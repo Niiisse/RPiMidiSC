@@ -5,7 +5,6 @@ import time
 import math
 
 app_version = "v 0.1"
-
 seqstepmax = 64				# Used for total sequencer steps
 seqstepsize = 2				# Amount per step
 
@@ -22,6 +21,7 @@ def main(window):
 	# MOAR SETUP
 	bpm = 0.25 				# TODO: Write function for dynamically setting BPM to BPS
 
+
 	# Sequencer Window
 	begin_x = 23; begin_y = 6
 	height = 9; width = 36
@@ -31,6 +31,8 @@ def main(window):
 	seqwin.addstr(0, 2, "   SEQUENCER   ", curses.A_BOLD | curses.A_REVERSE)	# Title
 	
 	start_timer = True
+
+	show_ui = True # TODO: Change to def
 
 	# UI LOOP
 	while (True):
@@ -42,8 +44,6 @@ def main(window):
 		window.addstr(3, 1, " BPS:    ".format(seqstep), curses.A_ITALIC)										# Fix bug
 		window.addstr(3, 1, " BPS: {} ".format(bpm), curses.A_ITALIC | curses.A_DIM)				# Show BPM
 		draw_sequencer(seqwin, seqstep)																											# Draw sequencer
-
-
 
 		# Timer
 		if start_timer == True:
@@ -66,26 +66,26 @@ def draw_sequencer(seqwin, seqstep):
 
 	for y in range(5):
 		for x in range(32):
-				draw_x = 2 + x
-				draw_y = 2 + y
-				drawstep = seqstep
+			draw_x = 2 + x
+			draw_y = 2 + y
+			drawstep = seqstep
 
-				# Setting Color Logic
-				color_pair = c.color_pair(2)
+			# Setting Color Logic
+			color_pair = c.color_pair(2)
 
-				if seqstep >= 32:																							# Drawstep is used for second row highlighting
-					drawstep = seqstep - (seqstepmax/2)
+			if seqstep >= 32:																							# Drawstep is used for second row highlighting
+				drawstep = seqstep - (seqstepmax/2)
 
-				if seqstep <= 31:																							# First 32 steps = first row	
-					if x >= drawstep and x <= drawstep + 1 and y < 2:
-						color_pair = c.color_pair(1)
+			if seqstep <= 31:																							# First 32 steps = first row	
+				if x >= drawstep and x <= drawstep + 1 and y < 2:
+					color_pair = c.color_pair(1)
 
-				elif seqstep >= 30:																						# Second 32 steps = second row
-					if x >= drawstep and x <= drawstep + 1 and y > 2:						
-						color_pair = c.color_pair(1)
+			elif seqstep >= 30:																						# Second 32 steps = second row
+				if x >= drawstep and x <= drawstep + 1 and y > 2:						
+					color_pair = c.color_pair(1)
 
-				if y != 2:																										# Make sure there's a blank line inbetween
-					seqwin.addstr(draw_y, draw_x, "*", color_pair | c.A_BOLD)		# Draw the seq chars
+			if y != 2:																										# Make sure there's a blank line inbetween
+				seqwin.addstr(draw_y, draw_x, "*", color_pair | c.A_BOLD)		# Draw the seq chars
 
 # Handles input for sequencer stepping
 def inputSeq(char, seqstep, seqstepmax):
@@ -120,5 +120,6 @@ def startSeqTimer():
 	tic = time.perf_counter()
 	return tic
 
-
-wrapper(main)
+def startUI():
+	print("called UI!")
+	wrapper(main)

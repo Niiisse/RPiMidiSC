@@ -32,7 +32,7 @@ def main():
 	curses.cbreak()
 	curses.curs_set(0)
 	curses.start_color()
-
+	
 	UI.window.clear()            # Clears the screen
 	UI.window.nodelay(True)
 	UI.window.border()
@@ -143,5 +143,3 @@ def startUI():
 	except:
 		#restoreScreen()
 		traceback.print_exc()
-	
-	#wrapper(main)

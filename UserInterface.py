@@ -3,15 +3,16 @@ from curses.textpad import Textbox, rectangle
 from curses import wrapper
 import time
 import math
+import config
 
 
 class UI:
 	window = None
 
-	bpm = 0.25
-	seqstep = 0
-	seqstepmax = 64
-	seqstepsize = 2
+	bpm = config.sequencer['bpm']
+	seqstep = config.sequencer['seqstep']
+	seqstepmax = config.sequencer['seqstepmax']
+	seqstepsize = config.sequencer['seqstepsize']
 
 	begin_x = 23; begin_y = 6
 	height = 9; width = 36

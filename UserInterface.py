@@ -7,23 +7,22 @@ import config
 
 
 class UI:
-	window = None
-
 	bpm = config.sequencer['bpm']
 	seqstep = config.sequencer['seqstep']
 	seqstepmax = config.sequencer['seqstepmax']
 	seqstepsize = config.sequencer['seqstepsize']
-
-	begin_x = 23; begin_y = 6
-	height = 9; width = 36
+	begin_x = config.sequencer['begin_x'] 
+	begin_y = config.sequencer['begin_y']
+	height = config.sequencer['height']
+	width = config.sequencer['width']
+	
 	seqwin = None
-
+	window = None
 	start_timer = True
 	char = None
-
 	tic = None
 
-	app_version = "v 0.1"
+	app_version = config.general['app_version']
 
 def main():
 	# SETUP
@@ -49,7 +48,11 @@ def main():
 	UI.start_timer = True
 	
 def update_ui():
-	UI.char = UI.window.getch()																																# Get character
+	UI.char = UI.window.getch()		
+	# Check for quitting
+	if UI.char == ord('q'):
+		restoreScreen();
+		return 1									
 	UI.seqstep = inputSeq(UI.char, UI.seqstep, UI.seqstepmax)																# Process sequencer stepping input
 	UI.bpm = inputBpm(UI.char, UI.bpm)
 	UI.seqwin.addstr(0, 25, " step:    ".format(UI.seqstep), curses.A_ITALIC)									# Fixes a bug in rendering strings
@@ -67,10 +70,11 @@ def update_ui():
 		UI.seqstep += UI.seqstepsize
 		UI.start_timer = True
 
-
 	UI.window.refresh()
 	UI.seqwin.refresh()
 
+	return 0
+		
 # Draws main sequencer
 def draw_sequencer(seqwin, seqstep):
 
@@ -142,5 +146,5 @@ def startUI():
 	try: 
 		main()
 	except:
-		#restoreScreen()
+		restoreScreen()
 		traceback.print_exc()

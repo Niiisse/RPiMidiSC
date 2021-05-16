@@ -58,36 +58,67 @@ clear() # Makes sure we're clear before main loop
 
 # Setup
 numericArr = [        # Stores the numeric display bytes
-  '10000001',
-  '11101101',
-  '01000011',
-  '01001001',
-  '00101101',
-  '00011001',
-  '00010001',
-  '11001101',
-  '00000001',
-  '00001001'
+  0b10000001,
+  0b11101101,
+  0b01000011,
+  0b01001001,
+  0b00101101,
+  0b00011001,
+  0b00010001,
+  0b11001101,
+  0b00000001,
+  0b00001001
 ]
 
-digitAmount = 7
-digitArray = [0 for i in range(digitAmount)]
+outputString = "01111111111111111111111111111111111111110000000000000000"
+outputList = list(outputString)
 
 while True: 
-  numericArray[-1]
+  for i in range(len(outputList)):
+    if i < 40:
+      outputList[i] = '0'
+      
+      outputString = ""
+      outputString = outputString.join(outputList)
 
-  # Processing nrs
-  byteString = ""
-  print(digitArray)
+      print(outputString)
+      outputBits(outputString)  
 
-  for i in range(digitAmount):
-    byteString = byteString + numericArr[i]
+      time.sleep(0.02)  
 
-  print(byteString)
+    else:
+      outputList[i] = '1'
 
-  outputBits(byteString)  
+      outputString = ""
+      outputString = outputString.join(outputList)
 
-  time.sleep(0.5)  
+      print(outputString)
+      outputBits(outputString)  
+
+      time.sleep(0.05)  
+
+  for i in range(len(outputList)):
+    if i < 40:
+      outputList[i] = '1'
+
+      outputString = ""
+      outputString = outputString.join(outputList)
+
+      print(outputString)
+      outputBits(outputString)  
+
+      time.sleep(0.02)
+
+    else:  
+      outputList[i] = '0'
+
+      outputString = ""
+      outputString = outputString.join(outputList)
+
+      print(outputString)
+      outputBits(outputString)  
+
+      time.sleep(0.05)
 
 
 #bytestring = format(value, '08b')

@@ -7,11 +7,11 @@ GPIO.setwarnings(False)
 DATA  = 21
 LATCH = 20
 CLOCK = 16
-#BTITERATE = 12
+BTITERATE = 12
 GPIO.setup(DATA,  GPIO.OUT)
 GPIO.setup(LATCH, GPIO.OUT)
 GPIO.setup(CLOCK, GPIO.OUT)
-#GPIO.setup(BTITERATE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(BTITERATE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 # Pulses the latch pin - write the output to data lines
 def latch():
@@ -58,36 +58,54 @@ clear() # Makes sure we're clear before main loop
 
 # Setup
 numericArr = [        # Stores the numeric display bytes
-  '10000001',
-  '11101101',
-  '01000011',
-  '01001001',
-  '00101101',
-  '00011001',
-  '00010001',
-  '11001101',
-  '00000001',
-  '00001001'
+  0b10000001,
+  0b11101101,
+  0b01000011,
+  0b01001001,
+  0b00101101,
+  0b00011001,
+  0b00010001,
+  0b11001101,
+  0b00000001,
+  0b00001001
 ]
 
-digitAmount = 7
-digitArray = [0 for i in range(digitAmount)]
+thirdDigit = 0      # 100s num
+secondDigit = 0       # 10s num
+firstDigit = 0       # 1
+bytestring = format(numericArr[0], '08b')
+outputBits(bytestring)
 
-while True: 
-  numericArray[-1]
+fillerString = "11111111111111110000000000000000"
 
-  # Processing nrs
-  byteString = ""
-  print(digitArray)
+strInput = input("Sleep time: ")
+sleeptime = float(strInput)
 
-  for i in range(digitAmount):
-    byteString = byteString + numericArr[i]
+while True:
+  if thirdDigit < 9:
+    thirdDigit += 1 
+  else:
+    thirdDigit = 0
+    secondDigit += 1
 
-  print(byteString)
+  if secondDigit > 9:                   # For clamping
+    secondDigit = 0
+    firstDigit += 1
 
-  outputBits(byteString)  
+  if firstDigit > 9:
+    firstDigit = 0
 
-  time.sleep(0.5)  
+  firstBytestring = format(numericArr[firstDigit], '08b')
+  secondBytestring = format(numericArr[secondDigit], '08b')
+  thirdBytestring = format(numericArr[thirdDigit], '08b')
+  outputBytestring = firstBytestring + secondBytestring + thirdBytestring + fillerString
+
+  
+  print(firstBytestring, secondBytestring, thirdBytestring)
+
+  outputBits(outputBytestring)
+
+  time.sleep(sleeptime)
 
 
 #bytestring = format(value, '08b')
@@ -95,13 +113,13 @@ while True:
 
   # NUMBERS
   # 0 = on (pulled to ground), 1 = off
-  # 0 0b10000001
-  # 1 0b11101101
-  # 2 0b01000011
-  # 3 0b01001001
-  # 4 0b00101101
-  # 5 0b00011001
-  # 6 0b00010001
-  # 7 0b11001101
-  # 8 0b00000001
-  # 9 0b00001001
+  # 0 100000000
+  # 1 0b11101100
+  # 2 0b01000010
+  # 3 0b01001000
+  # 4 0b00101100
+  # 5 0b00011000
+  # 6 0b00010000
+  # 7 0b11001100
+  # 8 0b00000000
+  # 9 0b00001000

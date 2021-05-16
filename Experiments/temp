@@ -1,0 +1,28 @@
+temp
+
+		else:																											# Continued press 
+			if Debounce.continousPress == False:											# Starting continous press mode
+				if Debounce.toc - Debounce.tic > Debounce.secondWait:
+					Debounce.continuousPress = True
+					canGo = True
+					
+					print("start continuous press")
+
+			else:
+				if Debounce.toc - Debounce.tic > Debounce.secondWait:
+					canGo = True
+					
+					#TODO: add logic for time 
+					print("continue continuous press")
+
+
+	tic = time.time()										# First time point for comparing (sets after each succesful execution)
+	toc = 0															#	Second time point for comparing (set when button is pressed)
+	initialWait = 0.15  								# Waiting time in seconds for first debounce (tapping button)
+	secondWait = 1											#	Waiting time in s after which button will start continuous press
+	thirdWait = 0.1
+	continuousPress = False							# Flag used for continuous press (keeping button pressed down)
+	btPreviouslyPressed = False					# Flag whether button was pressed down the previous frame
+
+	btDown = False
+	btUp = True

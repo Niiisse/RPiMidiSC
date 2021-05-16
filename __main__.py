@@ -1,5 +1,5 @@
 import UserInterface as ui
-import HardwareInterface as HWi
+#import HardwareInterface as HWi
 import sys
 
 

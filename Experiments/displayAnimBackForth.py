@@ -58,36 +58,47 @@ clear() # Makes sure we're clear before main loop
 
 # Setup
 numericArr = [        # Stores the numeric display bytes
-  '10000001',
-  '11101101',
-  '01000011',
-  '01001001',
-  '00101101',
-  '00011001',
-  '00010001',
-  '11001101',
-  '00000001',
-  '00001001'
+  0b10000001,
+  0b11101101,
+  0b01000011,
+  0b01001001,
+  0b00101101,
+  0b00011001,
+  0b00010001,
+  0b11001101,
+  0b00000001,
+  0b00001001
 ]
 
-digitAmount = 7
-digitArray = [0 for i in range(digitAmount)]
+outputString = "011111111111111111111111111111111111111111111111"
+outputList = list(outputString)
+heading = 0
 
 while True: 
-  numericArray[-1]
+  i = outputList.index('0')     # Get index
+  if heading == 0:
+    if i+1 == len(outputList):    # Make sure we don't go out of bounds
+      outputList[-1:] = '1'         # If we do go out of bounds, reset last to 1
+      outputList[-2:] = '0'           # ...and set first to 0 TODO: needs to be inverted for regular led, calculate pos after 3 bytes
+      outputList.append('1')
+      heading = 1
+    else:
+      outputList[i] = '1'           # Flip current 'bit'
+      outputList[i+1] = '0'         # Flip next 'bit'
+  else:
+    if i == 0:
+      heading = 0
+    else:
+      outputList[i] = '1'
+      outputList[i-1] = '0'
 
-  # Processing nrs
-  byteString = ""
-  print(digitArray)
+  outputString = ""
+  outputString = outputString.join(outputList)
 
-  for i in range(digitAmount):
-    byteString = byteString + numericArr[i]
+  print(outputString)
+  outputBits(outputString)  
 
-  print(byteString)
-
-  outputBits(byteString)  
-
-  time.sleep(0.5)  
+  time.sleep(0.05)  
 
 
 #bytestring = format(value, '08b')

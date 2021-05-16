@@ -7,11 +7,11 @@ GPIO.setwarnings(False)
 DATA  = 21
 LATCH = 20
 CLOCK = 16
+#BTITERATE = 12
 GPIO.setup(DATA,  GPIO.OUT)
 GPIO.setup(LATCH, GPIO.OUT)
 GPIO.setup(CLOCK, GPIO.OUT)
-
-
+#GPIO.setup(BTITERATE, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 # Pulses the latch pin - write the output to data lines
 def latch():
@@ -35,13 +35,11 @@ def clear():
     GPIO.output(CLOCK, 1)  
     GPIO.output(CLOCK, 0)  
 
-  print("Cleared")
   latch()
 
 # Push bit into the shift register
 def inputBit(inputValue):
   GPIO.output(DATA, inputValue)
-  #print("Put ," inputValue, " in")
   tick()
 
 # Push a byte to the shift register
@@ -56,39 +54,44 @@ def outputBits(inputString):
   
   latch()
 
-
 clear() # Makes sure we're clear before main loop
 
-interrupted = False
-value = 0b11111110
+# Setup
+numericArr = [        # Stores the numeric display bytes
+  0b10000001,
+  0b11101101,
+  0b01000011,
+  0b01001001,
+  0b00101101,
+  0b00011001,
+  0b00010001,
+  0b11001101,
+  0b00000001,
+  0b00001001
+]
 
-bytestring = format(value, '08b')
-outputBits(bytestring)
-
-#  for x in range(0, 12):
-#    bytestring = format(value, '08b')
-#    outputBits(bytestring)
-#    print(bytestring)
-
-#    if x < 6:
-#      value >>= 1
-#
-#    else:
-#      value <<=1
-
-#    time.sleep(0.5)
-
-  #bote = input("Byte: ")
-  #outputBits(bote)
+while True: 
+  inputString = input("input: ")
   
+  print("string:", inputString)
 
-  # 1 0b11101100
-  # 2 0b01000010
-  # 3 0b01001000
-  # 4 0b00101100
-  # 5 0b00011000
-  # 6 0b00010000
+  outputBits(inputString)  
+
+  time.sleep(1)  
+
+
+#bytestring = format(value, '08b')
+#outputBits(bytestring)
+
+  # NUMBERS
+  # 0 = on (pulled to ground), 1 = off
+  # 0 0b10000001
+  # 1 0b11101101
+  # 2 0b01000011
+  # 3 0b01001001
+  # 4 0b00101101
+  # 5 0b00011001
+  # 6 0b00010001
   # 7 0b11001101
-  # 8
+  # 8 0b00000001
   # 9 0b00001001
-  # 10

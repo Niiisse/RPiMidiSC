@@ -1,5 +1,20 @@
 import time
 
+# Debouncing class
+# Example usage:
+#
+#			btPlus = not GPIO.input(BT_BPM_PLUS)
+#
+#  		if btPlus:
+#   		bpmPlusDb.setState(btPlus)
+#    		if bpmPlusDb.checkDebounce():
+#      		bpmUp()
+#
+#  		elif not btPlus and bpmPlusDb.btDown:
+#    		bpmPlusDb.setState(btPlus)
+#
+#		By Niisse (2021-04-16)
+
 class Debounce:
 	def __init__(self):
 		self.tic = time.time()						# First time point for comparing (sets after each succesful execution)
@@ -37,14 +52,14 @@ class Debounce:
 
 		return canGo  															# Signals return
 
-	def setState(self, btState):								# Sets current button state
-		if not self.btDown and btState:							# is button down flag not already set, and button is pressed?
-			self.btDown = True													# Set flag
-			self.btUp = False														# Set flag
+	def setState(self, btState):									# Sets current button state
+		if not self.btDown and btState:								# is button down flag not already set, and button is pressed?
+			self.btDown = True														# Set flag
+			self.btUp = False															# Set flag
 
-		elif self.btDown and not btState:					# Do the same, but for button up
-			self.btDown = False
-			self.btUp = True										
+		elif self.btDown and not btState:							# Do the same, but for button up
+			self.btDown = False														# Set state
+			self.btUp = True															# Set state
 
-			self.btPreviouslyPressed = False					# Reset state
-			self.continuousPress = False							# Same 'ere
+			self.btPreviouslyPressed = False							# Reset state
+			self.continuousPress = False									# Same 'ere

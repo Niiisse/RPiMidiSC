@@ -1,3 +1,5 @@
-main.py
+
 __pycache__/
 .vscode/
+
+*.pyc

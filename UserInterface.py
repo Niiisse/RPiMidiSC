@@ -1,14 +1,18 @@
 import curses, traceback
 from curses.textpad import Textbox, rectangle
 from curses import wrapper
+import GlobalVars
 import time
 import math
 import config
 
+# TODO: debugging window thingy for putting vars in
+# Could make a little command like structure like in vim; show bar on bottom of screen
+# and have a key1+key2 for selecting focus of debug output var
 
 class UI:
 	bpm = config.sequencer['bpm']
-	seqstep = config.sequencer['seqstep']
+	seqstep = 0																	
 	seqstepmax = config.sequencer['seqstepmax']
 	seqstepsize = config.sequencer['seqstepsize']
 	begin_x = config.sequencer['begin_x'] 
@@ -23,9 +27,53 @@ class UI:
 	tic = None
 
 	app_version = config.general['app_version']
+	gv = GlobalVars.GlobalVars()
 
 def main():
-	# SETUP
+	doWindowSetup() # Initial Window Setup
+
+	drawTitle()
+	UI.window.addstr(1, 1, " O / P: control seq step ", curses.A_ITALIC)
+	UI.window.addstr(2, 1, " K / L: control bpm ", curses.A_ITALIC)
+
+	drawSequencerWindow()
+	
+def update_ui():
+	UI.char = UI.window.getch()	
+
+	if UI.char == ord('q'): 																		# Quit?
+		restoreScreen()
+		return 1							
+	elif UI.char == ord('r') or UI.char == curses.KEY_RESIZE:		# Resize or Reset window?
+		#resetScreen()
+		return 2	
+
+	UI.bpm = inputBpm(UI.char, UI.bpm)
+	UI.seqstep = inputSeq(UI.char, UI.seqstep, UI.seqstepmax)																# Process sequencer stepping input
+
+	
+	draw_sequencer(UI.seqwin, UI.seqstep)																											# Draw sequencer
+	sequencerTimer() # Manages sequencer timer
+
+	drawInfo()
+
+	UI.window.refresh()
+	UI.seqwin.refresh()
+
+	UI.gv.setSeqstep(UI.seqstep)	# Returns new sequencer step to global vars
+
+	return 0
+
+def sequencerTimer():
+	if UI.start_timer == True:
+		UI.start_timer = False
+		UI.tic = startSeqTimer()
+	
+	if time.perf_counter() - UI.tic > UI.bpm:
+		UI.seqstep += UI.seqstepsize
+		UI.start_timer = True
+		
+def doWindowSetup():
 	UI.window = curses.initscr()
 
 	curses.noecho()
@@ -37,46 +85,37 @@ def main():
 	UI.window.nodelay(True)
 	UI.window.border()
 
-	UI.window.addstr(0, 20, "   RPi MIDI Controller / Sequencer {}   ".format(UI.app_version), curses.A_REVERSE | curses.A_BOLD)
-	UI.window.addstr(1, 1, " O / P: control seq step ", curses.A_ITALIC)
-	UI.window.addstr(2, 1, " K / L: control bpm ", curses.A_ITALIC)
+def drawTitle():
+	# Function for drawing the window title, figuring out where it's supposed to go
 
+	width = 20
+	titleString = "   RPi MIDI Controller / Sequencer {}   ".format(UI.app_version)
+	titleLength = len(titleString)
+	screenHeight,screenWidth = UI.window.getmaxyx()
+
+
+	width = math.floor(screenWidth / 2 - titleLength / 2)
+	UI.window.addstr(0, width, titleString, curses.A_REVERSE | curses.A_BOLD)
+
+def drawInfo():
+	UI.seqwin.addstr(0, 25, " step:    ".format(UI.seqstep), curses.A_ITALIC)									# Fixes a bug in rendering strings
+	UI.seqwin.addstr(0, 25, " step: {} ".format(UI.seqstep), curses.A_ITALIC)									# Show seq step
+	UI.window.addstr(3, 1, " BPS:    ".format(UI.seqstep), curses.A_ITALIC)										# Fix bug
+	UI.window.addstr(3, 1, " BPS: {} ".format(UI.bpm), curses.A_ITALIC | curses.A_DIM)				# Show BPM
+
+
+#def getInput():
+	# Get Window input and process accordingly
+
+def drawSequencerWindow():
 	# Sequencer Window
 	UI.seqwin = curses.newwin(UI.height, UI.width, UI.begin_y, UI.begin_x)
 	UI.seqwin.border()
 	UI.seqwin.addstr(0, 2, "   SEQUENCER   ", curses.A_BOLD | curses.A_REVERSE)	# Title
 	UI.start_timer = True
-	
-def update_ui():
-	UI.char = UI.window.getch()		
-	# Check for quitting
-	if UI.char == ord('q'):
-		restoreScreen();
-		return 1									
-	UI.seqstep = inputSeq(UI.char, UI.seqstep, UI.seqstepmax)																# Process sequencer stepping input
-	UI.bpm = inputBpm(UI.char, UI.bpm)
-	UI.seqwin.addstr(0, 25, " step:    ".format(UI.seqstep), curses.A_ITALIC)									# Fixes a bug in rendering strings
-	UI.seqwin.addstr(0, 25, " step: {} ".format(UI.seqstep), curses.A_ITALIC)									# Show seq step
-	UI.window.addstr(3, 1, " BPS:    ".format(UI.seqstep), curses.A_ITALIC)										# Fix bug
-	UI.window.addstr(3, 1, " BPS: {} ".format(UI.bpm), curses.A_ITALIC | curses.A_DIM)				# Show BPM
-	draw_sequencer(UI.seqwin, UI.seqstep)																											# Draw sequencer
 
-	# Timer
-	if UI.start_timer == True:
-		UI.start_timer = False
-		UI.tic = startSeqTimer()
-	
-	if time.perf_counter() - UI.tic > UI.bpm:
-		UI.seqstep += UI.seqstepsize
-		UI.start_timer = True
-
-	UI.window.refresh()
-	UI.seqwin.refresh()
-
-	return 0
-		
-# Draws main sequencer
 def draw_sequencer(seqwin, seqstep):
+	# Draws main sequencer
 
 	curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLUE)		# Active Seq color pair
 	curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_BLACK)		# Inactive Seq color pair
@@ -140,6 +179,11 @@ def startSeqTimer():
 def restoreScreen():
 	curses.nocbreak()
 	curses.echo()
+	curses.endwin()
+
+def resetScreen():
+	# Resets the screen, aids with getting the right terminal window
+	restoreScreen()
 	curses.endwin()
 
 def startUI():

@@ -1,5 +1,12 @@
 general = {
-  "app_version": "v 0.1"  # General version nr
+  "app_version": "v 0.1",  # General version nr
+  "hardware_enabled": False
+}
+
+debounce = {
+  "initialWait": 0.15, 
+  "secondWait": 1,
+  "thirdWait": 0.1
 }
 
 sequencer = {

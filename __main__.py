@@ -26,6 +26,7 @@ while (True):
 
 
   if config.general['hardware_enabled']:
+    #TODO: optimize; only call on change
     seqstep = gv.getSeqstep()
     sr.tempSequencer(seqstep)
 

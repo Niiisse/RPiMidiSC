@@ -11,16 +11,18 @@ import config
 # and have a key1+key2 for selecting focus of debug output var
 
 class UI:
-	bpm = config.sequencer['bpm']
 	seqstep = 0																	
 	seqstepmax = config.sequencer['seqstepmax']
 	seqstepsize = config.sequencer['seqstepsize']
 	begin_x = config.sequencer['begin_x'] 
 	begin_y = config.sequencer['begin_y']
-	height = config.sequencer['height']
-	width = config.sequencer['width']
+	seqWinHeight = config.sequencer['seqWinHeight']
+	seqWinWidth = config.sequencer['seqWinWidth']
+	tempoWinHeight = config.tempo['tempoWinHeight'] 
+	tempoWinWidth = config.tempo['tempoWinWidth']
 	
 	seqwin = None
+	tempoWin = None
 	window = None
 	start_timer = True
 	char = None
@@ -28,6 +30,7 @@ class UI:
 
 	app_version = config.general['app_version']
 	gv = GlobalVars.GlobalVars()
+	gv.bpm = config.sequencer['bpm']
 
 def main():
 	doWindowSetup() # Initial Window Setup
@@ -36,9 +39,13 @@ def main():
 	UI.window.addstr(1, 1, " O / P: control seq step ", curses.A_ITALIC)
 	UI.window.addstr(2, 1, " K / L: control bpm ", curses.A_ITALIC)
 
-	drawSequencerWindow()
+	# Get window size, use it to setup subwindows
+	windowSize = UI.window.getmaxyx()
+	createSequencerWindow(windowSize)
+	createTempoWindow(windowSize)
 	
 def update_ui():
+	# Input processing TODO: move?
 	UI.char = UI.window.getch()	
 
 	if UI.char == ord('q'): 																		# Quit?
@@ -48,17 +55,20 @@ def update_ui():
 		#resetScreen()
 		return 2	
 
-	UI.bpm = inputBpm(UI.char, UI.bpm)
+	UI.gv.bpm = inputBpm(UI.char, UI.gv.bpm)
 	UI.seqstep = inputSeq(UI.char, UI.seqstep, UI.seqstepmax)																# Process sequencer stepping input
-
 	
-	draw_sequencer(UI.seqwin, UI.seqstep)																											# Draw sequencer
+	# Drawing
+	drawInfo()
+
+	drawSequencer(UI.seqwin, UI.seqstep)																											# Draw sequencer
 	sequencerTimer() # Manages sequencer timer
 
-	drawInfo()
+	drawTempoWindow()
 
 	UI.window.refresh()
 	UI.seqwin.refresh()
+	UI.tempoWin.refresh()
 
 	UI.gv.setSeqstep(UI.seqstep)	# Returns new sequencer step to global vars
 
@@ -67,9 +77,9 @@ def update_ui():
 def sequencerTimer():
 	if UI.start_timer == True:
 		UI.start_timer = False
-		UI.tic = startSeqTimer()
+		startSeqTimer()
 	
-	if time.perf_counter() - UI.tic > UI.bpm:
+	if time.perf_counter() - UI.tic > ( 60 / UI.gv.bpm / 4):
 		UI.seqstep += UI.seqstepsize
 		UI.start_timer = True
 		
@@ -88,33 +98,45 @@ def doWindowSetup():
 def drawTitle():
 	# Function for drawing the window title, figuring out where it's supposed to go
 
-	width = 20
 	titleString = "   RPi MIDI Controller / Sequencer {}   ".format(UI.app_version)
 	titleLength = len(titleString)
-	screenHeight,screenWidth = UI.window.getmaxyx()
+	screenPos = UI.window.getmaxyx()
 
-
-	width = math.floor(screenWidth / 2 - titleLength / 2)
+	width = math.floor(screenPos[1] / 2 - titleLength / 2)
 	UI.window.addstr(0, width, titleString, curses.A_REVERSE | curses.A_BOLD)
 
 def drawInfo():
 	UI.seqwin.addstr(0, 25, " step:    ".format(UI.seqstep), curses.A_ITALIC)									# Fixes a bug in rendering strings
 	UI.seqwin.addstr(0, 25, " step: {} ".format(UI.seqstep), curses.A_ITALIC)									# Show seq step
-	UI.window.addstr(3, 1, " BPS:    ".format(UI.seqstep), curses.A_ITALIC)										# Fix bug
-	UI.window.addstr(3, 1, " BPS: {} ".format(UI.bpm), curses.A_ITALIC | curses.A_DIM)				# Show BPM
+	UI.window.addstr(3, 1, " BPM:    ".format(UI.seqstep), curses.A_ITALIC)										# Fix bug
+	UI.window.addstr(3, 1, " BPM: {} ".format(UI.gv.bpm), curses.A_ITALIC | curses.A_DIM)				# Show BPM
 
+def createSequencerWindow(windowSize):
+	# draw Sequencer Window in the middle of the screen
 
-#def getInput():
-	# Get Window input and process accordingly
+	begin_y = math.floor(windowSize[0] / 2 - UI.seqWinHeight / 2)
+	begin_x = math.floor(windowSize[1] / 2 - UI.seqWinWidth / 2)
 
-def drawSequencerWindow():
-	# Sequencer Window
-	UI.seqwin = curses.newwin(UI.height, UI.width, UI.begin_y, UI.begin_x)
+	UI.seqwin = curses.newwin(UI.seqWinHeight, UI.seqWinWidth, begin_y, begin_x)
 	UI.seqwin.border()
 	UI.seqwin.addstr(0, 2, "   SEQUENCER   ", curses.A_BOLD | curses.A_REVERSE)	# Title
 	UI.start_timer = True
 
-def draw_sequencer(seqwin, seqstep):
+def createTempoWindow(windowSize):
+	# draw BPM window left of seqWin
+	#TODO: check for space, otherwise put it above or below or something
+
+	seqSize = UI.seqwin.getmaxyx()
+
+	# Y position is (for now) middle of screen - own height. X position is half of screen - seqwin width
+	begin_y = math.floor(windowSize[0] / 2 - UI.tempoWinHeight / 2)
+	begin_x = math.floor((windowSize[1] / 2 - UI.tempoWinWidth) - seqSize[1] / 2)
+
+	UI.tempoWin = curses.newwin(UI.tempoWinHeight, UI.tempoWinWidth, begin_y, begin_x)
+	UI.tempoWin.border()
+	UI.tempoWin.addstr(0, 2, "   BPM   ", curses.A_BOLD | curses.A_REVERSE) 
+
+def drawSequencer(seqwin, seqstep):
 	# Draws main sequencer
 
 	curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLUE)		# Active Seq color pair
@@ -143,8 +165,13 @@ def draw_sequencer(seqwin, seqstep):
 			if y != 2:																												# Make sure there's a blank line inbetween
 				UI.seqwin.addstr(draw_y, draw_x, "*", color_pair | curses.A_BOLD)		# Draw the seq chars
 
-# Handles input for sequencer stepping
+def drawTempoWindow(): 
+	UI.tempoWin.addstr(2, 3, "BPM:    ", curses.A_NORMAL)
+	UI.tempoWin.addstr(2, 3, "BPM: {}".format(UI.gv.bpm), curses.A_NORMAL)
+
 def inputSeq(char, seqstep, seqstepmax):
+	# Handles input for sequencer stepping
+
 	if char == ord('p'):
 		seqstep += UI.seqstepsize
 	elif char == ord('o'):
@@ -159,17 +186,18 @@ def inputSeq(char, seqstep, seqstepmax):
 
 	return seqstep
 
-# Handles input for BPM changes
 def inputBpm(char, bpm):
+	# Handles input for BPM changes
+
 	if char == ord('l'):
-		bpm -= 0.05
+		bpm += 1
 	elif char == ord('k'):
-		bpm += 0.05
+		bpm -= 1
 
 	if bpm < 0:								# Clamping
 		bpm = 0
 
-	bpm = round(bpm, 2)					# Round it to 2 decimals...
+	#bpm = round(bpm, 0)					# Round it to 2 decimals...
 	return bpm								# ...and return it
 
 def startSeqTimer():
@@ -183,6 +211,7 @@ def restoreScreen():
 
 def resetScreen():
 	# Resets the screen, aids with getting the right terminal window
+
 	restoreScreen()
 	curses.endwin()
 

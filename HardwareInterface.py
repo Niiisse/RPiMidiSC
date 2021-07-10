@@ -48,6 +48,7 @@ class ShiftRegister:
   #   bytestring = format(numericArr[0], '08b')
   #   outputBits(bytestring)
   #  Then, splits input values into individual values
+  
   def outputBits(self, inputString):
     bitList = list(inputString)
     bitList = bitList[::-1]

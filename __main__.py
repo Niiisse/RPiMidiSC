@@ -28,4 +28,4 @@ while (True):
     #TODO: optimize; only call on change?
 
     #sr.tempSequencer(gv.seqstep)
-    HWi.createOutputString(gv)
+    sr.createOutputString(gv)

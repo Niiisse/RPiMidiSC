@@ -96,17 +96,20 @@ numericArr = [        # Stores the numeric display bytes
 
 def createBPMstring(gv):
   bpm = format(gv.bpm)
-  strings["", "", "",]
+  while len(bpm) < 3:
+    bpm = "0" + bpm
+
+  bpmString = ""
 
   for i in range(3):
-    strings[i] = format(numericArr[int(bpm[i])], '08b')
+    bpmString = bpmString + format(numericArr[int(bpm[i])], '08b')
 
-  
+  return bpmString  
 
 def createOutputString(gv):
 
 
-  outputString = ""
+  outputString = createBPMstring + "0000000000000000" + ShiftRegister.tempSequencer(self, gv.seqstep)
   ShiftRegister.outputBits(ShiftRegister, outputString)
 
 

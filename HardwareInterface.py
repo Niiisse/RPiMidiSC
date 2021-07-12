@@ -55,6 +55,7 @@ class ShiftRegister:
 
     for bit in bitList:
       bit = int(bit)
+      
       self.inputBit(bit)
     
     self.latch()

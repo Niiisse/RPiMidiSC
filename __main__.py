@@ -17,10 +17,10 @@ gv = GlobalVars.GlobalVars()  #
 
 while (True):
   try_quit = ui.update_ui()   # Runs UI loop; returns 0 normally
-  if try_quit == 1:           # However, it returns 1 when q is pressed...  
+  if try_quit == "quit":           # However, it returns 1 when q is pressed...  
     ui.restoreScreen()      
     sys.exit(0)               # ...signalling us to exit.
-  if try_quit == 2:
+  if try_quit == "reset":
     ui.resetScreen()
     ui.startUI()
 

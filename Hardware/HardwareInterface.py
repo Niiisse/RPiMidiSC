@@ -107,9 +107,10 @@ def createBPMstring(gv):
   return bpmString  
 
 def createOutputString(gv):
+  sequencerString = tempSequencer(gv.seqstep)
+  bpmString = createBPMstring(gv)
 
-
-  outputString = createBPMstring + "0000000000000000" + tempSequencer(gv.seqstep)
+  outputString = bpmString + "0000000000000000" + sequencerString
   ShiftRegister.outputBits(ShiftRegister, outputString)
 
 

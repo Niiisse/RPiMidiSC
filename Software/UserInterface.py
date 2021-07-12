@@ -79,7 +79,7 @@ def update_ui():
 	UI.statusWin.refresh()
 	UI.patternWin.refresh()
 
-	# Return new sequencer step to global var
+	# Return new vars to global var
 	UI.gv.setSeqstep(UI.seqstep)
 	UI.gv.setBPM(UI.gv.bpm)
 	UI.gv.setPatternStep(UI.gv.patternStep)
@@ -341,7 +341,7 @@ def sequencerTimer():
 			startSeqTimer()
 		
 		# " if current time - last tic time > bpm time" ...
-		if time.perf_counter() - UI.tic > ( 60 / UI.gv.bpm / 4):
+		if time.perf_counter() - UI.tic > ( 60 / UI.gv.bpm / 2):
 			UI.seqstep += UI.seqstepsize
 			UI.start_timer = True
 

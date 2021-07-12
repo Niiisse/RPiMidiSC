@@ -341,7 +341,7 @@ def sequencerTimer():
 			startSeqTimer()
 		
 		# " if current time - last tic time > bpm time" ...
-		if time.perf_counter() - UI.tic > ( 60 / UI.gv.bpm / 2):
+		if time.perf_counter() - UI.tic > ( 60 / UI.gv.bpm / 8):
 			UI.seqstep += UI.seqstepsize
 			UI.start_timer = True
 

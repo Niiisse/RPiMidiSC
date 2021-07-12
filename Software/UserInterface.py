@@ -82,7 +82,7 @@ def update_ui():
 	# Return new vars to global var
 	UI.gv.setSeqstep(UI.seqstep)
 	UI.gv.setBPM(UI.gv.bpm)
-	UI.gv.setPatternStep(UI.gv.patternStep)
+	#UI.gv.setPatternStep(UI.gv.patternStep)
 
 	# Process inputs (for next frame)
 	return processInput()

@@ -15,29 +15,13 @@ print("RPiMidiSC")
 ui.startUI()
 gv = Software.GlobalVars.GlobalVars()  #
 
-
-while (True):
-  try_quit = ui.update_ui()   # Runs UI loop; returns 0 normally
-  if try_quit == "quit":           # However, it returns 1 when q is pressed...  
-    ui.restoreScreen()      
-    sys.exit(0)               # ...signalling us to exit.
-  if try_quit == "reset":
-    ui.resetScreen()
-    ui.startUI()
-
-
-  if config.general['hardware_enabled']:
-    #TODO: optimize; only call on change?
-    bitString = createOutputString()
-    sr.outputBits(bitString)
-
-def tempSequencer(seqStep):
+def tempSequencer():
   #divideStep = seqStep / 16    #TODO: figure out why this doesn't work
   #TODO: figure out how to do file logging
   #TODO: Figure out a better way to handle inputs and outputs (shouldnt be doing this in this file, probably)
 
   try: 
-    ledStep = math.floor(seqStep / 4)
+    ledStep = math.floor(gv.seqstep / 4)
   except ZeroDivisionError:
     ledStep = 0
 
@@ -50,7 +34,7 @@ def tempSequencer(seqStep):
   # self.outputBits(outputString)
   return ledString
 
-def createBPMstring(self, gv):
+def createBPMstring():
   numericArr = [        # Stores the numeric display bytes
   0b10000001,
   0b11101101,
@@ -76,8 +60,24 @@ def createBPMstring(self, gv):
   return bpmString  
 
 def createOutputString():
-  sequencerString = self.tempSequencer(gv.seqstep)
-  bpmString = self.createBPMstring(gv.bpm)
+  sequencerString = tempSequencer()
+  bpmString = createBPMstring()
 
   outputString = bpmString + "0000000000000000" + sequencerString
   return outputString
+
+while (True):
+  try_quit = ui.update_ui()   # Runs UI loop; returns 0 normally
+  if try_quit == "quit":           # However, it returns 1 when q is pressed...  
+    ui.restoreScreen()      
+    sys.exit(0)               # ...signalling us to exit.
+  if try_quit == "reset":
+    ui.resetScreen()
+    ui.startUI()
+
+
+  if config.general['hardware_enabled']:
+    #TODO: optimize; only call on change?
+    bitString = createOutputString()
+    sr.outputBits(bitString)
+

@@ -60,7 +60,7 @@ class ShiftRegister:
     
     self.latch()
 
-def tempSequencer(self, seqStep):
+def tempSequencer(seqStep):
   #divideStep = seqStep / 16    #TODO: figure out why this doesn't work
   #TODO: figure out how to do file logging
   #TODO: Figure out a better way to handle inputs and outputs (shouldnt be doing this in this file, probably)
@@ -109,7 +109,7 @@ def createBPMstring(gv):
 def createOutputString(gv):
 
 
-  outputString = createBPMstring + "0000000000000000" + ShiftRegister.tempSequencer(self, gv.seqstep)
+  outputString = createBPMstring + "0000000000000000" + tempSequencer(gv.seqstep)
   ShiftRegister.outputBits(ShiftRegister, outputString)
 
 

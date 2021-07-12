@@ -15,3 +15,6 @@ class GlobalVars:
 
   def getSeqstep(self):
     return GlobalVars.seqstep
+
+  def setBPM(self, bpm):
+    GlobalVars.bpm = bpm

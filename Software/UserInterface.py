@@ -80,7 +80,8 @@ def update_ui():
 	UI.patternWin.refresh()
 
 	# Return new sequencer step to global var
-	UI.gv.setSeqstep(UI.seqstep)	
+	UI.gv.setSeqstep(UI.seqstep)
+	UI.gv.setBPM(UI.bpm)
 
 	# Process inputs (for next frame)
 	return processInput()

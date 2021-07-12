@@ -61,7 +61,7 @@ class ShiftRegister:
     self.latch()
 
 
-def testFunction(bitstring):
-  ShiftRegister.outputBits(ShiftRegister, "11001100110011001100110011001100110011001100110011001100")
+  def testFunction(self, bitstring):
+    self.outputBits("11001100110011001100110011001100110011001100110011001100")
 
-  # TODO: write function that creates the bitstring thats to be sent
+    # TODO: write function that creates the bitstring thats to be sent

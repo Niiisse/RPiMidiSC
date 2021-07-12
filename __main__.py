@@ -30,4 +30,4 @@ while (True):
     #sr.tempSequencer(gv.seqstep)
     #sr.createOutputString(gv.seqstep, gv.bpm)
 
-    HWi.testFunction("test")
+    sr.testFunction("test")

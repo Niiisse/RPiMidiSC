@@ -81,7 +81,7 @@ def createPatternString():
 
   patternString = ""
 
-  for i in range(3):
+  for i in range(2):
     patternString = patternString + format(numericArr[int(patternStep[i])], '08b')
 
 

@@ -106,8 +106,8 @@ class ShiftRegister:
 
     return bpmString  
 
-  def createOutputString(self, bpm):
-    sequencerString = self.tempSequencer(gv.seqstep)
+  def createOutputString(self, seqstep, bpm):
+    sequencerString = self.tempSequencer(seqstep)
     bpmString = self.createBPMstring(bpm)
 
     outputString = bpmString + "0000000000000000" + sequencerString

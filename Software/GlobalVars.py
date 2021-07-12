@@ -1,5 +1,6 @@
 class GlobalVars:
   # All of these vars are loaded from config on initialize
+  
   def __init__(self):
     self.seqstep = 0         # Sequencer step
     self.bpm = 0             # Tempo

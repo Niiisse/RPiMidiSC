@@ -34,7 +34,7 @@ def tempSequencer():
   # self.outputBits(outputString)
   return ledString
 
-def createBPMstring():
+def createBPMstring(bpmVal):
   numericArr = [        # Stores the numeric display bytes
   0b10000001,
   0b11101101,
@@ -48,7 +48,7 @@ def createBPMstring():
   0b00001001
   ]
 
-  bpm = format(gv.bpm)
+  bpm = format(bpmVal)
   while len(bpm) < 3:
     bpm = "0" + bpm
 
@@ -59,12 +59,12 @@ def createBPMstring():
 
   return bpmString  
 
-def createOutputString():
+def createOutputString(bpm):
   sequencerString = tempSequencer()
-  bpmString = createBPMstring()
+  bpmString = createBPMstring(bpm)
 
   outputString = bpmString + "0000000000000000" + sequencerString
-  print(outputString)
+  #print(outputString)
   return outputString
 
 
@@ -80,6 +80,7 @@ while (True):
 
   if config.general['hardware_enabled']:
     #TODO: optimize; only call on change?
-    bitString = createOutputString()
+    bpmlocal = gv.bpm
+    bitString = createOutputString(bpmlocal)
     sr.outputBits(bitString)
 

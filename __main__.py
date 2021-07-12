@@ -61,7 +61,7 @@ def createBPMstring(bpmVal):
 
   return bpmString  
 
-createPatternString():
+def createPatternString():
   numericArr = [        # Stores the numeric display bytes
   0b10000001,
   0b11101101,

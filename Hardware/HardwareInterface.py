@@ -3,19 +3,6 @@ import math
 import time
 
 class ShiftRegister:
-  numericArr = [        # Stores the numeric display bytes
-  0b10000001,
-  0b11101101,
-  0b01000011,
-  0b01001001,
-  0b00101101,
-  0b00011001,
-  0b00010001,
-  0b11001101,
-  0b00000001,
-  0b00001001
-  ]
-
   GPIO.setwarnings(False)
   GPIO.setmode(GPIO.BCM)
 
@@ -95,6 +82,19 @@ class ShiftRegister:
     return ledString
 
   def createBPMstring(self, gv):
+    numericArr = [        # Stores the numeric display bytes
+    0b10000001,
+    0b11101101,
+    0b01000011,
+    0b01001001,
+    0b00101101,
+    0b00011001,
+    0b00010001,
+    0b11001101,
+    0b00000001,
+    0b00001001
+    ]
+
     bpm = format(gv.bpm)
     while len(bpm) < 3:
       bpm = "0" + bpm
@@ -107,11 +107,11 @@ class ShiftRegister:
     return bpmString  
 
   def createOutputString(self, gv):
-    sequencerString = tempSequencer(self, gv.seqstep)
-    bpmString = createBPMstring(self, gv)
+    sequencerString = self.tempSequencer(gv.seqstep)
+    bpmString = self.createBPMstring(gv)
 
     outputString = bpmString + "0000000000000000" + sequencerString
-    outputBits(self, outputString)
+    self.outputBits(outputString)
 
 
   # TODO: write function that creates the bitstring thats to be sent

@@ -31,12 +31,12 @@ tempo = {
 status = {
   # Status Window
   "statusWinHeight": 5,       # Height of status window
-  "statusWinWidth": 12        # Width of status window
+  "statusWinWidth": 13        # Width of status window
 }
 
 pattern = {
   # Pattern Window
-  "patternWinHeight": 6,      # Height of pattern window
+  "patternWinHeight": 5,      # Height of pattern window
   "patternWinWidth": 13,      # Width of pattern window
   "patternStep": 1,           # Current pattern step
   "patternMax": 4,            # Max amount of patterns

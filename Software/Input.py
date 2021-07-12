@@ -39,6 +39,10 @@ def doInput(self, char):
   elif char == ord('n'):
     return "patternStepDown"
 
+  # Play / pausing (toggle)
+  elif char == ord(' '):
+    return "playPause"
+
   # GPIO INPUT
   if config.general['hardware_enabled']: 
     # TODO: Hardware inputs (do check if enabled first)

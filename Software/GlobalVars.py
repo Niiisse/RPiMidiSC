@@ -4,7 +4,9 @@ class GlobalVars:
   seqstep = 0         # Sequencer step
   bpm = 0             # Tempo
   playing = True      # Playing / paused status
-  patternStep = 1         # Current pattern no.
+  patternStep = 0     # Current pattern no.
+  patternChange = 0   # signals pattern change for next measure
+  patternPending = 0  # Used in changing pattern
 
 
   # TODO: are these really necessary?

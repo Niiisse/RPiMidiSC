@@ -80,5 +80,8 @@ class ShiftRegister:
     outputString = disabledSegments + ledString
     self.outputBits(outputString)
 
+def createOutputString(gv):
+  return 0
+
 
 # TODO: write function that creates the bitstring thats to be sent

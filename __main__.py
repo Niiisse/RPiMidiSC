@@ -1,18 +1,18 @@
-import UserInterface as ui
-import GlobalVars
+import Software.UserInterface as ui
+import Software.GlobalVars
 import config
 import sys
 
 # Check whether the hardware interface is enabled or disabled in config
 # I added this to make local debugging without hardware easier
 if config.general['hardware_enabled']:
-  import HardwareInterface as HWi
+  import Hardware.HardwareInterface as HWi
   sr = HWi.ShiftRegister()
 
 
 print("RPiMidiSC")
 ui.startUI()
-gv = GlobalVars.GlobalVars()  #
+gv = Software.GlobalVars.GlobalVars()  #
 
 
 while (True):
@@ -24,10 +24,8 @@ while (True):
     ui.resetScreen()
     ui.startUI()
 
-
   if config.general['hardware_enabled']:
-    #TODO: optimize; only call on change
-    seqstep = gv.getSeqstep()
-    sr.tempSequencer(seqstep)
+    #TODO: optimize; only call on change?
 
-#TODO: call HWi.CreateBitString();
+    sr.tempSequencer(gv.seqstep)
+    HWi.createOutputString(gv)

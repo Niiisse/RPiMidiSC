@@ -81,7 +81,7 @@ def update_ui():
 
 	# Return new sequencer step to global var
 	UI.gv.setSeqstep(UI.seqstep)
-	UI.gv.setBPM(UI.bpm)
+	UI.gv.setBPM(UI.gv.bpm)
 
 	# Process inputs (for next frame)
 	return processInput()

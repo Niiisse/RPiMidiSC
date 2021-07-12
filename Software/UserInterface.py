@@ -7,6 +7,8 @@ import time
 import math
 import config
 
+# FIXME: all instances of gv.whatever should get a local var and be setted back to gv
+
 # TODO: debugging window thingy for putting vars in
 # Could make a little command like structure like in vim; show bar on bottom of screen
 # and have a key1+key2 for selecting focus of debug output var
@@ -82,7 +84,7 @@ def update_ui():
 	# Return new vars to global var
 	UI.gv.setSeqstep(UI.seqstep)
 	UI.gv.setBPM(UI.gv.bpm)
-	#UI.gv.setPatternStep(UI.gv.patternStep)
+	UI.gv.setPatternStep(UI.gv.patternStep)
 
 	# Process inputs (for next frame)
 	return processInput()

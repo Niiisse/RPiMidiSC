@@ -250,7 +250,7 @@ def processInput():
 			UI.gv.bpm = 1
 
 	elif action == "bpmDown":
-		if UI.gv.bpm > 0:
+		if UI.gv.bpm > 1:
 			UI.gv.bpm -= 1
 		else:
 			UI.gv.bpm = 999

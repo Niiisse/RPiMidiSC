@@ -64,7 +64,9 @@ def createOutputString():
   bpmString = createBPMstring()
 
   outputString = bpmString + "0000000000000000" + sequencerString
+  print(outputString)
   return outputString
+
 
 while (True):
   try_quit = ui.update_ui()   # Runs UI loop; returns 0 normally

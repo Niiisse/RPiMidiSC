@@ -15,6 +15,8 @@ print("RPiMidiSC")
 ui.startUI()
 gv = Software.GlobalVars.GlobalVars()  #
 
+# FIXME: get this temp bullshit out of here
+
 def tempSequencer():
   #divideStep = seqStep / 16    #TODO: figure out why this doesn't work
   #TODO: figure out how to do file logging
@@ -59,11 +61,38 @@ def createBPMstring(bpmVal):
 
   return bpmString  
 
+createPatternString():
+  numericArr = [        # Stores the numeric display bytes
+  0b10000001,
+  0b11101101,
+  0b01000011,
+  0b01001001,
+  0b00101101,
+  0b00011001,
+  0b00010001,
+  0b11001101,
+  0b00000001,
+  0b00001001
+  ]
+
+  patternStep = format(gv.patternStep)
+  while len(patternStep) < 2:
+    patternStep = "0" + patternStep
+
+  patternString = ""
+
+  for i in range(3):
+    patternString = patternString + format(numericArr[int(patternStep[i])], '08b')
+
+
+  return patternString
+
 def createOutputString(bpm):
   sequencerString = tempSequencer()
   bpmString = createBPMstring(bpm)
+  patternString = createPatternString()
 
-  outputString = bpmString + "0000000000000000" + sequencerString
+  outputString = bpmString + patternString + sequencerString
   #print(outputString)
   return outputString
 

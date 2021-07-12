@@ -13,8 +13,8 @@ class GlobalVars:
   def setSeqstep(self, seqstep):
     GlobalVars.seqstep = seqstep
 
-  def getSeqstep(self):
-    return GlobalVars.seqstep
-
   def setBPM(self, bpm):
     GlobalVars.bpm = bpm
+
+  def setPatternStep(self, patternStep):
+    GlobalVars.patternStep = patternStep

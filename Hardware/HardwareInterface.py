@@ -81,7 +81,7 @@ class ShiftRegister:
     # self.outputBits(outputString)
     return ledString
 
-  def createBPMstring(self, gv):
+  def createBPMstring(self, bpm):
     numericArr = [        # Stores the numeric display bytes
     0b10000001,
     0b11101101,
@@ -95,9 +95,9 @@ class ShiftRegister:
     0b00001001
     ]
 
-    bpm = format(gv.bpm)
-    while len(bpm) < 3:
-      bpm = "0" + bpm
+    bpmStr = format(bpm)
+    while len(bpmStr) < 3:
+      bpmStr = "0" + bpmStr
 
     bpmString = ""
 
@@ -106,9 +106,9 @@ class ShiftRegister:
 
     return bpmString  
 
-  def createOutputString(self, gv):
+  def createOutputString(self, bpm):
     sequencerString = self.tempSequencer(gv.seqstep)
-    bpmString = self.createBPMstring(gv)
+    bpmString = self.createBPMstring(bpm)
 
     outputString = bpmString + "0000000000000000" + sequencerString
     self.outputBits(outputString)

@@ -27,5 +27,5 @@ while (True):
   if config.general['hardware_enabled']:
     #TODO: optimize; only call on change?
 
-    sr.tempSequencer(gv.seqstep)
+    #sr.tempSequencer(gv.seqstep)
     HWi.createOutputString(gv)

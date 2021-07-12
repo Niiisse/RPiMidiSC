@@ -28,4 +28,6 @@ while (True):
     #TODO: optimize; only call on change?
 
     #sr.tempSequencer(gv.seqstep)
-    sr.createOutputString(sr, gv.seqstep, gv.bpm)
+    #sr.createOutputString(gv.seqstep, gv.bpm)
+
+    HWi.testFunction("test")

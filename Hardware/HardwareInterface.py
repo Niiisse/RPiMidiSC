@@ -60,58 +60,8 @@ class ShiftRegister:
     
     self.latch()
 
-  def tempSequencer(self, seqStep):
-    #divideStep = seqStep / 16    #TODO: figure out why this doesn't work
-    #TODO: figure out how to do file logging
-    #TODO: Figure out a better way to handle inputs and outputs (shouldnt be doing this in this file, probably)
 
-    try: 
-      ledStep = math.floor(seqStep / 4)
-    except ZeroDivisionError:
-      ledStep = 0
-
-    disabledSegments = "1" * (5 * 8)
-
-    ledString = ""
-    
-    for i in range(0, 16):
-      ledString += "1" if i == ledStep else "0"
-
-    # outputString = disabledSegments + ledString
-    # self.outputBits(outputString)
-    return ledString
-
-  def createBPMstring(self, bpm):
-    numericArr = [        # Stores the numeric display bytes
-    0b10000001,
-    0b11101101,
-    0b01000011,
-    0b01001001,
-    0b00101101,
-    0b00011001,
-    0b00010001,
-    0b11001101,
-    0b00000001,
-    0b00001001
-    ]
-
-    bpmStr = format(bpm)
-    while len(bpmStr) < 3:
-      bpmStr = "0" + bpmStr
-
-    bpmString = ""
-
-    for i in range(3):
-      bpmString = bpmString + format(numericArr[int(bpm[i])], '08b')
-
-    return bpmString  
-
-  def createOutputString(self, seqstep, bpm):
-    sequencerString = self.tempSequencer(seqstep)
-    bpmString = self.createBPMstring(bpm)
-
-    outputString = bpmString + "0000000000000000" + sequencerString
-    self.outputBits(outputString)
-
+def testFunction(bitstring):
+  ShiftRegister.outputBits(ShiftRegister, "11001100110011001100110011001100110011001100110011001100")
 
   # TODO: write function that creates the bitstring thats to be sent

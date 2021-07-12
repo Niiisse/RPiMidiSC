@@ -1,6 +1,6 @@
 general = {
   "app_version": "v 0.1.2",  # General version nr
-  "hardware_enabled": False
+  "hardware_enabled": True
 }
 
 debounce = {

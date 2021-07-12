@@ -60,54 +60,6 @@ class ShiftRegister:
     
     self.latch()
 
-def tempSequencer(self, seqStep):
-  #divideStep = seqStep / 16    #TODO: figure out why this doesn't work
-  #TODO: figure out how to do file logging
-  #TODO: Figure out a better way to handle inputs and outputs (shouldnt be doing this in this file, probably)
-
-  try: 
-    ledStep = math.floor(seqStep / 4)
-  except ZeroDivisionError:
-    ledStep = 0
-
-  disabledSegments = "1" * (5 * 8)
-
-  ledString = ""
-  
-  for i in range(0, 16):
-    ledString += "1" if i == ledStep else "0"
-
-  # outputString = disabledSegments + ledString
-  # self.outputBits(outputString)
-  return ledString
-
-numericArr = [        # Stores the numeric display bytes
-0b10000001,
-0b11101101,
-0b01000011,
-0b01001001,
-0b00101101,
-0b00011001,
-0b00010001,
-0b11001101,
-0b00000001,
-0b00001001
-]
-
-def createBPMstring(gv):
-  bpm = format(gv.bpm)
-  strings["", "", "",]
-
-  for i in range(3):
-    strings[i] = format(numericArr[int(bpm[i])], '08b')
-
-  
-
-def createOutputString(gv):
 
 
-  outputString = ""
-  ShiftRegister.outputBits(ShiftRegister, outputString)
-
-
-# TODO: write function that creates the bitstring thats to be sent
+  # TODO: write function that creates the bitstring thats to be sent

@@ -7,6 +7,8 @@ import time
 import math
 import config
 
+# FIXME: all instances of gv.whatever should get a local var and be setted back to gv
+
 # TODO: debugging window thingy for putting vars in
 # Could make a little command like structure like in vim; show bar on bottom of screen
 # and have a key1+key2 for selecting focus of debug output var
@@ -79,8 +81,10 @@ def update_ui():
 	UI.statusWin.refresh()
 	UI.patternWin.refresh()
 
-	# Return new sequencer step to global var
-	UI.gv.setSeqstep(UI.seqstep)	
+	# Return new vars to global var
+	UI.gv.setSeqstep(UI.seqstep)
+	UI.gv.setBPM(UI.gv.bpm)
+	UI.gv.setPatternStep(UI.gv.patternStep)
 
 	# Process inputs (for next frame)
 	return processInput()
@@ -243,7 +247,7 @@ def processInput():
 		if UI.gv.bpm < 999:
 			UI.gv.bpm += 1
 		else:
-			UI.gv.bpm = 0
+			UI.gv.bpm = 1
 
 	elif action == "bpmDown":
 		if UI.gv.bpm > 0:
@@ -339,7 +343,7 @@ def sequencerTimer():
 			startSeqTimer()
 		
 		# " if current time - last tic time > bpm time" ...
-		if time.perf_counter() - UI.tic > ( 60 / UI.gv.bpm / 4):
+		if time.perf_counter() - UI.tic > ( 60 / UI.gv.bpm / 8):
 			UI.seqstep += UI.seqstepsize
 			UI.start_timer = True
 

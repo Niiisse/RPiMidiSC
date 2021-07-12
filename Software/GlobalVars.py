@@ -1,13 +1,12 @@
 class GlobalVars:
   # All of these vars are loaded from config on initialize
   
-  def __init__(self):
-    self.seqstep = 0         # Sequencer step
-    self.bpm = 0             # Tempo
-    self.playing = True      # Playing / paused status
-    self.patternStep = 0     # Current pattern no.
-    self.patternChange = 0   # signals pattern change for next measure
-    self.patternPending = 0  # Used in changing pattern
+  seqstep = 0         # Sequencer step
+  bpm = 0             # Tempo
+  playing = True      # Playing / paused status
+  patternStep = 0     # Current pattern no.
+  patternChange = 0   # signals pattern change for next measure
+  patternPending = 0  # Used in changing pattern
 
 
   # TODO: are these really necessary?

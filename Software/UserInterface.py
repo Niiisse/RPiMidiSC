@@ -2,7 +2,7 @@ import curses, traceback
 from curses.textpad import Textbox, rectangle
 from curses import wrapper
 from . import Input
-from .GlobalVars import GlobalVars
+from . import GlobalVars
 import time
 import math
 import config
@@ -37,7 +37,7 @@ class UI:
 	char = None
 	tic = None
 
-	gv = GlobalVars()
+	gv = GlobalVars.GlobalVars()
 	gv.bpm = config.sequencer['bpm']
 	gv.playing = config.sequencer['playing']
 	gv.patternStep = config.pattern['patternStep']

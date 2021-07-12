@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import math
 import time
 
-class ShiftRegister
+class ShiftRegister:
   numericArr = [        # Stores the numeric display bytes
   0b10000001,
   0b11101101,

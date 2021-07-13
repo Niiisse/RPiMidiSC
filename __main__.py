@@ -24,9 +24,7 @@ while (True):
   # If none of that happens, it returns the bytestring which can be sent to the hardware interface
 
   uiResult = ui.updateUi()   
-
-  print(uiResult)
-
+  
   if uiResult == "quit":           
     ui.restoreScreen()      
     sys.exit(0)     

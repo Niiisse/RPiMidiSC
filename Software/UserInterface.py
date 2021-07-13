@@ -17,6 +17,7 @@ from . import Blink
 
 class UI:
 	app_version = config.general['app_version']
+	outputByteString = " no data "
 
 	seqstep = 0																	
 	seqstepmax = config.sequencer['seqstepmax']
@@ -78,6 +79,7 @@ def updateUi():
 	drawPatternWindow(UI.patternWin, UI.gv.patternStep, UI.patternMax)
 	drawSequencer(UI.seqwin, UI.seqstep)																											# Draw sequencer
 	sequencerTimer() 	# Manages sequencer timer
+	drawDebugBar(UI.window, UI.outputByteString)
 
 	UI.window.refresh()
 	UI.seqwin.refresh()
@@ -94,8 +96,8 @@ def updateUi():
 	# pass outputByteString to processInput to return the bytestring, assuming no other
 	# events have priority.
 
-	outputByteString = createOutputString(UI.gv.bpm, UI.gv.patternStep, UI.gv.patternChange, UI.gv.patternPending, UI.gv.seqstep, UI.gv.playing)
-	return processInput(outputByteString)
+	UI.outputByteString = createOutputString(UI.gv.bpm, UI.gv.patternStep, UI.gv.patternChange, UI.gv.patternPending, UI.gv.seqstep, UI.gv.playing)
+	return processInput(UI.outputByteString)
 
 
 ## UI Creation and Drawing
@@ -232,6 +234,23 @@ def drawInfo():
 	UI.seqwin.addstr(0, 25, " step: {} ".format(UI.seqstep), curses.A_ITALIC)									# Show seq step
 	# UI.window.addstr(3, 1, " BPM:    ".format(UI.seqstep), curses.A_ITALIC)										# Fix bug
 	# UI.window.addstr(3, 1, " BPM: {} ".format(UI.gv.bpm), curses.A_ITALIC | curses.A_DIM)			# Show BPM
+
+def drawDebugBar(window, byteString):
+	# Draws debug bar if there is enough room
+	size = window.getmaxyx()
+	stringLength = len(byteString)
+
+	# First, check if it works with additional spacing
+	if stringLength + 6 <= size[1]:
+		byteString = "   " + byteString + "   "		
+		width = math.floor(size[1] / 2 - (stringLength + 6) / 2)
+		try:
+			window.addstr(size[0]-1, width, byteString, curses.A_REVERSE | curses.A_BOLD)
+		except:
+			pass
+
+
+	# TODO: else, remove chars until it fits
 
 
 ## Program Logic

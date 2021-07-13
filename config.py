@@ -1,5 +1,5 @@
 general = {
-  "app_version": "v 0.1.2",  # General version nr
+  "app_version": "v 0.1.3",  # General version nr
   "hardware_enabled": True
 }
 

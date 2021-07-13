@@ -59,7 +59,7 @@ def main():
 	createStatusWindow(windowSize)
 	createPatternWindow(windowSize)
 	
-def update_ui():
+def updateUi():
 	# Main UI loop. Handles inputs, then updates windows
 	
 	# Clamps for keeping various vars within bounds
@@ -86,8 +86,12 @@ def update_ui():
 	UI.gv.setBPM(UI.gv.bpm)
 	UI.gv.setPatternStep(UI.gv.patternStep)
 
-	# Process inputs (for next frame)
-	return processInput()
+	# Process inputs (for next frame); get output for HWi.
+	# pass outputByteString to processInput to return the bytestring, assuming no other
+	# events have priority.
+
+	outputByteString = createOutputString(UI.gv.bpm, UI.gv.patternStep, UI.gv.seqstep)
+	return processInput(outputByteString)
 
 
 ## UI Creation and Drawing
@@ -228,7 +232,7 @@ def drawInfo():
 
 ## Program Logic
 
-def processInput():
+def processInput(outputByteString):
 	# Process input events sent by Input
 	action = Input.doInput(Input, UI.window.getch())
 
@@ -281,7 +285,7 @@ def processInput():
 	elif action == "playPause":
 		togglePlayPause()
 
-	return 0
+	return outputByteString
 
 def clampSequencerStep(seqstep):
 	# Handles sequencer stepping, also pattern stuff
@@ -352,6 +356,64 @@ def togglePlayPause():
 		UI.gv.playing = False
 	else:
 		UI.gv.playing = True
+
+def createOutputString(bpm, patternStep, seqstep):
+	# Creates output bytestring that can be sent to Hardware Interface
+	
+	# BPM
+	bpmString = format(bpm)
+	bpmOutput = ""
+
+	while len(bpmString) < 3:					# Because format is '090', not '90'
+		bpmString = "0" + bpmString
+
+	for i in range(3):								# Sends individual number off to get the bytestring
+		tempString = convertDecimalToByteString(int(bpmString[i]))
+		bpmOutput = bpmOutput + tempString
+
+	# Pattern Step
+	patternStepString = format(patternStep)
+
+	while len(patternStepString) < 2:
+		patternStepString = "0" + patternStepString
+
+	patternStepOutput = ""
+
+	for i in range(2):
+		tempString = convertDecimalToByteString(int(patternStepString[i]))
+		patternStepOutput = patternStepOutput + tempString
+
+	# Sequencer Step
+	try:
+		ledStep = math.floor(seqstep / 4)
+	except ZeroDivisionError:
+		ledStep = 0
+
+	ledString = ""
+	
+	for i in range(16):
+		ledString += "1" if i == ledStep else "0"					# Tertiary operaters are sweeet
+
+	return bpmOutput + patternStepOutput + ledString
+
+def convertDecimalToByteString(decimal):
+	# Used for creating the outputbytestring
+	numericArr = [        # Stores the numeric display bytes
+	0b10000001,
+	0b11101101,
+	0b01000011,
+	0b01001001,
+	0b00101101,
+	0b00011001,
+	0b00010001,
+	0b11001101,
+	0b00000001,
+	0b00001001
+	]
+
+	byteString = format(numericArr[decimal], '08b')
+
+	return byteString
 
 
 ## Curses Starting & Resetting 

@@ -94,7 +94,7 @@ def updateUi():
 	# pass outputByteString to processInput to return the bytestring, assuming no other
 	# events have priority.
 
-	outputByteString = createOutputString(UI.gv.bpm, UI.gv.patternStep, UI.gv.seqstep)
+	outputByteString = createOutputString(UI.gv.bpm, UI.gv.patternStep, UI.gv.patternChange, UI.gv.patternPending, UI.gv.seqstep)
 	return processInput(outputByteString)
 
 
@@ -361,7 +361,7 @@ def togglePlayPause():
 	else:
 		UI.gv.playing = True
 
-def createOutputString(bpm, patternStep, seqstep):
+def createOutputString(bpm, patternStep, patternChange, patternPending, seqstep):
 	# Creates output bytestring that can be sent to Hardware Interface
 	
 	# BPM
@@ -376,7 +376,7 @@ def createOutputString(bpm, patternStep, seqstep):
 		bpmOutput = bpmOutput + tempString
 
 	# Pattern Step
-	patternStepString = format(patternStep)
+	patternStepString = format(patternStep) if patternChange == 0 else format(patternPending)
 
 	while len(patternStepString) < 2:
 		patternStepString = "0" + patternStepString
@@ -387,7 +387,7 @@ def createOutputString(bpm, patternStep, seqstep):
 		tempString = convertDecimalToByteString(int(patternStepString[i]))
 		patternStepOutput = patternStepOutput + tempString
 
-	if UI.gv.patternChange != 0:
+	if patternChange != 0:
 		patternStepOutput = UI.blink.blink(patternStepOutput, True)
 
 	# Sequencer Step

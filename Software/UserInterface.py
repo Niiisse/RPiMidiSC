@@ -94,7 +94,7 @@ def updateUi():
 	# pass outputByteString to processInput to return the bytestring, assuming no other
 	# events have priority.
 
-	outputByteString = createOutputString(UI.gv.bpm, UI.gv.patternStep, UI.gv.patternChange, UI.gv.patternPending, UI.gv.seqstep)
+	outputByteString = createOutputString(UI.gv.bpm, UI.gv.patternStep, UI.gv.patternChange, UI.gv.patternPending, UI.gv.seqstep, UI.gv.playing)
 	return processInput(outputByteString)
 
 
@@ -361,10 +361,10 @@ def togglePlayPause():
 	else:
 		UI.gv.playing = True
 
-def createOutputString(bpm, patternStep, patternChange, patternPending, seqstep):
+def createOutputString(bpm, patternStep, patternChange, patternPending, seqstep, playing):
 	# Creates output bytestring that can be sent to Hardware Interface
 	
-	# BPM
+	# BPM #
 	bpmString = format(bpm)
 	bpmOutput = ""
 
@@ -375,7 +375,9 @@ def createOutputString(bpm, patternStep, patternChange, patternPending, seqstep)
 		tempString = convertDecimalToByteString(int(bpmString[i]))
 		bpmOutput = bpmOutput + tempString
 
-	# Pattern Step
+	# Pattern Step #
+
+	# Decide whether we should show actual step or pending step
 	patternStepString = format(patternStep) if patternChange == 0 else format(patternPending)
 
 	while len(patternStepString) < 2:
@@ -387,19 +389,23 @@ def createOutputString(bpm, patternStep, patternChange, patternPending, seqstep)
 		tempString = convertDecimalToByteString(int(patternStepString[i]))
 		patternStepOutput = patternStepOutput + tempString
 
+	# Should we blink?
 	if patternChange != 0:
 		patternStepOutput = UI.blink.blink(patternStepOutput, True)
 
-	# Sequencer Step
+	# Sequencer Step #
 	try:
 		ledStep = math.floor(seqstep / 4)
 	except ZeroDivisionError:
 		ledStep = 0
 
 	ledString = ""
+	ledState = ""
 	
 	for i in range(16):
-		ledString += "1" if i == ledStep else "0"					# Ternary operaters are sweeet
+		ledState = "1" if playing == True else UI.blink.blink("1", False)
+
+		ledString += ledState if i == ledStep else "0"					# Ternary operaters are sweeet
 
 	return bpmOutput + patternStepOutput + ledString
 

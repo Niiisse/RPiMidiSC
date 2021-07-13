@@ -25,7 +25,7 @@ while (True):
 
   uiResult = ui.updateUi()   
 
-  #print(uiResult)
+  print(uiResult)
 
   if uiResult == "quit":           
     ui.restoreScreen()      
@@ -36,7 +36,7 @@ while (True):
     ui.startUI()
   
   elif config.general['hardware_enabled']:
-    sendByteString(uiResult)  
+    sr.outputBits(uiResult)
     
-def sendByteString(outputByteString):
-  sr.outputBits(outputByteString)
+# def sendByteString(outputByteString):
+#   sr.outputBits(outputByteString)

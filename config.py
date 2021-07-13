@@ -1,9 +1,12 @@
 general = {
-  "app_version": "v 0.1.3",  # General version nr
-  "hardware_enabled": True
+  "app_version": "v 0.1.3",   # General version nr
+  "hardware_enabled": False,   # Whether to enable or disable the hardware interface
+  "blinkTime": 0.5            # Blinking time duration
 }
 
 debounce = {
+  # For debouncing hardware buttons
+
   "initialWait": 0.15, 
   "secondWait": 1,
   "thirdWait": 0.1
@@ -11,6 +14,7 @@ debounce = {
 
 sequencer = {
   # Sequencer window
+
   "bpm": 120,                 # Tempo
   "seqstep": 0,               # Current step of sequencer
   "seqstepmax": 64,           # Total sequencer steps
@@ -24,18 +28,21 @@ sequencer = {
 
 tempo = {
   # Tempo window
+
   "tempoWinHeight": 5,        # Height of tempo window
   "tempoWinWidth": 13         # Width of tempo window
 }
 
 status = {
   # Status Window
+
   "statusWinHeight": 5,       # Height of status window
   "statusWinWidth": 13        # Width of status window
 }
 
 pattern = {
   # Pattern Window
+
   "patternWinHeight": 5,      # Height of pattern window
   "patternWinWidth": 13,      # Width of pattern window
   "patternStep": 1,           # Current pattern step

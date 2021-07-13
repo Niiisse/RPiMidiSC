@@ -1,11 +1,13 @@
 import curses, traceback
-from curses.textpad import Textbox, rectangle
 from curses import wrapper
-from . import Input
-from . import GlobalVars
+from curses.textpad import Textbox, rectangle
 import time
 import math
 import config
+
+from . import Input
+from . import GlobalVars
+from . import Blink
 
 # FIXME: all instances of gv.whatever should get a local var and be setted back to gv
 
@@ -43,6 +45,8 @@ class UI:
 	gv.bpm = config.sequencer['bpm']
 	gv.playing = config.sequencer['playing']
 	gv.patternStep = config.pattern['patternStep']
+
+	blink = Blink.Blink(config.general['blinkTime'])
 
 def main():
 	# Sets up main window
@@ -383,6 +387,9 @@ def createOutputString(bpm, patternStep, seqstep):
 		tempString = convertDecimalToByteString(int(patternStepString[i]))
 		patternStepOutput = patternStepOutput + tempString
 
+	if UI.gv.patternChange != 0:
+		patternStepOutput = UI.blink.blink(patternStepOutput, True)
+
 	# Sequencer Step
 	try:
 		ledStep = math.floor(seqstep / 4)
@@ -392,7 +399,7 @@ def createOutputString(bpm, patternStep, seqstep):
 	ledString = ""
 	
 	for i in range(16):
-		ledString += "1" if i == ledStep else "0"					# Tertiary operaters are sweeet
+		ledString += "1" if i == ledStep else "0"					# Ternary operaters are sweeet
 
 	return bpmOutput + patternStepOutput + ledString
 

@@ -59,7 +59,3 @@ class ShiftRegister:
       self.inputBit(bit)
     
     self.latch()
-
-
-
-  # TODO: write function that creates the bitstring thats to be sent

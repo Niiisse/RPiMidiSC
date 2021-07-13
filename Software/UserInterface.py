@@ -154,7 +154,7 @@ def drawSequencer(seqwin, seqstep):
 	curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_BLACK)		# Inactive Seq color pair
 
 	for y in range(5):
-		for x in range(32):
+		for x in range(math.floor(UI.seqstepmax/2)):
 			draw_x = 2 + x
 			draw_y = 2 + y
 			drawstep = UI.seqstep
@@ -162,14 +162,14 @@ def drawSequencer(seqwin, seqstep):
 			# Setting Color Logic
 			color_pair = curses.color_pair(2)
 
-			if UI.seqstep >= 32:																							# Drawstep is used for second row highlighting
-				drawstep = UI.seqstep - (UI.seqstepmax/2)
+			if UI.seqstep >= UI.seqstepmax/2:																							# Drawstep is used for second row highlighting
+				drawstep = UI.seqstep - (math.floor(UI.seqstepmax/2))
 
-			if UI.seqstep <= 31:																							# First 32 steps = first row	
+			if UI.seqstep <= UI.seqstepmax/2 - 1:																							# First 32 steps = first row	
 				if x >= drawstep and x <= drawstep + 1 and y < 2:
 					color_pair = curses.color_pair(1)
 
-			elif UI.seqstep >= 30:																						# Second 32 steps = second row
+			elif UI.seqstep >= math.floor(UI.seqstepmax/2 - UI.seqstepsize):																						# Second 32 steps = second row
 				if x >= drawstep and x <= drawstep + 1 and y > 2:						
 					color_pair = curses.color_pair(1)
 
@@ -240,7 +240,7 @@ def drawDebugBar(window, byteString):
 	size = window.getmaxyx()
 	stringLength = len(byteString)
 
-	# First, check if it works with additional spacing
+	# Check if it fits, otherwise just don't paint it 
 	if stringLength + 6 <= size[1]:
 		byteString = "   " + byteString + "   "		
 		width = math.floor(size[1] / 2 - (stringLength + 6) / 2)
@@ -248,9 +248,6 @@ def drawDebugBar(window, byteString):
 			window.addstr(size[0]-1, width, byteString, curses.A_REVERSE | curses.A_BOLD)
 		except:
 			pass
-
-
-	# TODO: else, remove chars until it fits
 
 
 ## Program Logic

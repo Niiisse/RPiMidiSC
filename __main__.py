@@ -2,6 +2,7 @@ import Software.UserInterface as ui
 import Software.GlobalVars
 import config
 import sys
+from pprint import pprint
 
 # Check whether the hardware interface is enabled or disabled in config
 
@@ -26,7 +27,15 @@ while (True):
   uiResult = ui.updateUi()   
   
   if uiResult == "quit":           
-    ui.restoreScreen()      
+    ui.restoreScreen()
+
+    # Some debugging code for sequencer object
+    # sequencer = ui.getSequencer()
+    # print(sequencer.patterns[1].patternSteps[1].getState())
+    # print(sequencer.patterns[1].patternSteps[2].getState())
+    # pprint(vars(ui.getSequencer()))
+    # pprint(vars(sequencer.patterns[1]))
+
     sys.exit(0)     
   
   elif uiResult == "reset":

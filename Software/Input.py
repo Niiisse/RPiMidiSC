@@ -43,6 +43,14 @@ def doInput(self, char):
   elif char == ord(' '):
     return "playPause"
 
+  # Pattern Editing
+  elif char == ord('e'):
+    return "patternEdit"
+
+  # Enable / Disable step
+  elif char == ord('r'):
+    return "toggleStep"
+
   # GPIO INPUT
   if config.general['hardware_enabled']: 
     # TODO: Hardware inputs (do check if enabled first)

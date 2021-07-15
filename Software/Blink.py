@@ -1,6 +1,7 @@
 import time
 
   # Blink Class
+  #
   # Used for blinking hardware elements. String returned will be original string, or
   # empty string. Second argument can be used to invert empty string (for 7 seg displays)
   #

@@ -160,12 +160,14 @@ def drawSequencer(seqwin, sequencer):
 	# states:
 	#		Playing mode. Either playing or paused. Current step is highlighted.
 	#		Editing mode. All steps are highlighted. Current step blinks. 
+	#
+	# FIXME: this works currently because I don't use other color pairs, but I shouldn't define them here.
 
 	curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLUE)		# Active Seq color pair
 	curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_BLACK)		# Inactive Seq color pair
 	curses.init_pair(3, curses.COLOR_RED, curses.COLOR_BLACK)			# Disabled Seq color pair
 
-	# state is playing or paused, overridden by editing
+	# state is playing or paused, but overridden by editing. State is used to determine drawing mode.
 	if sequencer.patternEditing:
 		state = "editing"
 	else:
@@ -174,20 +176,22 @@ def drawSequencer(seqwin, sequencer):
 	# Sequencer drawing
 	if state == "playing" or state == "paused":
 
+		# Double for loop for playing mode. patternAmount + 1 because we have an empty row
 		for y in range(sequencer.patternAmount + 1):
 			for x in range(sequencer.sequencerSteps):
 				
-				dX = 2 + x*2
-				dY = 2 + y
-				colorPair = curses.color_pair(2)
-				modifier = curses.A_BOLD
-				drawStep = sequencer.seqstep
+				dX = 2 + x*2															# d(raw)X. + 2 because we want it to draw inside the window, not on the edge
+				dY = 2 + y																# d(raw)Y. Same story here
+				colorPair = curses.color_pair(2)					# Default to non-selected color pair
+				modifier = curses.A_BOLD									# Probably unnecessary due to me changing my mind
+				drawStep = sequencer.seqstep							# Used for the second row. Easier than typing "seqstep/2" all the time
 
-				# Drawstep logic (used for highlighting second row)
+				# Drawstep logic (used for highlighting second row). Basically just checks if the loop is at the right place,
+				# and if so, change the color pair to 'selected' - white on blue.
 				if sequencer.seqstep >= sequencer.sequencerSteps / 2:
 					drawStep = sequencer.seqstep - sequencer.sequencerSteps / 2
 
-				# First row color selecting
+				# Color selecting for first row
 				if sequencer.seqstep < sequencer.sequencerSteps / 2:
 					if x >= drawStep*2 and x <= drawStep*2 + 1 and y < 2:
 						colorPair = curses.color_pair(1)
@@ -197,10 +201,18 @@ def drawSequencer(seqwin, sequencer):
 					if x >= drawStep*2 and x <= drawStep*2 + 1 and y > 2:
 						colorPair = curses.color_pair(1)
 				
-				# Draw the *, but don't draw 3rd line
+				# Finally! Draw the *, but don't draw 3rd line
 				if y != 2:
 					seqwin.addstr(dY, dX, "**", colorPair | modifier)
 
+	# Editing Mode drawing
+	# This shows 
+	elif state == "editing":
+		colorPair = curses.color_pair(1)
+
+		for y in range(sequencer.patternAmount + 1):\
+			for x in range(sequencer.sequencerSteps):
+				pass
 	
 	# for y in range(5):
 	# 	for x in range(math.floor(UI.seqstepmax)):

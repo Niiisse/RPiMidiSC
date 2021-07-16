@@ -23,3 +23,5 @@ class Sequencer:
     self.patternEditing = False                                                 # Currently in editing mode?
 
   # TODO: Move timer in here. Add function tick. Move pattern stepping etc to here.
+
+  

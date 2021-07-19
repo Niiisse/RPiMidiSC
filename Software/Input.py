@@ -48,7 +48,7 @@ def doInput(self, char):
     return "patternEdit"
 
   # Enable / Disable step
-  elif char == ord('r'):
+  elif char == ord('d'):
     return "toggleStep"
 
   # Show/hide keybinds

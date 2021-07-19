@@ -16,7 +16,7 @@ class Sequencer:
 
     # Pattern Variables
     self.patternAmount = patternAmount                                              # Amount of patterns
-    self.patterns = [Pattern.Pattern(sequencerSteps) for i in range(patternAmount)] # List that holds Patterns
+    self.patterns = [Pattern.Pattern(sequencerSteps) for i in range(patternAmount+1)] # List that holds Patterns
     self.patternStep = 1                                                            # Current pattern
     self.patternChange = 0                                                          # Signals pattern change for next measure
     self.patternPending = 0                                                         # Used in changing pattern

@@ -601,7 +601,7 @@ def createOutputString(sequencer):
 				
 				ledState = UI.blink.blink("1", False) if sequencer.playing == False else "0"
 			else:
-				ledState = 0
+				ledState = "0"
 				 
 		ledString += ledState 
 

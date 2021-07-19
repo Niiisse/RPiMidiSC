@@ -595,13 +595,12 @@ def createOutputString(sequencer):
 	
 		else:
 			if i == ledStep:
-				ledState = "1" if sequencer.playing == True else UI.blink.blink("1", False)
+				if sequencer.patterns[sequencer.patternStep].patternSteps[i].getState():
+					ledState = "1" if sequencer.playing == True else UI.blink.blink("1", False)
 			else:
 				ledState = "0"
 
 		ledString += ledState 
-
-
 
 	return bpmOutput + patternStepOutput + ledString
 

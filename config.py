@@ -49,3 +49,9 @@ pattern = {
   "patternAmount": 4,            # Max amount of patterns
   "patternMode": "auto"       # Auto mode makes pattern follow seqstep stuff
 }
+
+interface = {
+  # Interface options
+  
+  "drawKeybinds": False,      # Whether the UI should show keybinds
+}

@@ -23,6 +23,15 @@ class PatternStep():
     if not self.enabled:
       self.enabled = True
 
+  def toggleStep(self):
+    # Toggles enable/disable
+
+    if self.enabled:
+      self.enabled = False
+    else:
+      self.enabled = True
+
   def getState(self):
     # Gets state of enabled
+    
     return self.enabled

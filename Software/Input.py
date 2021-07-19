@@ -51,7 +51,12 @@ def doInput(self, char):
   elif char == ord('r'):
     return "toggleStep"
 
+  # Show/hide keybinds
+  elif char == ord('z'):
+    return "showKeys"
+
   # GPIO INPUT
   if config.general['hardware_enabled']: 
     # TODO: Hardware inputs (do check if enabled first)
     return "notImplemented"
+

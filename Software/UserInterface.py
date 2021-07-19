@@ -35,6 +35,20 @@ class UI:
 	patternWinSize = (config.pattern['patternWinHeight'], config.pattern['patternWinWidth'])
 	patternMode = config.pattern['patternMode']
 	patternAmount = config.pattern['patternAmount']
+	showKeyBinds = config.interface['drawKeybinds']
+	keysLastFrame = False
+
+	keyBinds = (
+		"q: quit",
+		"r: reset",
+		"k / l: bpm",
+		"o / p: step",
+		"n / m: pattern",
+		"space: play/pause",
+		"e: pattern edit",
+		"r: toggle step",
+		"z: show/hide keybinds"
+	)
 
 	seqwin = None
 	tempoWin = None
@@ -54,6 +68,13 @@ class UI:
 
 	blink = Blink.Blink(config.general['blinkTime'])
 	sequencer = Sequencer.Sequencer(config.pattern['patternAmount'], config.sequencer['seqstepmax'], config.sequencer['bpm'], config.sequencer['seqstepmax'], config.sequencer['seqstepsize'])
+
+	# testing seq step disabling
+	sequencer.patterns[1].patternSteps[1].disableStep()
+	sequencer.patterns[1].patternSteps[3].disableStep()
+	sequencer.patterns[1].patternSteps[5].disableStep()
+	sequencer.patterns[1].patternSteps[7].disableStep() 
+	sequencer.patterns[1].patternSteps[15].disableStep() 
 
 def main():
 	# Sets up main window
@@ -87,6 +108,8 @@ def updateUi():
 	drawSequencer(UI.seqwin, UI.sequencer)																											# Draw sequencer
 	sequencerTimer(UI.sequencer) 	# Manages sequencer timer
 	drawDebugBar(UI.window, UI.outputByteString)
+
+	UI.keysLastFrame = drawKeybinds(UI.window, UI.showKeyBinds, UI.keysLastFrame, UI.keyBinds)
 
 	UI.window.refresh()
 	UI.seqwin.refresh()
@@ -165,7 +188,12 @@ def drawSequencer(seqwin, sequencer):
 
 	curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLUE)		# Active Seq color pair
 	curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_BLACK)		# Inactive Seq color pair
-	curses.init_pair(3, curses.COLOR_RED, curses.COLOR_BLACK)			# Disabled Seq color pair
+	curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_BLACK)			# Disabled Seq color pair
+	curses.init_pair(4, curses.COLOR_WHITE, curses.COLOR_GREEN)		# Enabled selected in Editing
+	curses.init_pair(5, curses.COLOR_GREEN, curses.COLOR_GREEN)		# Enabled selected in Editing
+
+
+	halfSteps = math.floor(sequencer.sequencerSteps / 2)					# Makes life easier
 
 	# state is playing or paused, but overridden by editing. State is used to determine drawing mode.
 	if sequencer.patternEditing:
@@ -173,14 +201,15 @@ def drawSequencer(seqwin, sequencer):
 	else:
 		state = "playing" if sequencer.playing else "paused"
 
-	# Sequencer drawing
+	# PLAY MODE DRAWING #
+
 	if state == "playing" or state == "paused":
 
 		# Double for loop for playing mode. patternAmount + 1 because we have an empty row
-		for y in range(sequencer.patternAmount + 1):
-			for x in range(sequencer.sequencerSteps):
+		for y in range(5):
+			for x in range(halfSteps):
 				
-				dX = 2 + x*2															# d(raw)X. + 2 because we want it to draw inside the window, not on the edge
+				dX = 2 + x  * 4															# d(raw)X. + 2 because we want it to draw inside the window, not on the edge
 				dY = 2 + y																# d(raw)Y. Same story here
 				colorPair = curses.color_pair(2)					# Default to non-selected color pair
 				modifier = curses.A_BOLD									# Probably unnecessary due to me changing my mind
@@ -188,56 +217,82 @@ def drawSequencer(seqwin, sequencer):
 
 				# Drawstep logic (used for highlighting second row). Basically just checks if the loop is at the right place,
 				# and if so, change the color pair to 'selected' - white on blue.
-				if sequencer.seqstep >= sequencer.sequencerSteps / 2:
-					drawStep = sequencer.seqstep - sequencer.sequencerSteps / 2
+				if sequencer.seqstep >= halfSteps:
+					drawStep = sequencer.seqstep - halfSteps
 
 				# Color selecting for first row
-				if sequencer.seqstep < sequencer.sequencerSteps / 2:
-					if x >= drawStep*2 and x <= drawStep*2 + 1 and y < 2:
+				if sequencer.seqstep < halfSteps:
+					if x == drawStep and y < 2:
 						colorPair = curses.color_pair(1)
 
 				# Second row color selecting
-				elif sequencer.seqstep >= math.floor(sequencer.sequencerSteps / 2):
-					if x >= drawStep*2 and x <= drawStep*2 + 1 and y > 2:
+				elif sequencer.seqstep >= halfSteps:
+					if x == drawStep and y > 2:
 						colorPair = curses.color_pair(1)
 				
 				# Finally! Draw the *, but don't draw 3rd line
 				if y != 2:
-					seqwin.addstr(dY, dX, "**", colorPair | modifier)
+					seqwin.addstr(dY, dX, "****", colorPair | modifier)
 
-	# Editing Mode drawing
-	# This shows 
+
+	# EDITING MODE DRAWING #
+
 	elif state == "editing":
-		colorPair = curses.color_pair(1)
+		
+		for y in range(5):
+			for x in range(halfSteps):
+				
+				dX = 2 + x*4															# d(raw)X. + 2 because we want it to draw inside the window, not on the edge
+				dY = 2 + y																# d(raw)Y. Same story here
+				colorPair = curses.color_pair(1)					# Default to selected color pair
+				modifier = curses.A_BOLD									# Modifier for string
+				drawStep = sequencer.seqstep							# Used for the second row. Easier than typing "seqstep/2" all the time
+				xStep = x if y < 2 else x+halfSteps				# Doubles if we're in the second row
+				selectedState = True											# Used for seeing if the selected step is enabled/disabled
 
-		for y in range(sequencer.patternAmount + 1):\
-			for x in range(sequencer.sequencerSteps):
-				pass
-	
-	# for y in range(5):
-	# 	for x in range(math.floor(UI.seqstepmax)):
-	# 		draw_x = 2 + x
-	# 		draw_y = 2 + y
-	# 		drawstep = UI.seqstep
+				#  Drawstep logic
+				if sequencer.seqstep >= halfSteps:
+					drawStep = sequencer.seqstep - halfSteps
 
-	# 		# Setting Color Logic
-	# 		if UI.patternEditingMode == False:
-					
-	# 			color_pair = curses.color_pair(2)
+				# Color selecting for first row
+				if y < 2:
+					if sequencer.patterns[sequencer.patternStep].patternSteps[xStep].getState() == False:
+						colorPair = curses.color_pair(3)
+						#modifier = curses.A_NORMAL
+						selectedState = False
 
-	# 			if UI.seqstep >= UI.seqstepmax:																			# Drawstep is used for second row highlighting
-	# 				drawstep = UI.seqstep - (math.floor(UI.seqstepmax))
+					# Current step selected?
+					if sequencer.seqstep < halfSteps and x == drawStep:
+						#modifier = curses.A_BLINK
 
-	# 			if UI.seqstep <= UI.seqstepmax/2 - 1:																	# First 32 steps = first row	
-	# 				if x >= drawstep and x <= drawstep + 3 and y < 2:
-	# 					color_pair = curses.color_pair(1)
+						# Determine color pair
+						if selectedState:
+							colorPair = curses.color_pair(4)
+						else:
+							colorPair = curses.color_pair(5)
 
-	# 			elif UI.seqstep >= math.floor(UI.seqstepmax - UI.seqstepsize):			# Second 32 steps = second row
-	# 				if x >= drawstep and x <= drawstep + 3 and y > 2:						
-	# 					color_pair = curses.color_pair(1)
+				# Second row color selecting
+				elif y > 2:
+					if sequencer.patterns[sequencer.patternStep].patternSteps[xStep].getState() == False:
+						colorPair = curses.color_pair(3)
+						modifier = curses.A_NORMAL
+						selectedState = False
 
-	# 			if y != 2:																														# Make sure there's a blank line inbetween
-	# 				UI.seqwin.addstr(draw_y, draw_x, "*", color_pair | curses.A_BOLD)		# Draw the seq chars
+					# Current step?
+					if sequencer.seqstep >= halfSteps and x == drawStep:
+						#modifier = curses.A_BLINK
+
+						# Determine color
+						if selectedState:
+							colorPair = curses.color_pair(4)
+						else:
+							colorPair = curses.color_pair(5)
+
+
+				# Finally! Draw the *, but don't draw 3rd line
+				if y != 2:
+					seqwin.addstr(dY, dX, "****", colorPair | modifier)
+
 
 def drawTempoWindow(tempoWin):
 	# Draws contents of tempo window
@@ -315,6 +370,30 @@ def drawDebugBar(window, byteString):
 		except:
 			pass
 
+def drawKeybinds(window, showKeyBinds, lastFrame, keyBinds):
+	# keyBinds holds list of strings with keybinds
+	# lastFrame holds bool of whether the list was drawn last frame.
+	# if it was, and now no longer is, need to clear the old strings because curses
+
+	if showKeyBinds:
+		window.addstr(2, 2, " "*16, curses.A_NORMAL)
+		for i, val in enumerate(keyBinds):
+			window.addstr(i+2, 2, val, curses.A_ITALIC)
+	
+		return True
+
+	else:
+		if lastFrame:
+			# Need to clear the screen
+
+			for i, val in enumerate(keyBinds):
+				window.addstr(i+2, 2, " "*len(val), curses.A_ITALIC)
+
+			return False
+
+		window.addstr(2, 2, "Show keybinds: z", curses.A_ITALIC)
+		return False
+		
 ##
 ## Program Logic
 ##
@@ -373,11 +452,19 @@ def processInput(outputByteString, sequencer):
 	elif action == "patternEdit":
 		togglePatternEditMode(sequencer)
 
+	elif action == "toggleStep":
+		#if sequencer.patternEditing:
+		sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].disableStep()
+
 
 	# Play / Pause toggle
 	elif action == "playPause":
 		if sequencer.patternEditing == False:
 			togglePlayPause(sequencer)
+
+	# Show keybinds
+	elif action == "showKeys":
+		UI.showKeyBinds = False if UI.showKeyBinds else True
 
 	return outputByteString
 
@@ -461,6 +548,7 @@ def playSequencer(sequencer):
 
 def togglePatternEditMode(sequencer): 
 	# Toggles Pattern Editing Mode
+	
 	if sequencer.patternEditing:
 		sequencer.patternEditing = False
 		sequencer.playing = True

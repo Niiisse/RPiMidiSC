@@ -30,11 +30,11 @@ while (True):
     ui.restoreScreen()
 
     # Some debugging code for sequencer object
-    # sequencer = ui.getSequencer()
-    # print(sequencer.patterns[1].patternSteps[1].getState())
-    # print(sequencer.patterns[1].patternSteps[2].getState())
+    sequencer = ui.getSequencer()
+    for i in range(sequencer.seqstepmax):
+      print(sequencer.patterns[1].patternSteps[i].getState())
     # pprint(vars(ui.getSequencer()))
-    # pprint(vars(sequencer.patterns[1]))
+    #pprint(vars(sequencer.patterns[1]))
 
     sys.exit(0)     
   

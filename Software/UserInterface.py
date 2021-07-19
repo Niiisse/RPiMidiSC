@@ -173,7 +173,6 @@ def drawSequencer(seqwin, sequencer):
 	curses.init_pair(4, curses.COLOR_WHITE, curses.COLOR_GREEN)		# Enabled selected in Editing
 	curses.init_pair(5, curses.COLOR_GREEN, curses.COLOR_GREEN)		# Enabled selected in Editing
 
-
 	halfSteps = math.floor(sequencer.sequencerSteps / 2)					# Makes life easier
 
 	# state is playing or paused, but overridden by editing. State is used to determine drawing mode.
@@ -273,7 +272,6 @@ def drawSequencer(seqwin, sequencer):
 				# Finally! Draw the *, but don't draw 3rd line
 				if y != 2:
 					seqwin.addstr(dY, dX, "****", colorPair | modifier)
-
 
 def drawTempoWindow(tempoWin):
 	# Draws contents of tempo window
@@ -503,7 +501,7 @@ def startSeqTimer():
 
 def sequencerTimer(sequencer):
 	# Times the stepping events based on BPM
-	if sequencer.playing:
+	if sequencer.playing and not sequencer.patternEditing:
 		if sequencer.start_timer == True:
 			sequencer.start_timer = False
 			startSeqTimer()
@@ -531,10 +529,10 @@ def togglePatternEditMode(sequencer):
 	
 	if sequencer.patternEditing:
 		sequencer.patternEditing = False
-		sequencer.playing = True
+		#sequencer.playing = True
 	else:
 		sequencer.patternEditing = True
-		sequencer.playing = False
+		#sequencer.playing = False
 
 def createOutputString(sequencer):
 	# Creates output bytestring that can be sent to Hardware Interface
@@ -577,9 +575,32 @@ def createOutputString(sequencer):
 	ledState = ""
 	
 	for i in range(16):
-		ledState = "1" if sequencer.playing == True else UI.blink.blink("1", False)
+		# Gon explain this one in detail cus ternary statements can be confusing to read
+		# Loop over all steps in current Pattern
+		# ledState sets what the potential state is going to be if this is the selected step.
+		#
+		# If editing:
+		#		BLINK current step LED; else
+		#		all LEDs ON; disabled steps: LED OFF
+		#
+		# If playing:
+		#		all LEDs OFF, current step: LED ON
+		#		pausing: BLINK current LED
 
-		ledString += ledState if i == ledStep else "0"					# Ternary operaters are sweeet
+		if sequencer.patternEditing:
+			if i == ledStep:
+				ledState = UI.blink.blink("1", False)
+			else:
+				ledState = "1" if sequencer.patterns[sequencer.patternStep].patternSteps[i].getState() else "0"
+				defaultVal = "1"
+		else:
+			# 1 if playing, 0/1 (blinking) is paused
+			ledState = "1" if sequencer.playing == True else UI.blink.blink("1", False)
+			defaultVal = "0"
+
+		ledString += ledState if i == ledStep else defaultVal
+
+
 
 	return bpmOutput + patternStepOutput + ledString
 

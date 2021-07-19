@@ -592,13 +592,14 @@ def createOutputString(sequencer):
 				ledState = UI.blink.blink("1", False)
 			else:
 				ledState = "1" if sequencer.patterns[sequencer.patternStep].patternSteps[i].getState() else "0"
-				defaultVal = "1"
+	
 		else:
-			# 1 if playing, 0/1 (blinking) is paused
-			ledState = "1" if sequencer.playing == True else UI.blink.blink("1", False)
-			defaultVal = "0"
+			if i == ledStep:
+				ledState = "1" if sequencer.playing == True else UI.blink.blink("1", False)
+			else:
+				ledState = "0"
 
-		ledString += ledState if i == ledStep else defaultVal
+		ledString += ledState 
 
 
 

@@ -598,7 +598,7 @@ def createOutputString(sequencer):
 			if i == ledStep:
 				if sequencer.patterns[sequencer.patternStep].patternSteps[i].getState():
 					ledState = "1" if sequencer.playing == True else UI.blink.blink("1", False)
-				
+				else:
 				ledState = UI.blink.blink("1", False) if sequencer.playing == False else "0"
 			else:
 				ledState = "0"

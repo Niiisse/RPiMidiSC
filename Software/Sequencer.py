@@ -30,7 +30,7 @@ class Sequencer:
     self.patternStep = 1                                                              # Current pattern
     self.patternChange = 0                                                            # Signals pattern change for next measure
     self.pendingPattern = 0                                                           # Used in changing pattern
-    self.patternEditing = False                                                       # Currently in editing mode?
+    self.patternEditing = False                                                        # Currently in editing mode?
 
   def play(self):
     # Plays. (i don't know what you expected, tbh)

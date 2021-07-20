@@ -22,7 +22,7 @@ from . import Sequencer
 #				Sequencer will light up all enabled notes and blink selected note
 #				Rewrite software sequencer
 
-class UI:
+class Ui:
 	app_version = config.general['app_version']
 	outputByteString = "no data"
 
@@ -56,11 +56,10 @@ class UI:
 	patternWin = None
 	window = None
 	char = None
-	tic = None
 	sequencer = None
 
 	blink = Blink.Blink(config.general['blinkTime'])
-	sequencer = Sequencer.Sequencer(config.pattern['patternAmount'], config.sequencer['seqstepmax'], config.sequencer['bpm'], config.sequencer['seqstepmax'], config.sequencer['seqstepsize'])
+	sequencer = Sequencer.Sequencer(config.pattern['patternAmount'], config.sequencer['seqstepmax'], config.sequencer['bpm'], config.sequencer['seqstepsize'])
 
 def main():
 	# Sets up main window
@@ -70,7 +69,7 @@ def main():
 	drawTitle()
 
 	# Get window size, use it to set up subwindows
-	windowSize = UI.window.getmaxyx()
+	windowSize = Ui.window.getmaxyx()
 
 	createSequencerWindow(windowSize)
 	createTempoWindow(windowSize)
@@ -81,34 +80,34 @@ def updateUi():
 	# Main UI loop. Handles inputs, then updates windows
 	
 	# Clamps for keeping various vars within bounds
-	clampSequencerStep(UI.sequencer) 		# TODO: move to Sequencer, create some Sequencer.update def. 
+	clampSequencerStep(Ui.sequencer) 		# TODO: move to Sequencer, create some Sequencer.update def. 
 																			# That update call prolly shouldn't be in UI, either.
-	clampPatternStepping(UI.sequencer)
-	clampPendingStepping(UI.sequencer)
+	clampPatternStepping(Ui.sequencer)
+	clampPendingStepping(Ui.sequencer)
 
 	# Drawing, updating subwindows + associated processing
-	drawInfo(UI.seqwin, UI.sequencer)
-	drawTempoWindow(UI.tempoWin)
-	drawStatusWindow(UI.statusWin, UI.sequencer)
-	drawPatternWindow(UI.patternWin, UI.sequencer)
-	drawSequencer(UI.seqwin, UI.sequencer)										# Draws sequencer
-	sequencerTimer(UI.sequencer) 															# Manages sequencer timer
-	drawDebugBar(UI.window, UI.outputByteString)							# Draws debug bar
+	drawInfo(Ui.seqwin, Ui.sequencer)
+	drawTempoWindow(Ui.tempoWin)
+	drawStatusWindow(Ui.statusWin, Ui.sequencer)
+	drawPatternWindow(Ui.patternWin, Ui.sequencer)
+	drawSequencer(Ui.seqwin, Ui.sequencer)										# Draws sequencer
+	Ui.sequencer.timer()													# Manages sequencer timer
+	drawDebugBar(Ui.window, Ui.outputByteString)							# Draws debug bar
 
-	UI.keysLastFrame = drawKeybinds(UI.window, UI.showKeyBinds, UI.keysLastFrame, UI.keyBinds)	# Draws the keyBindings, clears it only when necessary
+	Ui.keysLastFrame = drawKeybinds(Ui.window, Ui.showKeyBinds, Ui.keysLastFrame, Ui.keyBinds)	# Draws the keyBindings, clears it only when necessary
 
-	UI.window.refresh()
-	UI.seqwin.refresh()
-	UI.tempoWin.refresh()
-	UI.statusWin.refresh()
-	UI.patternWin.refresh()
+	Ui.window.refresh()
+	Ui.seqwin.refresh()
+	Ui.tempoWin.refresh()
+	Ui.statusWin.refresh()
+	Ui.patternWin.refresh()
 
 	# Generate output bytestring, process inputs for next frame
 	# pass outputByteString to processInput to return the bytestring to main.py, assuming no other
 	# events have priority.
 
-	UI.outputByteString = createOutputString(UI.sequencer)
-	return processInput(UI.outputByteString, UI.sequencer)
+	Ui.outputByteString = createOutputString(Ui.sequencer)
+	return processInput(Ui.outputByteString, Ui.sequencer)
 
 ##
 ## UI Creation and Drawing / Updating
@@ -117,47 +116,47 @@ def updateUi():
 def createSequencerWindow(windowSize):
 	# draw Sequencer Window in the middle of the screen
 
-	begin_y = math.floor(windowSize[0] / 2 - UI.seqWinHeight / 2)
-	begin_x = math.floor(windowSize[1] / 2 - UI.seqWinWidth / 2)
+	begin_y = math.floor(windowSize[0] / 2 - Ui.seqWinHeight / 2)
+	begin_x = math.floor(windowSize[1] / 2 - Ui.seqWinWidth / 2)
 
-	UI.seqwin = curses.newwin(UI.seqWinHeight, UI.seqWinWidth, begin_y, begin_x)
-	UI.seqwin.border()
-	UI.seqwin.addstr(0, 2, "   SEQUENCER   ", curses.A_BOLD | curses.A_REVERSE)	# Title
-	UI.start_timer = True
+	Ui.seqwin = curses.newwin(Ui.seqWinHeight, Ui.seqWinWidth, begin_y, begin_x)
+	Ui.seqwin.border()
+	Ui.seqwin.addstr(0, 2, "   SEQUENCER   ", curses.A_BOLD | curses.A_REVERSE)	# Title
+	Ui.start_timer = True
 
 def createTempoWindow(windowSize):
 	# draw BPM window left of seqWin
 	#TODO: check for space, otherwise put it above or below or something
 
-	seqSize = UI.seqwin.getmaxyx()
+	seqSize = Ui.seqwin.getmaxyx()
 
 	# Y position is (for now) middle of screen - own height. X position is half of screen - seqwin width
-	begin_y = math.floor(windowSize[0] / 2 - UI.tempoWinSize[0] - 1)
-	begin_x = math.floor((windowSize[1] / 2 - UI.tempoWinSize[1]) - seqSize[1] / 2) - 1
+	begin_y = math.floor(windowSize[0] / 2 - Ui.tempoWinSize[0] - 1)
+	begin_x = math.floor((windowSize[1] / 2 - Ui.tempoWinSize[1]) - seqSize[1] / 2) - 1
 
-	UI.tempoWin = curses.newwin(UI.tempoWinHeight, UI.tempoWinWidth, begin_y, begin_x)
-	UI.tempoWin.border()
-	UI.tempoWin.addstr(0, 2, "  Tempo  ", curses.A_BOLD | curses.A_REVERSE) 
+	Ui.tempoWin = curses.newwin(Ui.tempoWinHeight, Ui.tempoWinWidth, begin_y, begin_x)
+	Ui.tempoWin.border()
+	Ui.tempoWin.addstr(0, 2, "  Tempo  ", curses.A_BOLD | curses.A_REVERSE) 
 
 def createStatusWindow(windowSize):
-	seqSize = UI.seqwin.getmaxyx()
+	seqSize = Ui.seqwin.getmaxyx()
 
-	begin_y = math.floor(windowSize[0] / 2 - UI.statusWinSize[0] / 2)
+	begin_y = math.floor(windowSize[0] / 2 - Ui.statusWinSize[0] / 2)
 	begin_x = math.floor(windowSize[1] / 2 + seqSize[1] / 2) + 1
 
-	UI.statusWin = curses.newwin(UI.statusWinSize[0], UI.statusWinSize[1], begin_y, begin_x)
-	UI.statusWin.border()
-	UI.statusWin.addstr(0, 2, " Status  ", curses.A_BOLD | curses.A_REVERSE)
+	Ui.statusWin = curses.newwin(Ui.statusWinSize[0], Ui.statusWinSize[1], begin_y, begin_x)
+	Ui.statusWin.border()
+	Ui.statusWin.addstr(0, 2, " Status  ", curses.A_BOLD | curses.A_REVERSE)
 
 def createPatternWindow(windowSize):
-	seqSize = UI.seqwin.getmaxyx()
+	seqSize = Ui.seqwin.getmaxyx()
 
-	begin_y = math.floor(windowSize[0] / 2 + UI.tempoWinSize[0] / 2 - UI.patternWinSize[0] / 2)
-	begin_x = math.floor(windowSize[1] / 2 - seqSize[1] / 2 - UI.patternWinSize[1]) - 1
+	begin_y = math.floor(windowSize[0] / 2 + Ui.tempoWinSize[0] / 2 - Ui.patternWinSize[0] / 2)
+	begin_x = math.floor(windowSize[1] / 2 - seqSize[1] / 2 - Ui.patternWinSize[1]) - 1
 
-	UI.patternWin = curses.newwin(UI.patternWinSize[0], UI.patternWinSize[1], begin_y, begin_x)
-	UI.patternWin.border()
-	UI.patternWin.addstr(0, 2, " Pattern ", curses.A_BOLD | curses.A_REVERSE)
+	Ui.patternWin = curses.newwin(Ui.patternWinSize[0], Ui.patternWinSize[1], begin_y, begin_x)
+	Ui.patternWin.border()
+	Ui.patternWin.addstr(0, 2, " Pattern ", curses.A_BOLD | curses.A_REVERSE)
 
 def drawSequencer(seqwin, sequencer):
 	# Draws main sequencer.
@@ -169,7 +168,7 @@ def drawSequencer(seqwin, sequencer):
 
 	curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLUE)		# Active Seq color pair
 	curses.init_pair(2, curses.COLOR_WHITE, curses.COLOR_BLACK)		# Inactive Seq color pair
-	curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_BLACK)			# Disabled Seq color pair
+	curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_BLACK)		# Disabled Seq color pair
 	curses.init_pair(4, curses.COLOR_WHITE, curses.COLOR_GREEN)		# Enabled selected in Editing
 	curses.init_pair(5, curses.COLOR_GREEN, curses.COLOR_GREEN)		# Enabled selected in Editing
 
@@ -189,7 +188,7 @@ def drawSequencer(seqwin, sequencer):
 		for y in range(5):
 			for x in range(halfSteps):
 				
-				dX = 2 + x  * 4															# d(raw)X. + 2 because we want it to draw inside the window, not on the edge
+				dX = 2 + x  * 4														# d(raw)X. + 2 because we want it to draw inside the window, not on the edge
 				dY = 2 + y																# d(raw)Y. Same story here
 				colorPair = curses.color_pair(2)					# Default to non-selected color pair
 				modifier = curses.A_BOLD									# Probably unnecessary due to me changing my mind
@@ -278,7 +277,7 @@ def drawTempoWindow(tempoWin):
 
 	# First string clears line. Second paints bold text. Third paints BPM. 
 	tempoWin.addstr(2, 7, "   ", curses.A_NORMAL)
-	tempoWin.addstr(2, 7, "{}".format(UI.sequencer.bpm), curses.A_BOLD)
+	tempoWin.addstr(2, 7, "{}".format(Ui.sequencer.bpm), curses.A_BOLD)
 	tempoWin.addstr(2, 3, "BPM ", curses.A_NORMAL)
 
 def drawStatusWindow(statusWin, sequencer):
@@ -299,7 +298,7 @@ def drawPatternWindow(patternWin, sequencer):
 	# Logic for deciding whether resultingString should blink (if there's a pattern change upcoming)
 	if sequencer.patternChange != 0:
 		stringModifier = curses.A_BOLD | curses.A_BLINK
-		patternStepString = "{}".format(sequencer.patternPending)
+		patternStepString = "{}".format(sequencer.pendingPattern)
 
 	else:
 		stringModifier = curses.A_BOLD
@@ -321,12 +320,12 @@ def drawPatternWindow(patternWin, sequencer):
 def drawTitle():
 	# Function for drawing the window title, figuring out where it's supposed to go
 
-	titleString = "   RPi MIDI Controller / Sequencer {}   ".format(UI.app_version)
+	titleString = "   RPi MIDI Controller / Sequencer {}   ".format(Ui.app_version)
 	titleLength = len(titleString)
-	screenPos = UI.window.getmaxyx()
+	screenPos = Ui.window.getmaxyx()
 
 	width = math.floor(screenPos[1] / 2 - titleLength / 2)
-	UI.window.addstr(0, width, titleString, curses.A_REVERSE | curses.A_BOLD)
+	Ui.window.addstr(0, width, titleString, curses.A_REVERSE | curses.A_BOLD)
 
 def drawInfo(seqwin, sequencer):
 	# Draws some (prolly temporary) info
@@ -378,11 +377,11 @@ def drawKeybinds(window, showKeyBinds, lastFrame, keyBinds):
 ##
 
 def getSequencer():
-	return UI.sequencer
+	return Ui.sequencer
 
 def processInput(outputByteString, sequencer):
 	# Process input events sent by Input
-	action = Input.doInput(Input, UI.window.getch())
+	action = Input.doInput(Input, Ui.window.getch())
 
 	# Quit
 	if action == "quit":
@@ -411,14 +410,14 @@ def processInput(outputByteString, sequencer):
 	elif action == "seqStepUp":
 		sequencer.seqstep += sequencer.seqstepsize
 		
-		if sequencer.seqstep > sequencer.seqstepmax - sequencer.seqstepsize:
+		if sequencer.seqstep > sequencer.sequencerSteps - sequencer.seqstepsize:
 			sequencer.seqstep = 0
 
 	elif action == "seqStepDown":
 		sequencer.seqstep -= sequencer.seqstepsize
 
 		if sequencer.seqstep < 0:
-			sequencer.seqstep = sequencer.seqstepmax - sequencer.seqstepsize
+			sequencer.seqstep = sequencer.sequencerSteps - sequencer.seqstepsize
 	
 
 	# Pattern Stepping
@@ -429,7 +428,7 @@ def processInput(outputByteString, sequencer):
 
 	# Pattern Editing
 	elif action == "patternEdit":
-		togglePatternEditMode(sequencer)
+		sequencer.toggleEditMode()
 
 	elif action == "toggleStep":
 		sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].toggleStep()
@@ -438,11 +437,11 @@ def processInput(outputByteString, sequencer):
 	# Play / Pause toggle
 	elif action == "playPause":
 		if sequencer.patternEditing == False:
-			togglePlayPause(sequencer)
+			sequencer.togglePlay()
 
 	# Show keybinds
 	elif action == "showKeys":
-		UI.showKeyBinds = False if UI.showKeyBinds else True
+		Ui.showKeyBinds = False if Ui.showKeyBinds else True
 
 	return outputByteString
 
@@ -451,19 +450,19 @@ def clampSequencerStep(sequencer):
 	# Handles sequencer stepping, also pattern stuff
 
 	# Clamp step to roll back when it gets too high; add 1 to patternStep
-	if sequencer.seqstep > sequencer.seqstepmax - sequencer.seqstepsize:
+	if sequencer.seqstep > sequencer.sequencerSteps - sequencer.seqstepsize:
 		sequencer.seqstep = 0
 
 		# If there's a pattern change pending, execute it (because we have rolled back to 0)
 		if sequencer.patternChange != 0:
-			changePendingPattern(sequencer)
+			sequencer.changePendingPattern()
 
 		# However, if there's no pattern change pending; just add 1
 		else:
 			sequencer.patternStep += 1
 
 	elif sequencer.seqstep < 0:
-		sequencer.seqstep = sequencer.seqstepmax - sequencer.seqstepsize
+		sequencer.seqstep = sequencer.sequencerSteps - sequencer.seqstepsize
 		sequencer.patternStep -= 1
 
 	#return sequencer.seqstep
@@ -474,7 +473,7 @@ def clampPatternStepping(sequencer):
 	if sequencer.patternStep > sequencer.patternAmount:
 		sequencer.patternStep = 1
 	elif sequencer.patternStep < 1:
-		sequencer.patternStep = UI.patternAmount
+		sequencer.patternStep = Ui.patternAmount
 
 def clampPendingStepping(sequencer):
 	# Calculate pending pattern stepping. Basically a fancy clamp
@@ -486,53 +485,7 @@ def clampPendingStepping(sequencer):
 		if sequencer.patternChange + sequencer.patternStep < 1:
 			sequencer.patternChange += sequencer.patternAmount
 
-	sequencer.patternPending = sequencer.patternStep + sequencer.patternChange
-	
-def changePendingPattern(sequencer):
-	# Applies pending patternStep changes
-	sequencer.patternStep = sequencer.patternPending
-	sequencer.patternChange = 0
-	sequencer.patternPending = 0
-
-def startSeqTimer():
-	# Ticks 
-	UI.tic = time.perf_counter()
-	return UI.tic
-
-def sequencerTimer(sequencer):
-	# Times the stepping events based on BPM
-	if sequencer.playing and not sequencer.patternEditing:
-		if sequencer.start_timer == True:
-			sequencer.start_timer = False
-			startSeqTimer()
-		
-		# " if current time - last tic time > bpm time" ...
-		if time.perf_counter() - UI.tic > ( 60 / sequencer.bpm / 4):
-			sequencer.seqstep += sequencer.seqstepsize
-			sequencer.start_timer = True
-
-def togglePlayPause(sequencer):
-	if sequencer.playing == True:
-		sequencer.playing = False
-	else:
-		sequencer.playing = True
-
-def pauseSequencer(sequencer):
-	# TODO: move to sequencer object
-	sequencer.playing = False
-
-def playSequencer(sequencer): 
-	sequencer.playing = True
-
-def togglePatternEditMode(sequencer): 
-	# Toggles Pattern Editing Mode
-	
-	if sequencer.patternEditing:
-		sequencer.patternEditing = False
-		#sequencer.playing = True
-	else:
-		sequencer.patternEditing = True
-		#sequencer.playing = False
+	sequencer.pendingPattern = sequencer.patternStep + sequencer.patternChange
 
 def createOutputString(sequencer):
 	# Creates output bytestring that can be sent to Hardware Interface
@@ -552,7 +505,7 @@ def createOutputString(sequencer):
 	# PATTERN STEP #
 
 	# Decide whether we should show actual step or pending step
-	patternStepString = format(sequencer.patternStep) if sequencer.patternChange == 0 else format(sequencer.patternPending)
+	patternStepString = format(sequencer.patternStep) if sequencer.patternChange == 0 else format(sequencer.pendingPattern)
 
 	while len(patternStepString) < 2:
 		patternStepString = "0" + patternStepString
@@ -565,7 +518,7 @@ def createOutputString(sequencer):
 
 	# Should we blink?
 	if sequencer.patternChange != 0:
-		patternStepOutput = UI.blink.blink(patternStepOutput, True)
+		patternStepOutput = Ui.blink.blink(patternStepOutput, True)
 
 	# SEQUENCER STEP #
 
@@ -589,7 +542,7 @@ def createOutputString(sequencer):
 
 		if sequencer.patternEditing:
 			if i == ledStep:
-				ledState = UI.blink.blink("1", False)
+				ledState = Ui.blink.blink("1", False)
 			else:
 				ledState = "1" if sequencer.patterns[sequencer.patternStep].patternSteps[i].getState() else "0"
 	
@@ -597,13 +550,13 @@ def createOutputString(sequencer):
 		else:
 			if i == ledStep:
 				if sequencer.patterns[sequencer.patternStep].patternSteps[i].getState():
-					ledState = "1" if sequencer.playing == True else UI.blink.blink("1", False)
+					ledState = "1" if sequencer.playing == True else Ui.blink.blink("1", False)
 				else:
-					ledState = UI.blink.blink("1", False) if sequencer.playing == False else "0"
+					ledState = Ui.blink.blink("1", False) if sequencer.playing == False else "0"
 			else:
 				ledState = "0"
 				 
-		ledString += ledState 
+		ledString += ledState
 
 	return bpmOutput + patternStepOutput + ledString
 
@@ -633,16 +586,16 @@ def convertDecimalToByteString(decimal):
 def doWindowSetup():
 	# Initializes curses and the main window
 
-	UI.window = curses.initscr()
+	Ui.window = curses.initscr()
 
 	curses.noecho()
 	curses.cbreak()
 	curses.curs_set(0)
 	curses.start_color()
 	
-	UI.window.clear()            # Clears the screen
-	UI.window.nodelay(True)
-	UI.window.border()
+	Ui.window.clear()            # Clears the screen
+	Ui.window.nodelay(True)
+	Ui.window.border()
 
 def restoreScreen():
 	curses.nocbreak()

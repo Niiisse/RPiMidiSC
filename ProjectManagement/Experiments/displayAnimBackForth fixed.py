@@ -83,8 +83,12 @@ while True:
       outputList.append('1')
       heading = 1
     else:
-      outputList[i] = '1'           # Flip current 'bit'
-      outputList[i+1] = '0'         # Flip next 'bit'
+      if outputList[i] == '1': 
+        outputList[i] = '0'
+        outputList[i+1] = '1'         # Flip next 'bit'
+      else:
+        outputList[i] = '1'           # Flip current 'bit'
+        outputList[i+1] = '0'         # Flip next 'bit'
   else:
     if i == 0:
       heading = 0

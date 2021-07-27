@@ -84,11 +84,11 @@ while True:
       heading = 1
     else:
       if i <= 40:
-        outputList[i] = '1'           # Flip current 'bit'
-        outputList[i+1] = '0'         # Flip next 'bit'
+        outputList[i] = '0'           # Flip current 'bit'
+        outputList[i+1] = '1'         # Flip next 'bit'
       else:
-        outputList[i] = '0'
-        outputList[i+1] = '1'
+        outputList[i] = '1'
+        outputList[i+1] = '0'
   else:
     if i == 0:
       heading = 0

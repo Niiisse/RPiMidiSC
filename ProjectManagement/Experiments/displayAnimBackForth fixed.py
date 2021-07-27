@@ -70,7 +70,7 @@ numericArr = [        # Stores the numeric display bytes
   0b00001001
 ]
 
-outputString = "01111111" + "1" * (7*8)
+outputString = "01111111" + "11111111" * 4 + "00000000" * 2
 outputList = list(outputString)
 heading = 0
 

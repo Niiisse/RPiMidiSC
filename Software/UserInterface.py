@@ -12,15 +12,7 @@ from . import Sequencer
 
 # User Interface class
 #
-# Responsible for making the program go. Handles all input, processes events, generates
-# output for hardware interface.
-
-# FIXME: all instances of gv.whatever should get a local var and be setted back to gv
-
-# TODO: Pattern Edit Mode. Enable / disable notes (disabled notes don't play, don't light up)
-# 			Use seqstep select + new key to toggle enable/disable
-#				Sequencer will light up all enabled notes and blink selected note
-#				Rewrite software sequencer
+# Handles, well, user interface. Reports program state back to main with a return.
 
 class Ui:
 	app_version = config.general['app_version']
@@ -49,6 +41,8 @@ class Ui:
 		"d: toggle step",
 		"z: show/hide keybinds"
 	)
+	
+
 
 	seqwin = None
 	tempoWin = None
@@ -80,8 +74,9 @@ def updateUi():
 	# Main UI loop. Handles inputs, then updates windows
 	
 	# Clamps for keeping various vars within bounds
-	clampSequencerStep(Ui.sequencer) 		# TODO: move to Sequencer, create some Sequencer.update def. 
+	#clampSequencerStep(Ui.sequencer) 		# TODO: move to Sequencer, create some Sequencer.update def. 
 																			# That update call prolly shouldn't be in UI, either.
+	Ui.sequencer.stepSequencer() 				# TODO: move to update function in seq
 	clampPatternStepping(Ui.sequencer)
 	clampPendingStepping(Ui.sequencer)
 
@@ -408,16 +403,16 @@ def processInput(outputByteString, sequencer):
 
 	# Sequencer stepping next & previous; clamping
 	elif action == "seqStepUp":
-		sequencer.seqstep += sequencer.seqstepsize
+		sequencer.seqstep += sequencer.stepSize
 		
-		if sequencer.seqstep > sequencer.sequencerSteps - sequencer.seqstepsize:
+		if sequencer.seqstep > sequencer.sequencerSteps - sequencer.stepSize:
 			sequencer.seqstep = 0
 
 	elif action == "seqStepDown":
-		sequencer.seqstep -= sequencer.seqstepsize
+		sequencer.seqstep -= sequencer.stepSize
 
 		if sequencer.seqstep < 0:
-			sequencer.seqstep = sequencer.sequencerSteps - sequencer.seqstepsize
+			sequencer.seqstep = sequencer.sequencerSteps - sequencer.stepSize
 	
 
 	# Pattern Stepping
@@ -444,28 +439,6 @@ def processInput(outputByteString, sequencer):
 		Ui.showKeyBinds = False if Ui.showKeyBinds else True
 
 	return outputByteString
-
-def clampSequencerStep(sequencer):
-	# TODO: move to Sequencer
-	# Handles sequencer stepping, also pattern stuff
-
-	# Clamp step to roll back when it gets too high; add 1 to patternStep
-	if sequencer.seqstep > sequencer.sequencerSteps - sequencer.seqstepsize:
-		sequencer.seqstep = 0
-
-		# If there's a pattern change pending, execute it (because we have rolled back to 0)
-		if sequencer.patternChange != 0:
-			sequencer.changePendingPattern()
-
-		# However, if there's no pattern change pending; just add 1
-		else:
-			sequencer.patternStep += 1
-
-	elif sequencer.seqstep < 0:
-		sequencer.seqstep = sequencer.sequencerSteps - sequencer.seqstepsize
-		sequencer.patternStep -= 1
-
-	#return sequencer.seqstep
 
 def clampPatternStepping(sequencer):
 	# Clamps pattern step

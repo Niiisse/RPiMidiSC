@@ -4,8 +4,10 @@ from . import Pattern, Clamp
 # Sequencer 
 #
 # Handles most, if not all, of the music-related functions.
+# TODO: seqstep, pending clamping 
 # 
 # By Niisse
+
 
 class Sequencer:
 
@@ -16,7 +18,7 @@ class Sequencer:
     # Sequencer Variables
     self.playing = True                           # Whether the sequencer is currently playing or paused 
     self.seqstep = 0                              # Current step within pattern         
-    self.seqstepsize = seqstepsize                # Amount to increment with per step. TODO: see if this can go
+    self.stepSize = seqstepsize                # Amount to increment with per step. TODO: see if this can go
     self.sequencerSteps = sequencerSteps          # Total amout of steps per pattern
     self.bpm = bpm                                # Current tempo
     
@@ -30,7 +32,7 @@ class Sequencer:
     self.patternStep = 1                                                              # Current pattern
     self.patternChange = 0                                                            # Signals pattern change for next measure
     self.pendingPattern = 0                                                           # Used in changing pattern
-    self.patternEditing = False                                                        # Currently in editing mode?
+    self.patternEditing = False                                                       # Currently in editing mode?
 
   def play(self):
     # Plays. (i don't know what you expected, tbh)
@@ -67,7 +69,7 @@ class Sequencer:
       # 60 / bpm for changing bpm to bps; / 4 for sequencer spacing purposes)
       
       if time.perf_counter() - self.tic > (60 / self.bpm / 4):
-        self.seqstep += self.seqstepsize
+        self.seqstep += self.stepSize
         self.timerShouldTick = True
 
   def toggleEditMode(self):
@@ -80,12 +82,33 @@ class Sequencer:
     
     self.patternStep = self.pendingPattern
     self.patternChange = 0
-    self.patternPending = 0
+    self.pendingPattern = 0
 
   def changePattern(self, changeValue):
     # Instantly changes pattern. Useful in editing mode. changeValue needs an int
     
     self.patternStep += changeValue
+    # TODO: clamping?
 
-  def clampValues(self, value):
-    pass
+  def stepSequencer(self):
+    # Steps the sequencer. Handles pattern changing and such as well
+
+    # Clamp step; roll back when too high and process pattern stuff
+    if self.seqstep > self.sequencerSteps - self.stepSize:
+      self.seqstep = 0
+
+      # Apply pending pattern if applicable...
+      if self.patternChange != 0:
+        self.changePendingPattern()
+
+      # Else, increment pattern by 1
+      else:
+        self.patternStep += 1
+    
+    # Stepping backwards?
+    elif self.seqstep < 0:
+      self.seqstep = self.sequencerSteps
+      self.patternStep -= 1
+
+# Pretending I'm doing work...
+# Like usual, hehe

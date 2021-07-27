@@ -84,7 +84,7 @@ while True:
   s = format(numericArr[1], '08b') + format(numericArr[2], '08b') + format(numericArr[0], '08b') + "11111111111111110000000000000000"
   outputBits(s)  
 
-  
+  input()
 
 
 #bytestring = format(value, '08b')

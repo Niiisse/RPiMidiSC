@@ -78,7 +78,7 @@ while True:
   i = outputList.index('0')     # Get index
   if heading == 0:
     if i+1 == len(outputList):    # Make sure we don't go out of bounds
-      outputList[-1:] = '1'         # If we do go out of bounds, reset last to 1
+      outputList[-1:] = '0'         # If we do go out of bounds, reset last to 1
       outputList[-2:] = '0'           # ...and set first to 0 TODO: needs to be inverted for regular led, calculate pos after 3 bytes
       outputList.append('1')
       heading = 1
@@ -93,8 +93,12 @@ while True:
     if i == 0:
       heading = 0
     else:
-      outputList[i] = '1'
-      outputList[i-1] = '0'
+      if outputList[i] == '1': 
+        outputList[i] = '0'
+        outputList[i-1] = '1'         # Flip next 'bit'
+      else:
+        outputList[i] = '1'           # Flip current 'bit'
+        outputList[i-1] = '0'         # Flip next 'bit'
 
   outputString = ""
   outputString = outputString.join(outputList)

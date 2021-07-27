@@ -71,16 +71,17 @@ numericArr = [        # Stores the numeric display bytes
 ]
 
 while True: 
+  outputBits("11111111111111111111111111111111111111110000000000000000")
   inputString = input("input: ")
   s = format(numericArr[1], '08b') + "111111111111111111111111111111110000000000000000" 
   outputBits(s)  
 
   inputString = input("input: ")
-  s = format(numericArr[1], '08b') + format(numericArr[2], '08b') + "1" *  3 + "0" * 16
+  s = format(numericArr[1], '08b') + format(numericArr[2], '08b') + "1111111111111111111111110000000000000000"
   outputBits(s)  
 
   inputString = input("input: ")
-  s = format(numericArr[1], '08b') + format(numericArr[2], '08b') + format(numericArr[0], '08b') + "1" *  2 + "0" * 16
+  s = format(numericArr[1], '08b') + format(numericArr[2], '08b') + format(numericArr[0], '08b') + "11111111111111110000000000000000"
   outputBits(s)  
 
   

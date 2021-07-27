@@ -72,7 +72,7 @@ numericArr = [        # Stores the numeric display bytes
 
 while True: 
   inputString = input("input: ")
-  s = format(numericArr[1], '08b') + "1" *  4 + "0" * 16
+  s = format(numericArr[1], '08b') + "111111111111111111111111111111110000000000000000" 
   outputBits(s)  
 
   inputString = input("input: ")

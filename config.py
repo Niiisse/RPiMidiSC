@@ -1,6 +1,6 @@
 general = {
   "app_version": "v 0.1.7",     # General version nr
-  "hardware_enabled": False,    # Whether to enable or disable the hardware interface
+  "hardware_enabled": True,    # Whether to enable or disable the hardware interface
   "blinkTime": 0.25             # Blinking time duration
 }
 
@@ -14,6 +14,7 @@ debounce = {
 
 sequencer = {
   # Sequencer window
+
 
   "bpm": 120,                 # Tempo
   "seqstep": 0,               # Current step of sequencer

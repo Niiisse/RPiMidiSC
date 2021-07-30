@@ -1,5 +1,6 @@
 import time
 from . import Pattern, Clamp
+import random
 
 # Sequencer 
 #
@@ -18,7 +19,7 @@ class Sequencer:
     # Sequencer Variables
     self.playing = True                           # Whether the sequencer is currently playing or paused 
     self.seqstep = 0                              # Current step within pattern         
-    self.stepSize = seqstepsize                # Amount to increment with per step. TODO: see if this can go
+    self.stepSize = seqstepsize                   # Amount to increment with per step. TODO: see if this can go
     self.sequencerSteps = sequencerSteps          # Total amout of steps per pattern
     self.bpm = bpm                                # Current tempo
     
@@ -33,6 +34,18 @@ class Sequencer:
     self.patternChange = 0                                                            # Signals pattern change for next measure
     self.pendingPattern = 0                                                           # Used in changing pattern
     self.patternEditing = False                                                       # Currently in editing mode?
+
+    random.seed()
+
+  def randomiseData(self):
+    # Randomises note data for testing
+
+    for i in range(self.patternAmount):
+      for o in range(self.sequencerSteps):
+        self.patterns[i].patternSteps[o].note = random.randint(0, 12)
+        self.patterns[i].patternSteps[o].layer = random.randint(0, 9)
+        self.patterns[i].patternSteps[o].octave = random.randint(0, 9)
+        self.patterns[i].patternSteps[o].octave = random.randint(1, 9)
 
   def play(self):
     # Plays. (i don't know what you expected, tbh)
@@ -69,7 +82,12 @@ class Sequencer:
       # 60 / bpm for changing bpm to bps; / 4 for sequencer spacing purposes)
       
       if time.perf_counter() - self.tic > (60 / self.bpm / 4):
-        self.seqstep += self.stepSize
+
+        # FIXME: dirty hack for making sure seqstep != 16
+        if self.seqstep != 15:
+          self.seqstep += self.stepSize
+        else:
+          self.seqstep = 0
         self.timerShouldTick = True
 
   def toggleEditMode(self):
@@ -94,7 +112,7 @@ class Sequencer:
     # Steps the sequencer. Handles pattern changing and such as well
 
     # Clamp step; roll back when too high and process pattern stuff
-    if self.seqstep > self.sequencerSteps - self.stepSize:
+    if self.seqstep >= self.sequencerSteps:
       self.seqstep = 0
 
       # Apply pending pattern if applicable...
@@ -109,6 +127,3 @@ class Sequencer:
     elif self.seqstep < 0:
       self.seqstep = self.sequencerSteps
       self.patternStep -= 1
-
-# Pretending I'm doing work...
-# Like usual, hehe

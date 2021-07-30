@@ -41,8 +41,6 @@ class Ui:
 		"d: toggle step",
 		"z: show/hide keybinds"
 	)
-	
-
 
 	seqwin = None
 	tempoWin = None
@@ -54,7 +52,7 @@ class Ui:
 
 	blink = Blink.Blink(config.general['blinkTime'])
 	sequencer = Sequencer.Sequencer(config.pattern['patternAmount'], config.sequencer['seqstepmax'], config.sequencer['bpm'], config.sequencer['seqstepsize'])
-
+	sequencer.randomiseData()
 def main():
 	# Sets up main window
 
@@ -531,10 +529,23 @@ def createOutputString(sequencer):
 				 
 		ledString += ledState
 
-	return bpmOutput + patternStepOutput + ledString
+	# NOTEMODULE #
+	# TODO: set last layerString bit correctly
+	# TODO: set last channelString bit (sustain) correctly
+
+	noteString = convertDecimalToNote(sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].note)
+	layerString = convertDecimalToByteString(sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].layer)
+	octaveString = convertDecimalToByteString(sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].octave)
+	channelString = convertDecimalToByteString(sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].midiChannel)
+
+
+	# OUTPUT #
+	 
+	return bpmOutput + patternStepOutput + ledString + noteString + layerString + octaveString + channelString
 
 def convertDecimalToByteString(decimal):
 	# Used for creating the outputbytestring
+
 	numericArr = [        # Stores the numeric display bytes
 	0b10000001,
 	0b11101101,
@@ -549,6 +560,29 @@ def convertDecimalToByteString(decimal):
 	]
 
 	byteString = format(numericArr[decimal], '08b')
+
+	return byteString
+
+def convertDecimalToNote(decimal):
+	# Used for converting note number to actual note
+
+	noteArr = [        # Stores the numeric display bytes
+	0b01111110,		# -
+	0b10010010,		# C
+	0b10010011,		# C#
+	0b01100000,		# D
+	0b01100001,		# D#
+	0b00010010,		# E
+	0b00010110,		# F
+	0b00010111,		# F#
+	0b00010000,		# G
+	0b00010001,		# G#
+	0b00000100,		# A
+	0b00000101,		# A#
+	0b00110000,		# B
+	]
+
+	byteString = format(noteArr[decimal], '08b')
 
 	return byteString
 

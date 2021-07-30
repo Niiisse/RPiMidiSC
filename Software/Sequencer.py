@@ -45,7 +45,7 @@ class Sequencer:
         self.patterns[i].patternSteps[o].note = random.randint(0, 12)
         self.patterns[i].patternSteps[o].layer = random.randint(0, 9)
         self.patterns[i].patternSteps[o].octave = random.randint(0, 9)
-        self.patterns[i].patternSteps[o].octave = random.randint(1, 9)
+        self.patterns[i].patternSteps[o].octave = random.randint(0, 9)
 
   def play(self):
     # Plays. (i don't know what you expected, tbh)

@@ -547,7 +547,6 @@ def createOutputString(sequencer):
 			octaveString = convertDecimalToByteString(sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].octave)
 			channelString = convertDecimalToByteString(sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].midiChannel)
 		else:
-			noteString = "10000001"
 			layerString = "10000001"
 			octaveString = "10000001"
 			channelString = "10000001"

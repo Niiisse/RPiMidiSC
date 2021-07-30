@@ -40,7 +40,7 @@ class Sequencer:
   def randomiseData(self):
     # Randomises note data for testing
 
-    for i in range(self.patternAmount):
+    for i in range(self.patternAmount+1):
       for o in range(self.sequencerSteps):
         self.patterns[i].patternSteps[o].note = random.randint(0, 12)
         self.patterns[i].patternSteps[o].layer = random.randint(0, 9)

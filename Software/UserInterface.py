@@ -538,13 +538,19 @@ def createOutputString(sequencer):
 	octaveString = "10000001"
 	channelString = "10000001"
 
-	if sequencer.seqstep <= 15:
+	if sequencer.seqstep <= 15:		# FIXME: this shouldn't need to be checked.
 		noteString = convertDecimalToNote(sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].note)
+
 		if sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].note != 0: 
+			# Checks whether it should display the values or write - (in case of disabled note)
 			layerString = convertDecimalToByteString(sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].layer)
 			octaveString = convertDecimalToByteString(sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].octave)
 			channelString = convertDecimalToByteString(sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].midiChannel)
-
+		else:
+			noteString = "10000001"
+			layerString = "10000001"
+			octaveString = "10000001"
+			channelString = "10000001"
 
 	# OUTPUT #
 	 

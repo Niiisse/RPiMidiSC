@@ -84,10 +84,10 @@ class Sequencer:
       if time.perf_counter() - self.tic > (60 / self.bpm / 4):
 
         # FIXME: dirty hack for making sure seqstep != 16
-        if self.seqstep != 15:
-          self.seqstep += self.stepSize
-        else:
-          self.seqstep = 0
+        #if self.seqstep != 15:
+        self.seqstep += self.stepSize
+        #else:
+          #self.seqstep = 0
         self.timerShouldTick = True
 
   def toggleEditMode(self):
@@ -112,7 +112,7 @@ class Sequencer:
     # Steps the sequencer. Handles pattern changing and such as well
 
     # Clamp step; roll back when too high and process pattern stuff
-    if self.seqstep >= self.sequencerSteps:
+    if self.seqstep > self.sequencerSteps - self.stepSize:
       self.seqstep = 0
 
       # Apply pending pattern if applicable...

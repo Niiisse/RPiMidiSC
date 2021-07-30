@@ -82,12 +82,7 @@ class Sequencer:
       # 60 / bpm for changing bpm to bps; / 4 for sequencer spacing purposes)
       
       if time.perf_counter() - self.tic > (60 / self.bpm / 4):
-
-        # FIXME: dirty hack for making sure seqstep != 16
-        #if self.seqstep != 15:
         self.seqstep += self.stepSize
-        #else:
-          #self.seqstep = 0
         self.timerShouldTick = True
 
   def toggleEditMode(self):

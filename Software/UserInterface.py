@@ -533,12 +533,13 @@ def createOutputString(sequencer):
 	# TODO: set last layerString bit correctly
 	# TODO: set last channelString bit (sustain) correctly
 	# FIXME: need to sort out the 15/16 difference in seqstep stuff
-	noteString = "10000001"
-	layerString = "10000001"
-	octaveString = "10000001"
-	channelString = "10000001"
+	noteString = "01111110"
+	layerString = "01111110"
+	octaveString = "01111110"
+	channelString = "01111110"
 
 	if sequencer.seqstep <= 15:		# FIXME: this shouldn't need to be checked.
+		
 		noteString = convertDecimalToNote(sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].note)
 
 		if sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].note != 0: 
@@ -547,9 +548,9 @@ def createOutputString(sequencer):
 			octaveString = convertDecimalToByteString(sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].octave)
 			channelString = convertDecimalToByteString(sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].midiChannel)
 		else:
-			layerString = "10000001"
-			octaveString = "10000001"
-			channelString = "10000001"
+			layerString = "01111110"
+			octaveString = "01111110"
+			channelString = "01111110"
 
 	# OUTPUT #
 	 

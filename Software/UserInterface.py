@@ -574,15 +574,15 @@ def convertDecimalToNote(decimal):
 
 	noteArr = [        # Stores the numeric display bytes
 	0b01111110,		# -
-	0b10010010,		# C
-	0b10010011,		# C#
+	0b01110010,		# C
+	0b01110011,		# C#
 	0b01100000,		# D
 	0b01100001,		# D#
 	0b00010010,		# E
 	0b00010110,		# F
 	0b00010111,		# F#
-	0b00010000,		# G
-	0b00010001,		# G#
+	0b10010000,		# G
+	0b10010001,		# G#
 	0b00000100,		# A
 	0b00000101,		# A#
 	0b00110000,		# B

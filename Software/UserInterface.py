@@ -568,7 +568,7 @@ def createOutputString(sequencer):
 
 	noteString = "11111110"
 	layerString = "11111110"
-	octaveString = "1111111"
+	octaveString = "11111110"
 	channelString = "11111111"
 
 	#if sequencer.seqstep <= 15:		# FIXME: this shouldn't need to be checked.
@@ -586,11 +586,11 @@ def createOutputString(sequencer):
 		octaveString = "1111111"
 		channelString = "11111111"
 
-	# sustain
+	# Sustain Bit
 	if currentStep.noteLayers[currentStep.selectedLayer[0]].sustain:
-		octaveString += '1'
+		octaveString[7] = '1'
 	else:
-		octaveString += '0'
+		octaveString[7] = '0'
 
 	# OUTPUT #
 	 

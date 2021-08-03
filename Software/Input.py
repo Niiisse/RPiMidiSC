@@ -93,14 +93,14 @@ def doInput(self, char):
     # GPIO Input String Layout (10 bits):
     # 0: currentNoteUp
     # 1: currentNoteDown
-    # 2: noteLayerUp
+    # 2: noteLayerDown
     # 3: octaveDown
     # 4: midiChannelDown
     # 5: sustainDb
     # btnSustain: noteModuleEnable/Arm
     # 7: midiChannelUp
     # 8: octaveUp
-    # 9: noteLayerDown
+    # 9: noteLayerUp
 
     # Read inputs; set debouncing state    
     hwInput = noteModule.readData()
@@ -111,8 +111,8 @@ def doInput(self, char):
     btnCurrentNoteDown = hwInput[1]
     noteDownDb.setState(btnCurrentNoteDown, True)
     
-    btnNoteLayerUp = hwInput[2]
-    layerUpDb.setState(btnNoteLayerUp, True)
+    btnNoteLayerDown = hwInput[2]
+    layerDownDb.setState(btnNoteLayerDown, True)
 
     btnOctaveDown = hwInput[3]
     octaveDownDb.setState(btnOctaveDown, True)
@@ -132,8 +132,8 @@ def doInput(self, char):
     btnOctaveUp = hwInput[8]
     octaveUpDb.setState(btnOctaveUp, True)
     
-    btnNoteLayerDown = hwInput[9]
-    layerDownDb.setState(btnNoteLayerDown, True)
+    btnNoteLayerUp = hwInput[9]
+    layerUpDb.setState(btnNoteLayerUp, True)
 
 
     # Output returns

@@ -55,7 +55,7 @@ class PatternStep():
   def layerDown(self):
     # Changes note layer. TODO: multiple NCM support goes here, eventually
 
-    if self.selectedLayer[0] > 0:
+    if self.selectedLayer[0] >= 1:
       self.selectedLayer[0] -= 1
     else:
       self.selectedLayer[0] = 9

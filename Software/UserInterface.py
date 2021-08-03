@@ -590,7 +590,7 @@ def createOutputString(sequencer):
 	if currentStep.noteLayers[currentStep.selectedLayer[0]].sustain:
 		octaveString = octaveString[:-1] + '1'
 	else:
-		octaveString[7] = octaveString[:-1] + '0'
+		octaveString = octaveString[:-1] + '0'
 
 	# OUTPUT #
 	 

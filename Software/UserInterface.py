@@ -5,7 +5,7 @@ import time
 import math
 import config
 
-from . import Input
+import Software.Input
 from . import GlobalVars
 from . import Blink
 from . import Sequencer
@@ -533,10 +533,10 @@ def createOutputString(sequencer):
 	# TODO: set last layerString bit correctly
 	# TODO: set last channelString bit (sustain) correctly
 	# FIXME: need to sort out the 15/16 difference in seqstep stuff
-	noteString = "01111110"
-	layerString = "01111110"
-	octaveString = "01111110"
-	channelString = "01111110"
+	noteString = "11111110"
+	layerString = "11111110"
+	octaveString = "11111110"
+	channelString = "11111110"
 
 	if sequencer.seqstep <= 15:		# FIXME: this shouldn't need to be checked.
 		

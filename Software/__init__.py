@@ -1,0 +1,1 @@
+from . import Hardware  # For ShiftInput

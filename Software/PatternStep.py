@@ -16,8 +16,9 @@ class PatternStep():
     self.octave = 0
     self.midiChannel = 0
     self.layer = 0
-    self.sustain = True
-
+    self.sustain = False
+    self.arm = True
+    
   def disableStep(self):
     # Disables step
 

@@ -64,6 +64,6 @@ class NoteModule:
 
     GPIO.output(self.CLOCKENABLE, 1)
 
-    output = ocUp + ocDown + receivedByte
+    output = str(ocUp) + str(ocDown) + receivedByte
 
     return output

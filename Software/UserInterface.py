@@ -439,11 +439,11 @@ def processInput(outputByteString, sequencer):
 	# note up/down TODO: Add to keybinds list
 	elif action == "noteUp":
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
-		currentStep.noteLayer[currentStep.selectedLayer[0]].noteUp()
+		currentStep.noteLayers[currentStep.selectedLayer[0]].noteUp()
 
 	elif action == "noteDown":
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
-		currentStep.noteLayer[currentStep.selectedLayer[0]].noteDown()
+		currentStep.noteLayers[currentStep.selectedLayer[0]].noteDown()
 	
 	elif action == "layerUp":
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]

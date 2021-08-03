@@ -66,4 +66,5 @@ class PatternStep():
     for noteLayer in self.noteLayers:
       output = False if noteLayer.note != 0 else True
 
+    output = False
     return output

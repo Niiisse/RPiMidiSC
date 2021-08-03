@@ -436,7 +436,7 @@ def processInput(outputByteString, sequencer):
 	elif action == "showKeys":
 		Ui.showKeyBinds = False if Ui.showKeyBinds else True
 
-	# note up/down TODO: Add to keybinds list
+	# note up/down
 	elif action == "noteUp":
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].noteUp()
@@ -445,6 +445,7 @@ def processInput(outputByteString, sequencer):
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].noteDown()
 	
+	# Note layer
 	elif action == "layerUp":
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
 		currentStep.layerUp() # TODO: when multiple NCMs are connected, add second variable to layerUpDown for selecting specific layer
@@ -454,6 +455,10 @@ def processInput(outputByteString, sequencer):
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
 		currentStep.layerDown()
 
+	# Note Octave
+	elif action == "octaveUp":
+		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
+		currentStep.noteLayers[currentStep.selectedLayers[0]].octaveUp()
 
 	return outputByteString
 
@@ -552,7 +557,7 @@ def createOutputString(sequencer):
 	# TODO: set last layerString bit correctly
 	# TODO: set last channelString bit (sustain) correctly
 	# FIXME: need to sort out the 15/16 difference in seqstep stuff
-	
+
 	noteString = "11111110"
 	layerString = "11111110"
 	octaveString = "11111110"

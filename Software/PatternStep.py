@@ -1,8 +1,12 @@
+from . import NoteLayer
+
 # Pattern Step Class
 # 
 # Holds pattern's associated step data.
 # Sequencer has x patterns (up to 100)
 # Each Pattern has 16 PatternSteps
+# Each patternStep has 9 noteLayers which
+# contain the actual data
 # 
 # By Niisse (2021-07-14)
 #
@@ -12,12 +16,8 @@ class PatternStep():
 
   def __init__(self):
     self.enabled = True
-    self.note = 0
-    self.octave = 0
-    self.midiChannel = 0
-    self.layer = 0
-    self.sustain = False
-    self.arm = True
+    self.noteLayers = [NoteLayer.NoteLayer() for i in range(9)]
+    self.selectedLayer = [0]
 
   def disableStep(self):
     # Disables step
@@ -44,20 +44,18 @@ class PatternStep():
     
     return self.enabled
 
-  def noteUp(self):
-    # Increments current note
-    # TODO: add check for notelayer
+  def layerUp(self):
+    # Changes note layer. TODO: multiple NCM support goes here, eventually
 
-    if self.note < 12:
-      self.note += 1
-    else: 
-      self.note = 0
-
-  def noteDown(self):
-    # Decrements current note
-    # TODO: add check for notelayer
-
-    if self.note > 0:
-      self.note -= 1
+    if self.selectedLayer[0] < 9:
+      self.selectedLayer[0] += 1
     else:
-      self.note = 12
+      self.selectedLayer[0] = 0
+      
+  def layerDown(self):
+    # Changes note layer. TODO: multiple NCM support goes here, eventually
+
+    if self.selectedLayer[0] > 0:
+      self.selectedLayer[0] -= 1
+    else:
+      self.selectedLayer[0] = 9

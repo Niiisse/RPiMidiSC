@@ -436,11 +436,23 @@ def processInput(outputByteString, sequencer):
 	elif action == "showKeys":
 		Ui.showKeyBinds = False if Ui.showKeyBinds else True
 
+	# note up/down TODO: Add to keybinds list
 	elif action == "noteUp":
-		sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].noteUp()
+		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
+		currentStep.noteLayer[currentStep.selectedLayer[0]].noteUp()
 
 	elif action == "noteDown":
-		sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].noteDown()
+		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
+		currentStep.noteLayer[currentStep.selectedLayer[0]].noteDown()
+	
+	elif action == "layerUp":
+		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
+		currentStep.layerUp() # TODO: when multiple NCMs are connected, add second variable to layerUpDown for selecting specific layer
+													# (that's why selectedLayer[] is a list; first item = first NCM)
+
+	elif action == "layerDown":
+		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
+		currentStep.layerDown()
 
 
 	return outputByteString
@@ -546,14 +558,14 @@ def createOutputString(sequencer):
 	channelString = "11111110"
 
 	if sequencer.seqstep <= 15:		# FIXME: this shouldn't need to be checked.
-		
-		noteString = convertDecimalToNote(sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].note)
+		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
+		noteString = convertDecimalToNote(currentStep.noteLayers[currentStep.selectedLayer[0]].note)	# TODO: this 0 would be replaced with i for note control modules
 
-		if sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].note != 0: 
+		if currentStep.noteLayers[currentStep.selectedLayer[0]].note != 0: 
 			# Checks whether it should display the values or write - (in case of disabled note)
-			layerString = convertDecimalToByteString(sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].layer)
-			octaveString = convertDecimalToByteString(sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].octave)
-			channelString = convertDecimalToByteString(sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].midiChannel)
+			layerString = convertDecimalToByteString(currentStep.selectedLayer[0])
+			octaveString = convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].octave)
+			channelString = convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].midiChannel)
 		else:
 			layerString = "11111110"
 			octaveString = "11111110"

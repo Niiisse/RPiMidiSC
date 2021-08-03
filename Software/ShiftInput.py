@@ -19,7 +19,7 @@ class NoteModule:
 
     GPIO.setup(self.SERIAL, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.setup(self.OCTAVEUP, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-    GPIO.setup(self.OCTAVEDOWN, GPIO.IN, pull_up_down=GPIO.PUDDOWN)
+    GPIO.setup(self.OCTAVEDOWN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     
     GPIO.setup(self.PLOAD, GPIO.OUT)
     GPIO.setup(self.CLOCKENABLE, GPIO.OUT)

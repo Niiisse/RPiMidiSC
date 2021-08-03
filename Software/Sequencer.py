@@ -72,7 +72,8 @@ class Sequencer:
         if self.seqstep < self.sequencerSteps - 1:
           self.seqstep += self.stepSize
         else:
-          self.finalStep()
+          self.finalStepInPattern()
+        self.sendMidi()
         self.timerShouldTick = True
 
   def toggleEditMode(self):
@@ -93,7 +94,7 @@ class Sequencer:
     self.patternStep += changeValue
     # TODO: clamping?
 
-  def finalStep(self):
+  def finalStepInPattern(self):
     # Handles pattern changing and such as well
 
     # Clamp step; roll back when too high and process pattern stuff
@@ -111,3 +112,6 @@ class Sequencer:
     # elif self.seqstep < 0:
     #   self.seqstep = self.sequencerSteps
     #   self.patternStep -= 1
+
+  def sendMidi(self):
+    pass

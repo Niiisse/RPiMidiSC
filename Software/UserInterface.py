@@ -463,6 +463,16 @@ def processInput(outputByteString, sequencer):
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].octaveDown()
 
+	# MIDI channel
+	elif action == "midiChannelUp":
+		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
+		currentStep.noteLayers[currentStep.selectedLayer[0]].channelUp()
+
+	elif action == "midiChannelDown":
+		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
+		currentStep.noteLayers[currentStep.selectedLayer[0]].channelDown()
+
+	# Sustain
 	elif action == "toggleSustain":
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].toggleSustain()

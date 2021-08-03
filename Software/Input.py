@@ -75,11 +75,18 @@ def doInput(self, char):
   elif char == ord('z'):
     return "showKeys"
 
+  # add to list
   elif char == ord('b'):
     return "noteUp"
 
   elif char == ord('v'):
     return "noteDown"
+
+  elif char == ord('f'):
+    return "layerUp"
+
+  elif char == ord('g'):
+    return "layerDown"
 
   # GPIO INPUT
   if config.general['hardware_enabled']: 

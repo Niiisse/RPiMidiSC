@@ -52,6 +52,7 @@ class Ui:
 
 	blink = Blink.Blink(config.general['blinkTime'])
 	sequencer = Sequencer.Sequencer(config.pattern['patternAmount'], config.sequencer['seqstepmax'], config.sequencer['bpm'], config.sequencer['seqstepsize'])
+	
 def main():
 	# Sets up main window
 
@@ -551,6 +552,7 @@ def createOutputString(sequencer):
 	# TODO: set last layerString bit correctly
 	# TODO: set last channelString bit (sustain) correctly
 	# FIXME: need to sort out the 15/16 difference in seqstep stuff
+	
 	noteString = "11111110"
 	layerString = "11111110"
 	octaveString = "11111110"
@@ -558,12 +560,13 @@ def createOutputString(sequencer):
 
 	if sequencer.seqstep <= 15:		# FIXME: this shouldn't need to be checked.
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
+
 		noteString = convertDecimalToNote(currentStep.noteLayers[currentStep.selectedLayer[0]].note)	# TODO: this 0 would be replaced with i for note control modules
 		layerString = convertDecimalToByteString(currentStep.selectedLayer[0])
 
 		if currentStep.noteLayers[currentStep.selectedLayer[0]].note != 0: 
 			# Checks whether it should display the values or write - (in case of disabled note)
-			
+
 			octaveString = convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].octave)
 			channelString = convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].midiChannel)
 		else:

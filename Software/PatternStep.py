@@ -65,6 +65,6 @@ class PatternStep():
     output = False
 
     for x in range(10):
-      if self.noteLayers[x].note != 0: output = True 
+      if x != self.selectedLayer[0] and self.noteLayers[x].note != 0: output = True 
 
     return output

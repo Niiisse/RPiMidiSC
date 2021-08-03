@@ -64,6 +64,6 @@ class PatternStep():
     # Looks thru other layers and sees if a note is active, if so, show LED
 
     for noteLayer in self.noteLayers:
-      output = True if noteLayer.note != 0 else False
+      output = False if noteLayer.note != 0 else True
 
     return output

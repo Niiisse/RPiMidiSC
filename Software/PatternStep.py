@@ -59,3 +59,11 @@ class PatternStep():
       self.selectedLayer[0] -= 1
     else:
       self.selectedLayer[0] = 9
+
+  def checkOtherLayers(self):
+    # Looks thru other layers and sees if a note is active, if so, show LED
+
+    for noteLayer in self.noteLayers:
+      output = True if noteLayer.note != 0 else False
+
+    return output

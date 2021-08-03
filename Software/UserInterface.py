@@ -593,6 +593,10 @@ def createOutputString(sequencer):
 		octaveString = "11111111"
 		channelString = "11111111"
 
+	# Note layer bit
+	if currentStep.checkOtherLayers():
+		layerString = layerString[:-1] + '1'
+
 	# Sustain Bit
 	if currentStep.noteLayers[currentStep.selectedLayer[0]].sustain:
 		octaveString = octaveString[:-1] + '1'

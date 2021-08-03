@@ -458,15 +458,15 @@ def processInput(outputByteString, sequencer):
 	# Note Octave
 	elif action == "octaveUp":
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
-		currentStep.noteLayers[currentStep.selectedLayers[0]].octaveUp()
+		currentStep.noteLayers[currentStep.selectedLayer[0]].octaveUp()
 
 	elif action == "octaveDown":
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
-		currentStep.noteLayers[currentStep.selectedLayers[0]].octaveDown()
+		currentStep.noteLayers[currentStep.selectedLayer[0]].octaveDown()
 
 	elif action == "toggleSustain":
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
-		currentStep.noteLayers[currentStep.selectedLayers[0]].toggleSustain()
+		currentStep.noteLayers[currentStep.selectedLayer[0]].toggleSustain()
 
 	return outputByteString
 

@@ -75,10 +75,10 @@ def doInput(self, char):
   elif char == ord('z'):
     return "showKeys"
 
-  elif char == ord('v'):
+  elif char == ord('b'):
     return "noteUp"
 
-  elif char == ord('b'):
+  elif char == ord('v'):
     return "noteDown"
 
   # GPIO INPUT

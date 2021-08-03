@@ -564,8 +564,8 @@ def createOutputString(sequencer):
 
 	noteString = "11111110"
 	layerString = "11111110"
-	octaveString = "11111110"
-	channelString = "11111110"
+	octaveString = "1111111"
+	channelString = "11111111"
 
 	if sequencer.seqstep <= 15:		# FIXME: this shouldn't need to be checked.
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
@@ -579,8 +579,14 @@ def createOutputString(sequencer):
 			octaveString = convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].octave)
 			channelString = convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].midiChannel)
 		else:
-			octaveString = "11111110"
-			channelString = "11111110"
+			octaveString = "1111111"
+			channelString = "11111111"
+
+		# sustain
+		if currentStep.noteLayers[currentStep.selectedLayer[0]].sustain:
+			octaveString += '1'
+		else:
+			octaveString += '0'
 
 	# OUTPUT #
 	 

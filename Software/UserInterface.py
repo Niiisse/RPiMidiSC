@@ -582,8 +582,9 @@ def createOutputString(sequencer):
 
 		octaveString = convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].octave)
 		channelString = convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].midiChannel)
+
 	else:
-		octaveString = "1111111"
+		octaveString = "11111111"
 		channelString = "11111111"
 
 	# Sustain Bit

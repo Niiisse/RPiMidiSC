@@ -29,9 +29,9 @@ class NoteLayer:
     # Increase current octave
 
     if self.octave < 9:
-      self.note += 1
+      self.octave += 1
     else:
-      self.note = 0
+      self.octave = 0
 
   def octaveDown(self):
     # Decrease current octave

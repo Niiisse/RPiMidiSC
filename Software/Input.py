@@ -76,10 +76,10 @@ def doInput(self, char):
     return "showKeys"
 
   # Note up/down
-  elif char == ord('b'):
+  elif char == ord('v'):
     return "noteUp"
 
-  elif char == ord('v'):
+  elif char == ord('b'):
     return "noteDown"
 
   # Layer up/down
@@ -95,7 +95,7 @@ def doInput(self, char):
 
   elif char == ord('c'):
     return "octaveDown"
-    
+
   # GPIO INPUT
   if config.general['hardware_enabled']: 
     # GPIO Input String Layout (10 bits):

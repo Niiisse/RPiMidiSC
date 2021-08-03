@@ -426,7 +426,6 @@ def processInput(outputByteString, sequencer):
 	elif action == "toggleStep":
 		sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].toggleStep()
 
-
 	# Play / Pause toggle
 	elif action == "playPause":
 		if sequencer.patternEditing == False:

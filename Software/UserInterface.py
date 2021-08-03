@@ -5,7 +5,7 @@ import time
 import math
 import config
 
-import Software.Input
+import Software.Input as Input
 from . import GlobalVars
 from . import Blink
 from . import Sequencer
@@ -435,6 +435,13 @@ def processInput(outputByteString, sequencer):
 	# Show keybinds
 	elif action == "showKeys":
 		Ui.showKeyBinds = False if Ui.showKeyBinds else True
+
+	elif action == "noteUp":
+		sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].noteUp()
+
+	elif action == "noteDown":
+		sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].noteDown()
+
 
 	return outputByteString
 

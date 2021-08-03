@@ -1,12 +1,27 @@
 import curses 
 import config
+from . import Debounce
+
+# HW Enabled-specific stuff
 
 if config.general['hardware_enabled']:
-  from Hardware.ShiftInput import NoteModule
-  noteModule = NoteModule()
+  from . import ShiftInput
+  noteModule = ShiftInput.NoteModule()
 
-class Input:
-  char = None
+  # Debounce instances
+  noteUpDb = Debounce.Debounce()
+  noteDownDb = Debounce.Debounce()
+  layerUpDb = Debounce.Debounce()
+  layerDownDb = Debounce.Debounce()
+  octaveUpDb = Debounce.Debounce()
+  octaveDownDb = Debounce.Debounce()
+  channelUpDb = Debounce.Debounce()
+  channelDownDb = Debounce.Debounce()
+  sustainDb = Debounce.Debounce()
+  armDb = Debounce.Debounce()
+  
+#class Input:
+#  char = None
 
 
 def doInput(self, char):
@@ -60,6 +75,12 @@ def doInput(self, char):
   elif char == ord('z'):
     return "showKeys"
 
+  elif char == ord('v'):
+    return "noteUp"
+
+  elif char == ord('b'):
+    return "noteDown"
+
   # GPIO INPUT
   if config.general['hardware_enabled']: 
     # GPIO Input String Layout (10 bits):
@@ -68,42 +89,73 @@ def doInput(self, char):
     # 2: noteLayerUp
     # 3: octaveDown
     # 4: midiChannelDown
-    # 5: sustain
-    # 6: noteModuleEnable/Arm
+    # 5: sustainDb
+    # btnSustain: noteModuleEnable/Arm
     # 7: midiChannelUp
     # 8: octaveUp
     # 9: noteLayerDown
-    
+
+    # Read inputs; set debouncing state    
     hwInput = noteModule.readData()
     
     btnCurrentNoteUp = hwInput[0]
+    noteUpDb.setState(btnCurrentNoteUp, True)
+    
     btnCurrentNoteDown = hwInput[1]
+    noteDownDb.setState(btnCurrentNoteDown, True)
+    
     btnNoteLayerUp = hwInput[2]
-    btnOctaveDown = hwInput[3]
-    btnMidiChannelDown = hwInput[4]
-    btnSustain = hwInput[5]
-    btnArm = hwInput[6]
-    btnMidiChannelUp = hwInput[7]
-    btnOctaveUp = hwInput[8]
-    btnNoteLayerDown = hwInput[9]
+    layerUpDb.setState(btnNoteLayerUp, True)
 
-    if btnCurrentNoteUp == '1':
+    btnOctaveDown = hwInput[3]
+    octaveDownDb.setState(btnOctaveDown, True)
+
+    btnMidiChannelDown = hwInput[4]
+    channelUpDb.setState(btnOctaveDown, True)
+    
+    btnSustain = hwInput[5]
+    sustainDb.setState(btnSustain, True)
+
+    btnArm = hwInput[6]
+    armDb.setState(btnArm, True)
+    
+    btnMidiChannelUp = hwInput[7]
+    channelUpDb.setState(btnMidiChannelUp, True)
+    
+    btnOctaveUp = hwInput[8]
+    octaveUpDb.setState(btnOctaveUp, True)
+    
+    btnNoteLayerDown = hwInput[9]
+    layerDownDb.setState(btnNoteLayerDown, True)
+
+
+    # Output returns
+    if btnCurrentNoteUp == '1' and noteUpDb.checkDebounce():
       return "noteUp"
-    elif btnCurrentNoteDown == '1':
+
+    elif btnCurrentNoteDown == '1' and noteDownDb.checkDebounce():
       return "noteDown"
-    elif btnNoteLayerUp == '1':
+
+    elif btnNoteLayerUp == '1' and layerUpDb.checkDebounce():
       return "layerUp"
-    elif btnNoteLayerDown == '1':
+
+    elif btnNoteLayerDown == '1' and layerDownDb.checkDebounce():
       return "layerDown"
-    elif btnOctaveUp == '1':
+
+    elif btnOctaveUp == '1' and octaveUpDb.checkDebounce():
       return "octaveUp"
-    elif btnOctaveDown == '1':
+
+    elif btnOctaveDown == '1' and octaveDownDb.checkDebounce():
       return "octaveDown"
-    elif btnMidiChannelUp == '1':
+
+    elif btnMidiChannelUp == '1' and channelUpDb.checkDebounce():
       return "midiChannelUp"
-    elif btnMidiChannelDown == '1':
+
+    elif btnMidiChannelDown == '1' and channelDownDb.checkDebounce():
       return "midiChannelDown"
-    elif btnSustain == '1':
+
+    elif btnSustain == '1' and sustainDb.checkDebounce():
       return "toggleSustain"
-    elif btnArm == '1':
+
+    elif btnArm == '1' and armDb.checkDebounce():
       return "toggleArm"

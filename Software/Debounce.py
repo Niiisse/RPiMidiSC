@@ -10,7 +10,7 @@ import time, config
 #    		if bpmPlusDb.checkDebounce():
 #      		bpmUp()
 #
-#  		elif not btPlus and bpmPlusDb.btDown:
+#  		elif not btPlus and bpmPlusDb.btDown: << unnecessary?
 #    		bpmPlusDb.setState(btPlus)
 #
 #		By Niisse (2021-04-16)
@@ -52,7 +52,15 @@ class Debounce:
 
 		return canGo  															# Signals return
 
-	def setState(self, btState):									# Sets current button state
+	def setState(self, btState, stringType):			# Sets current button state
+
+		# String parsing
+		if stringType:
+			if btState == '1':
+				btState = True
+			elif btState == '0':
+				btState = False
+
 		if not self.btDown and btState:								# is button down flag not already set, and button is pressed?
 			self.btDown = True														# Set flag
 			self.btUp = False															# Set flag

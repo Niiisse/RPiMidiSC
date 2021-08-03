@@ -18,7 +18,7 @@ class PatternStep():
     self.layer = 0
     self.sustain = False
     self.arm = True
-    
+
   def disableStep(self):
     # Disables step
 
@@ -43,3 +43,21 @@ class PatternStep():
     # Gets state of enabled
     
     return self.enabled
+
+  def noteUp(self):
+    # Increments current note
+    # TODO: add check for notelayer
+
+    if self.note < 12:
+      self.note += 1
+    else: 
+      self.note = 0
+
+  def noteDown(self):
+    # Decrements current note
+    # TODO: add check for notelayer
+
+    if self.note > 0:
+      self.note -= 1
+    else:
+      self.note = 12

@@ -48,7 +48,14 @@ class NoteLayer:
       self.midiChannel += 1
     else:
       self.midiChannel = 0
-    
+
+  def channelDown(self):
+    # Increment current midi channel
+
+    if self.midiChannel > 0:
+      self.midiChannel -= 1
+    else:
+      self.midiChannel = 9
 
   def toggleSustain(self):
     # Toggles sustain on/off

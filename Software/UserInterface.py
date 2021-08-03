@@ -588,9 +588,9 @@ def createOutputString(sequencer):
 
 	# Sustain Bit
 	if currentStep.noteLayers[currentStep.selectedLayer[0]].sustain:
-		octaveString[7] = '1'
+		octaveString = octaveString[:-1] + '1'
 	else:
-		octaveString[7] = '0'
+		octaveString[7] = octaveString[:-1] + '0'
 
 	# OUTPUT #
 	 

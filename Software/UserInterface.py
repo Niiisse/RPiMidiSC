@@ -530,7 +530,7 @@ def createOutputString(sequencer):
 	ledString = ""
 	ledState = ""
 	
-	for i in range(sequencer.sequencerSteps -1):
+	for i in range(sequencer.sequencerSteps):
 		# Gon explain this one in detail cus ternary statements can be confusing to read
 		# Loop over all steps in current Pattern
 		# ledState sets what the potential state is going to be if this is the selected step.

@@ -85,7 +85,7 @@ def updateUi():
 	drawPatternWindow(Ui.patternWin, Ui.sequencer)
 	drawSequencer(Ui.seqwin, Ui.sequencer)										# Draws sequencer
 	Ui.sequencer.timer()													# Manages sequencer timer
-	drawDebugBar(Ui.window, Ui.outputByteString)							# Draws debug bar
+	#drawDebugBar(Ui.window, Ui.outputByteString)							# Draws debug bar
 
 	Ui.keysLastFrame = drawKeybinds(Ui.window, Ui.showKeyBinds, Ui.keysLastFrame, Ui.keyBinds)	# Draws the keyBindings, clears it only when necessary
 
@@ -530,7 +530,7 @@ def createOutputString(sequencer):
 	ledString = ""
 	ledState = ""
 	
-	for i in range(16):
+	for i in range(sequencer.sequencerSteps -1):
 		# Gon explain this one in detail cus ternary statements can be confusing to read
 		# Loop over all steps in current Pattern
 		# ledState sets what the potential state is going to be if this is the selected step.

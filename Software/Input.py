@@ -97,7 +97,7 @@ def doInput(self, char):
     # 3: octaveDown
     # 4: midiChannelDown
     # 5: sustainDb
-    # btnSustain: noteModuleEnable/Arm
+    # 6: noteModuleEnable/Arm
     # 7: midiChannelUp
     # 8: octaveUp
     # 9: noteLayerUp

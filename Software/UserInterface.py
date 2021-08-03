@@ -74,7 +74,7 @@ def updateUi():
 	# Clamps for keeping various vars within bounds
 	#clampSequencerStep(Ui.sequencer) 		# TODO: move to Sequencer, create some Sequencer.update def. 
 																			# That update call prolly shouldn't be in UI, either.
-	Ui.sequencer.stepSequencer() 				# TODO: move to update function in seq
+	#Ui.sequencer.stepSequencer() 				# TODO: move to update function in seq
 	clampPatternStepping(Ui.sequencer)
 	clampPendingStepping(Ui.sequencer)
 

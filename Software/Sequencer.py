@@ -69,7 +69,10 @@ class Sequencer:
       # 60 / bpm for changing bpm to bps; / 4 for sequencer spacing purposes)
       
       if time.perf_counter() - self.tic > (60 / self.bpm / 4):
-        self.seqstep += self.stepSize
+        if self.seqstep < self.sequencerSteps - 1:
+          self.seqstep += self.stepSize
+        else:
+          self.finalStep()
         self.timerShouldTick = True
 
   def toggleEditMode(self):
@@ -90,22 +93,21 @@ class Sequencer:
     self.patternStep += changeValue
     # TODO: clamping?
 
-  def stepSequencer(self):
-    # Steps the sequencer. Handles pattern changing and such as well
+  def finalStep(self):
+    # Handles pattern changing and such as well
 
     # Clamp step; roll back when too high and process pattern stuff
-    if self.seqstep > self.sequencerSteps - self.stepSize:
-      self.seqstep = 0
+    self.seqstep = 0
 
-      # Apply pending pattern if applicable...
-      if self.patternChange != 0:
-        self.changePendingPattern()
+    # Apply pending pattern if applicable...
+    if self.patternChange != 0:
+      self.changePendingPattern()
 
-      # Else, increment pattern by 1
-      else:
-        self.patternStep += 1
+    # Else, increment pattern by 1
+    else:
+      self.patternStep += 1
     
-    # Stepping backwards?
-    elif self.seqstep < 0:
-      self.seqstep = self.sequencerSteps
-      self.patternStep -= 1
+    # # Stepping backwards?
+    # elif self.seqstep < 0:
+    #   self.seqstep = self.sequencerSteps
+    #   self.patternStep -= 1

@@ -41,3 +41,8 @@ class NoteLayer:
     
     else:
       self.octave = 9
+
+  def toggleSustain(self):
+    # Toggles sustain on/off
+    
+    self.sustain = False if self.sustain else True

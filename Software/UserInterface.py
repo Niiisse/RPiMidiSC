@@ -595,7 +595,7 @@ def createOutputString(sequencer):
 
 	# Note layer bit
 	if currentStep.checkOtherLayers():
-		layerString = layerString[:-1] + '1'
+		layerString = layerString[:-1] + '0'
 
 	# Sustain Bit
 	if currentStep.noteLayers[currentStep.selectedLayer[0]].sustain:

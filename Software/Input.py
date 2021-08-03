@@ -75,19 +75,27 @@ def doInput(self, char):
   elif char == ord('z'):
     return "showKeys"
 
-  # add to list
+  # Note up/down
   elif char == ord('b'):
     return "noteUp"
 
   elif char == ord('v'):
     return "noteDown"
 
+  # Layer up/down
   elif char == ord('f'):
     return "layerUp"
 
   elif char == ord('g'):
     return "layerDown"
 
+  # octave up/down
+  elif char == ord('x'):
+    return "octaveUp"
+
+  elif char == ord('c'):
+    return "octaveDown"
+    
   # GPIO INPUT
   if config.general['hardware_enabled']: 
     # GPIO Input String Layout (10 bits):

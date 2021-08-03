@@ -563,15 +563,12 @@ def createOutputString(sequencer):
 
 	# NOTEMODULE #
 	# TODO: set last layerString bit correctly
-	# TODO: set last channelString bit (sustain) correctly
-	# FIXME: need to sort out the 15/16 difference in seqstep stuff
 
 	noteString = "11111110"
 	layerString = "11111110"
 	octaveString = "11111110"
 	channelString = "11111111"
 
-	#if sequencer.seqstep <= 15:		# FIXME: this shouldn't need to be checked.
 	currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
 
 	noteString = convertDecimalToNote(currentStep.noteLayers[currentStep.selectedLayer[0]].note)	# TODO: this 0 would be replaced with i for note control modules

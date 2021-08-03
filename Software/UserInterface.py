@@ -571,26 +571,26 @@ def createOutputString(sequencer):
 	octaveString = "1111111"
 	channelString = "11111111"
 
-	if sequencer.seqstep <= 15:		# FIXME: this shouldn't need to be checked.
-		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
+	#if sequencer.seqstep <= 15:		# FIXME: this shouldn't need to be checked.
+	currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
 
-		noteString = convertDecimalToNote(currentStep.noteLayers[currentStep.selectedLayer[0]].note)	# TODO: this 0 would be replaced with i for note control modules
-		layerString = convertDecimalToByteString(currentStep.selectedLayer[0])
+	noteString = convertDecimalToNote(currentStep.noteLayers[currentStep.selectedLayer[0]].note)	# TODO: this 0 would be replaced with i for note control modules
+	layerString = convertDecimalToByteString(currentStep.selectedLayer[0])
 
-		if currentStep.noteLayers[currentStep.selectedLayer[0]].note != 0: 
-			# Checks whether it should display the values or write - (in case of disabled note)
+	if currentStep.noteLayers[currentStep.selectedLayer[0]].note != 0: 
+		# Checks whether it should display the values or write - (in case of disabled note)
 
-			octaveString = convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].octave)
-			channelString = convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].midiChannel)
-		else:
-			octaveString = "1111111"
-			channelString = "11111111"
+		octaveString = convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].octave)
+		channelString = convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].midiChannel)
+	else:
+		octaveString = "1111111"
+		channelString = "11111111"
 
-		# sustain
-		if currentStep.noteLayers[currentStep.selectedLayer[0]].sustain:
-			octaveString += '1'
-		else:
-			octaveString += '0'
+	# sustain
+	if currentStep.noteLayers[currentStep.selectedLayer[0]].sustain:
+		octaveString += '1'
+	else:
+		octaveString += '0'
 
 	# OUTPUT #
 	 

@@ -105,8 +105,10 @@ class Sequencer:
       self.changePendingPattern()
 
     # Else, increment pattern by 1
-    else:
+    elif self.patternStep < self.patternAmount:
       self.patternStep += 1
+    else:
+      self.patternStep = 1
     
     # # Stepping backwards?
     # elif self.seqstep < 0:

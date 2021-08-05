@@ -1,7 +1,7 @@
 import time
 import rtmidi
 
-midiout = rtmidi.MidiOut()
+midiout = rtmidi.MidiOut(rtapi="API_LINUX_ALSA", name="RPiMIDISC RTMIDI")
 available_ports = midiout.get_ports()
 
 if available_ports:

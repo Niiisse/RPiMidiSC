@@ -1,5 +1,5 @@
-import Software.UserInterface as ui
-import Software.GlobalVars
+import Modules.UserInterface as ui
+
 import config
 import sys
 from pprint import pprint
@@ -7,14 +7,14 @@ from pprint import pprint
 # Check whether the hardware interface is enabled or disabled in config
 
 if config.general['hardware_enabled']:
-  import Hardware.HardwareInterface as HWi
+  import Modules.HardwareInterface as HWi
   sr = HWi.ShiftRegister()
 
 # Program start
 
 print("RPiMidiSC")
 ui.startUI()
-gv = Software.GlobalVars.GlobalVars()  #
+#gv = Modules.GlobalVars.GlobalVars()  #
 
 while (True):
   # Main program loop

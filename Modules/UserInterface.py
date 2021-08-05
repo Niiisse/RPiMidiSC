@@ -5,7 +5,7 @@ import time
 import math
 import config
 
-import Software.Input as Input
+from . import Input
 from . import GlobalVars
 from . import Blink
 from . import Sequencer

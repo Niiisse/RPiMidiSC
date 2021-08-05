@@ -50,7 +50,7 @@ class MidiInterface:
 
   def playNote(self, midiData):
     # TODO: figure out how to decide if currently playing notes should be stopped
-    #       create a list of all notes played in one step; check in next step to see whether they 
+    #       create a list of all notes played in one step; check in next step to seep whether they 
     #       are sustained (let play) or not (note_off)
     #       output.write for multiple
 

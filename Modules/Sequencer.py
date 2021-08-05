@@ -49,7 +49,10 @@ class Sequencer:
   def togglePlay(self):
     # Prepare to be amazed. Toggles pause/play
 
-    self.playing = False if self.playing else True
+    if self.playing: self.playing = False
+    else:
+      self.playing = True
+      self.sendMidi()       # Call this so the first step starts playing when unpausing
 
   def tickTimer(self):
     # 'Ticks' timer; sets new timestamp for comparison
@@ -130,10 +133,11 @@ class Sequencer:
     midiData = []     # List of noteLayer objects
 
     # Check all noteLayers in current step
-    for noteLayer in self.patterns[self.patternStep].patternSteps[self.seqstep].noteLayers:
+    if self.patterns[self.patternStep].patternSteps[self.seqstep].enabled:
+      for noteLayer in self.patterns[self.patternStep].patternSteps[self.seqstep].noteLayers:
 
-      # Make sure we get notes that are played or notes that are sustained
-      if noteLayer.note != 0: midiData.append(noteLayer)
-      elif noteLayer.note == 0 and noteLayer.sustain: midiData.append(noteLayer)
+        # Make sure we get notes that are played or notes that are sustained
+        if noteLayer.note != 0: midiData.append(noteLayer)
+        elif noteLayer.note == 0 and noteLayer.sustain: midiData.append(noteLayer)
 
-    self.midiInterface.playNote(midiData)
+      self.midiInterface.playNote(midiData)

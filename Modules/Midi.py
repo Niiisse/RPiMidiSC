@@ -20,18 +20,18 @@ class MidiInterface:
 
     # Dict that holds my note structure (1-12) and converts it to midi note
     self.noteToMidi = {
-      1: 24,      # C
-      2: 25,      # C#
-      3: 26,      # D
-      4: 27,      # D#
-      5: 28,      # E
-      6: 29,      # F
-      7: 30,      # F#
-      8: 31,      # G
-      9: 32,      # G#
-      10: 33,     # A
-      11: 34,     # A#
-      12: 35,     # B
+      1: 12,      # C
+      2: 13,      # C#
+      3: 14,      # D
+      4: 15,      # D#
+      5: 16,      # E
+      6: 17,      # F
+      7: 18,      # F#
+      8: 19,      # G
+      9: 20,      # G#
+      10: 21,     # A
+      11: 22,     # A#
+      12: 23,     # B
     }
 
   def calculateNoteValue(self, note, octave):
@@ -43,7 +43,7 @@ class MidiInterface:
 
     # No disabled note
     if note != 0:
-      outputNote = self.noteToMidi[note] + ((octave-1)*12)
+      outputNote = self.noteToMidi[note] + (octave*12)
       return outputNote
 
     pass

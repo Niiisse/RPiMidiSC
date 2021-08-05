@@ -34,7 +34,7 @@ class Sequencer:
     self.pendingPattern = 0                                                           # Used in changing pattern
     self.patternEditing = False                                                       # Currently in editing mode?
 
-    self.midi = Midi.MidiInterface()
+    self.midiInterface = Midi.MidiInterface()
 
   def play(self):
     # Plays. (i don't know what you expected, tbh)
@@ -71,13 +71,7 @@ class Sequencer:
       # 60 / bpm for changing bpm to bps; / 4 for sequencer spacing purposes)
       
       if time.perf_counter() - self.tic > (60 / self.bpm / 4):
-        #self.sequencerStep()
-        if self.seqstep < self.sequencerSteps - 1:
-          self.seqstep += self.stepSize
-        else:
-          self.finalStepInPattern()
-
-        self.sendMidi()
+        self.sequencerStep()
         self.timerShouldTick = True
 
   def toggleEditMode(self):
@@ -101,12 +95,13 @@ class Sequencer:
   def sequencerStep(self):
     # Executes each step
 
+    # Checks if we should increase seqstep or roll back
     if self.seqstep < self.sequencerSteps - 1:
       self.seqstep += self.stepSize
     else:
       self.finalStepInPattern()
-
-    self.sendMidi()
+    
+    self.sendMidi() # Midi Output
 
   def finalStepInPattern(self):
     # Handles pattern changing and such as well
@@ -130,5 +125,15 @@ class Sequencer:
     #   self.patternStep -= 1
 
   def sendMidi(self):
-    self.midi.playNote()
-    pass
+    # Collects all notes that should get played
+
+    midiData = []     # List of noteLayer objects
+
+    # Check all noteLayers in current step
+    for noteLayer in self.patterns[self.patternStep].patternSteps[self.seqstep].noteLayers:
+
+      # Make sure we get notes that are played or notes that are sustained
+      if noteLayer.note != 0: midiData.append(noteLayer)
+      elif noteLayer.note == 0 and noteLayer.sustain: midiData.append(noteLayer)
+
+    self.midiInterface.playNote(midiData)

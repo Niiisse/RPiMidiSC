@@ -6,22 +6,71 @@ import pygame.midi
 class MidiInterface:
 
   def __init__(self):
-    pygame.midi.init()
+    pygame.midi.init()                    # Init pygame midi library
 
-    #print(pygame.midi.get_default_output_id())
-    #print(pygame.midi.get_device_info(2))
+    self.velocity = 100
+
     # TODO: Figure out way to select midi device
 
-    self.player = pygame.midi.Output(2)
+    self.interface = pygame.midi.Output(2)
+    self.interface.set_instrument(0, 0)      # instrument id, channel #TODO: use set instrument for midi channel change
+    
+    # For checking whether notes should be disabled
+    self.pastNotes = []
 
-    self.player.set_instrument(0)
+    # Dict that holds my note structure (1-12) and converts it to midi note
+    self.noteToMidi = {
+      1: 24,      # C
+      2: 25,      # C#
+      3: 26,      # D
+      4: 27,      # D#
+      5: 28,      # E
+      6: 29,      # F
+      7: 30,      # F#
+      8: 31,      # G
+      9: 32,      # G#
+      10: 33,     # A
+      11: 34,     # A#
+      12: 35,     # B
+    }
 
-    # print('Playing...')
+  def calculateNoteValue(self, note, octave):
+    # My notes to MIDI notes
+    # If note == 0 && sustain = 1, don't cut note
+    # if note == 0 && sustain = 0, note off
+    # Each octave gives +12
+    # output
 
-  def playNote(self):
-    self.player.note_off(64)
+    # No disabled note
+    if note != 0:
+      outputNote = self.noteToMidi[note] + ((octave-1)*12)
+      return outputNote
 
-    self.player.note_on(64, 100)
+    pass
+
+  def playNote(self, midiData):
+    # TODO: figure out how to decide if currently playing notes should be stopped
+    #       create a list of all notes played in one step; check in next step to see whether they 
+    #       are sustained (let play) or not (note_off)
+    #       output.write for multiple
+
+    # Loop over received midiData
+    for noteLayer in midiData:
+      
+      # New note
+      if noteLayer.note != 0:
+        outputNote = self.calculateNoteValue(noteLayer.note, noteLayer.octave)
+        self.interface.note_on(outputNote, self.velocity, noteLayer.channel)
+        
+      # Sustained old note
+      #if noteLayer.note
+      #TODO: figure out way to make all others stop
+
+    #self.pastNotes.append(outputNote)
+    
+    #self.player.note_off(outputNote)
+
+    #self.interface.note_on(outputNote, 100)
 
   def cleanUp(self):
     pygame.midi.quit()

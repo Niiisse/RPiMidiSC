@@ -63,8 +63,10 @@ class MidiInterface:
     for idx, playedNote in enumerate(self.pastNotes):   # playedNote[0] = note; [1] = channel
       
       for noteLayer in midiData:
-        if not noteLayer.midiChannel == playedNote[1] and not noteLayer.note == 0 and not noteLayer.sustain:
-
+        if noteLayer.midiChannel == playedNote[1] and noteLayer.note == 0 and noteLayer.sustain:
+          # Note is to be sustained
+          pass
+        else:
           # Note doesn't match criteria for staying - add to yeet list
           self.interface.note_off(playedNote[0], 0, playedNote[1])    # Stop playing note
           toRemove.append(idx)                                        # Add idx to removelist      

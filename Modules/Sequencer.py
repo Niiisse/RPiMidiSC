@@ -52,8 +52,9 @@ class Sequencer:
     if self.playing: self.playing = False
     else:
       self.playing = True
-      self.seqstep -= 1
-      self.sendMidi()       # Call this so the first step starts playing when unpausing
+      #self.seqstep -= 1
+      self.sequencerStep
+      #self.sendMidi()       # Call this so the first step starts playing when unpausing
 
   def tickTimer(self):
     # 'Ticks' timer; sets new timestamp for comparison
@@ -98,6 +99,7 @@ class Sequencer:
 
   def sequencerStep(self):
     # Executes each step
+    self.sendMidi() # Midi Output
 
     # Checks if we should increase seqstep or roll back
     if self.seqstep < self.sequencerSteps - 1:
@@ -105,7 +107,6 @@ class Sequencer:
     else:
       self.finalStepInPattern()
     
-    self.sendMidi() # Midi Output
 
   def finalStepInPattern(self):
     # Handles pattern changing and such as well

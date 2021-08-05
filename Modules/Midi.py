@@ -60,7 +60,7 @@ class MidiInterface:
       # New note
       if noteLayer.note != 0:
         outputNote = self.calculateNoteValue(noteLayer.note, noteLayer.octave)
-        self.interface.note_on(outputNote, self.velocity, noteLayer.channel)
+        self.interface.note_on(outputNote, self.velocity, noteLayer.midiChannel)
         
       # Sustained old note
       #if noteLayer.note

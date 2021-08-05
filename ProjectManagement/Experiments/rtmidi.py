@@ -1,20 +1,24 @@
-import time
 import rtmidi
 
-midiout = rtmidi.MidiOut(rtapi="API_LINUX_ALSA", name="RPiMIDISC RTMIDI")
-available_ports = midiout.get_ports()
+midiin = rtmidi.RtMidiIn()
 
-if available_ports:
-    midiout.open_port(0)
+def print_message(midi):
+    if midi.isNoteOn():
+        print('ON: ', midi.getMidiNoteName(midi.getNoteNumber()), midi.getVelocity())
+    elif midi.isNoteOff():
+        print('OFF:', midi.getMidiNoteName(midi.getNoteNumber()))
+    elif midi.isController():
+        print('CONTROLLER', midi.getControllerNumber(), midi.getControllerValue())
+
+ports = range(midiin.getPortCount())
+if ports:
+    for i in ports:
+        print(midiin.getPortName(i))
+    print("Opening port 0!") 
+    midiin.openPort(0)
+    while True:
+        m = midiin.getMessage(250) # some timeout in ms
+        if m:
+            print_message(m)
 else:
-    midiout.open_virtual_port("My virtual output")
-
-with midiout:
-    note_on = [0x90, 60, 112] # channel 1, middle C, velocity 112
-    note_off = [0x80, 60, 0]
-    midiout.send_message(note_on)
-    time.sleep(0.5)
-    midiout.send_message(note_off)
-    time.sleep(0.1)
-
-del midiout
+    print('NO MIDI INPUT PORTS!')

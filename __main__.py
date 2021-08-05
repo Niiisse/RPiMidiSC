@@ -12,11 +12,11 @@ if config.general['hardware_enabled']:
   sr = HWi.ShiftRegister()
 
 # Program start
+midi = Midi.Midi()
 
 print("RPiMidiSC")
-ui.startUI()
+ui.startUI(midi)
 
-midi = Midi.Midi()
 
 
 while (True):

@@ -17,15 +17,16 @@ class Midi:
   else:
     midiOut.open_virtual_port("RPiMIDISC Virtual Out")
 
-  with midiOut:
-    note_on = [0x90, 60, 112] # channel 1, middle C, velocity 112
-    note_off = [0x80, 60, 0]
-    midiOut.send_message(note_on)
-    time.sleep(0.5)
-    midiOut.send_message(note_off)
-    time.sleep(0.1)
+  def playNoteTest(self):
+    with self.midiOut:
+      note_on = [0x90, 60, 112] # channel 1, middle C, velocity 112
+      note_off = [0x80, 60, 0]
+      self.midiOut.send_message(note_on)
+      time.sleep(0.5)
+      self.midiOut.send_message(note_off)
+      time.sleep(0.1)
 
-  del midiOut
+  #del midiOut
 
 
 

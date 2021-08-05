@@ -14,6 +14,9 @@ from . import Sequencer
 # Handles, well, user interface. Reports program state back to main with a return.
 
 class Ui:
+	def __init__(self, midi):
+		self.midi = midi
+
 	app_version = config.general['app_version']
 	outputByteString = "no data"
 
@@ -50,7 +53,7 @@ class Ui:
 	sequencer = None
 
 	blink = Blink.Blink(config.general['blinkTime'])
-	sequencer = Sequencer.Sequencer(config.pattern['patternAmount'], config.sequencer['seqstepmax'], config.sequencer['bpm'], config.sequencer['seqstepsize'])
+	sequencer = Sequencer.Sequencer(config.pattern['patternAmount'], config.sequencer['seqstepmax'], config.sequencer['bpm'], config.sequencer['seqstepsize'], self.midi)
 	
 def main():
 	# Sets up main window

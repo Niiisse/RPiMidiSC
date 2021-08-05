@@ -15,9 +15,7 @@ if config.general['hardware_enabled']:
 midi = Midi.Midi()
 
 print("RPiMidiSC")
-ui.startUI(midi)
-
-
+ui.startUI()
 
 while (True):
   # Main program loop

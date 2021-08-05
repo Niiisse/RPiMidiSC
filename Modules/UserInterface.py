@@ -53,7 +53,7 @@ class Ui:
 	sequencer = None
 
 	blink = Blink.Blink(config.general['blinkTime'])
-	sequencer = Sequencer.Sequencer(config.pattern['patternAmount'], config.sequencer['seqstepmax'], config.sequencer['bpm'], config.sequencer['seqstepsize'], self.midi)
+	sequencer = Sequencer.Sequencer(config.pattern['patternAmount'], config.sequencer['seqstepmax'], config.sequencer['bpm'], config.sequencer['seqstepsize'])
 	
 def main():
 	# Sets up main window

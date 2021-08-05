@@ -1,5 +1,5 @@
 import time
-from . import Pattern, Clamp
+from . import Pattern, Clamp, Midi
 
 # Sequencer 
 #
@@ -13,7 +13,7 @@ class Sequencer:
 
   clamp = Clamp.clamp
 
-  def __init__(self, patternAmount, sequencerSteps, bpm, seqstepsize, midi):
+  def __init__(self, patternAmount, sequencerSteps, bpm, seqstepsize):
 
     # Sequencer Variables
     self.playing = True                           # Whether the sequencer is currently playing or paused 
@@ -34,7 +34,7 @@ class Sequencer:
     self.pendingPattern = 0                                                           # Used in changing pattern
     self.patternEditing = False                                                       # Currently in editing mode?
 
-    self.midi = midi
+    self.midi = Midi.Midi()
 
   def play(self):
     # Plays. (i don't know what you expected, tbh)
@@ -71,7 +71,13 @@ class Sequencer:
       # 60 / bpm for changing bpm to bps; / 4 for sequencer spacing purposes)
       
       if time.perf_counter() - self.tic > (60 / self.bpm / 4):
-        self.sequencerStep()
+        #self.sequencerStep()
+        if self.seqstep < self.sequencerSteps - 1:
+          self.seqstep += self.stepSize
+        else:
+          self.finalStepInPattern()
+
+        self.sendMidi()
         self.timerShouldTick = True
 
   def toggleEditMode(self):

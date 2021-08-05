@@ -3,7 +3,7 @@
 class NoteLayer:
   def __init__(self):
     self.note = 0
-    self.octave = 3
+    self.octave = 2
     self.midiChannel = 0
     self.layer = 0
     self.sustain = False

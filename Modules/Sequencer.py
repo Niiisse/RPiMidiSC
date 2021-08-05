@@ -52,6 +52,7 @@ class Sequencer:
     if self.playing: self.playing = False
     else:
       self.playing = True
+      self.seqstep -= 1
       self.sendMidi()       # Call this so the first step starts playing when unpausing
 
   def tickTimer(self):

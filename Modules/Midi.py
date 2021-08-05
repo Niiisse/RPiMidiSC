@@ -60,23 +60,24 @@ class MidiInterface:
     # an entry (criteria: no new note on channel but sustain is enabled), don't delete it and check next time
 
     toRemove = []         # Will hold indexes of items that should be removed from pastNotes
-    for idx, playedNote in enumerate(self.pastNotes):   # playedNote[0] = note; [1] = channel
-      
-      self.interface.note_off(playedNote[0], 0, playedNote[1])    # Stop playing note
-      toRemove.append(idx)                                        # Add idx to removelist      
-
-    for item in toRemove:                                       # Loop over to-be-removed items
-      try: del self.pastNotes[item]                                    # YEEEET
-      except: pass
-      # FIXME: find out what goes wrong here
-
-    toRemove.clear()                                            # Clear list. Is this really necessary?
-      
-
-    ## PLAYING NEW NOTES ##
+  
     
     # Loop over received midiData
     for noteLayer in midiData: 
+      
+      ## DELETE OLD NOTES?
+      for idx, playedNote in enumerate(self.pastNotes):   # playedNote[0] = note; [1] = channel
+      
+        self.interface.note_off(playedNote[0], 0, playedNote[1])    # Stop playing note
+        toRemove.append(idx)                                        # Add idx to removelist      
+
+      for item in toRemove:                                       # Loop over to-be-removed items
+        try: del self.pastNotes[item]                                    # YEEEET
+        except: pass
+        # FIXME: find out what goes wrong here
+
+      toRemove.clear()                                            # Clear list. Is this really necessary?
+      ## PLAY NEW NOTES
       
       # New note
       if noteLayer.note != 0:

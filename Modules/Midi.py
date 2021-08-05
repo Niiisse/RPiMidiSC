@@ -60,33 +60,39 @@ class MidiInterface:
     # an entry (criteria: no new note on channel but sustain is enabled), don't delete it and check next time
 
     toRemove = []         # Will hold indexes of items that should be removed from pastNotes
-  
+    toKeep = []
     
     # Loop over received midiData
     for noteLayer in midiData: 
       
       ## DELETE OLD NOTES?
-      for idx, playedNote in enumerate(self.pastNotes):   # playedNote[0] = note; [1] = channel
-      
-        self.interface.note_off(playedNote[0], 0, playedNote[1])    # Stop playing note
-        toRemove.append(idx)                                        # Add idx to removelist      
+      for idx, playedNote in enumerate(self.noteOnList):   # playedNote[0] = note; [1] = channel
+        
+        if playedNote[1] == noteLayer.midiChannel and noteLayer.note == 0 and noteLayer.sustain:
+          toKeep.append(idx)
+        
+        else:
+          self.interface.note_off(playedNote[0], 0, playedNote[1])    # Stop playing note
+          toRemove.append(idx)                                        # Add idx to removelist      
 
-      for item in toRemove:                                       # Loop over to-be-removed items
-        try: del self.pastNotes[item]                                    # YEEEET
-        except: pass
-        # FIXME: find out what goes wrong here
+      for idd, item in enumerate(toRemove):                            # Loop over to-be-removed items
+        if not idd in toKeep:
+          try: del self.pastNotes[item]                                    # YEEEET
+          except: pass
+          # FIXME: find out what goes wrong here
 
       toRemove.clear()                                            # Clear list. Is this really necessary?
+
       ## PLAY NEW NOTES
       
       # New note
       if noteLayer.note != 0:
         
-        outputNote = self.calculateNoteValue(noteLayer.note, noteLayer.octave)
-        self.interface.note_on(outputNote, self.velocity, noteLayer.midiChannel)
+        outputNote = self.calculateNoteValue(noteLayer.note, noteLayer.octave)    # Calculate note value; store it
+        self.interface.note_on(outputNote, self.velocity, noteLayer.midiChannel)  # Play it
         
-        playedNote = [outputNote, noteLayer.midiChannel]
-        self.pastNotes.append(playedNote)
+        playedNote = [outputNote, noteLayer.midiChannel]                          # Save as playedNote
+        self.noteOnList.append(playedNote)                                         # Add to list of played notes
 
     #self.pastNotes.append(outputNote)
     

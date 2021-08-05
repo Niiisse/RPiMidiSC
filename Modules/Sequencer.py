@@ -136,9 +136,9 @@ class Sequencer:
 
     if self.patterns[self.patternStep].patternSteps[self.seqstep].enabled:
       for noteLayer in self.patterns[self.patternStep].patternSteps[self.seqstep].noteLayers:
-
+        midiData.append(noteLayer)
         # Make sure we get notes that are played or notes that are sustained
-        if noteLayer.note != 0: midiData.append(noteLayer)
-        elif noteLayer.note == 0 and noteLayer.sustain: midiData.append(noteLayer)
+        #if noteLayer.note != 0: midiData.append(noteLayer)
+        #elif noteLayer.note == 0 and noteLayer.sustain: midiData.append(noteLayer)
 
       self.midiInterface.playNote(midiData)

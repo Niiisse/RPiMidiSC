@@ -441,11 +441,15 @@ def processInput(outputByteString, sequencer):
 	elif action == "noteUp":
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].noteUp()
+		
+		sequencer.sendMidi()
 
 	elif action == "noteDown":
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].noteDown()
 	
+		sequencer.sendMidi()
+		
 	# Note layer
 	elif action == "layerUp":
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]

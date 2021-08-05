@@ -6,7 +6,6 @@ import math
 import config
 
 from . import Input
-from . import GlobalVars
 from . import Blink
 from . import Sequencer
 

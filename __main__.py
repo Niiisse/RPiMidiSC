@@ -1,4 +1,5 @@
 import Modules.UserInterface as ui
+import Modules.Midi as Midi
 
 import config
 import sys
@@ -14,7 +15,9 @@ if config.general['hardware_enabled']:
 
 print("RPiMidiSC")
 ui.startUI()
-#gv = Modules.GlobalVars.GlobalVars()  #
+
+midi = Midi.Midi()
+
 
 while (True):
   # Main program loop

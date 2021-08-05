@@ -46,7 +46,7 @@ class MidiInterface:
 
     # No disabled note
     if note != 0:
-      outputNote = self.noteToMidi[note] + (octave*12)
+      outputNote = self.noteToMidi[note] + ((octave-1)*12)
       return outputNote
 
     pass

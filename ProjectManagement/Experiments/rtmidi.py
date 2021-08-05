@@ -1,38 +1,21 @@
-"""Show how to open an output port and send MIDI events."""
-
-from __future__ import print_function
-
-import logging
-import sys
+import pygame.midi
 import time
 
-from rtmidi.midiutil import open_midioutput
-from rtmidi.midiconstants import NOTE_OFF, NOTE_ON
+pygame.midi.init()
 
+print(pygame.midi.get_default_output_id())
+print(pygame.midi.get_device_info(0))
 
-log = logging.getLogger('midiout')
-logging.basicConfig(level=logging.DEBUG)
+player = pygame.midi.Output(0)
 
-# Prompts user for MIDI input port, unless a valid port number or name
-# is given as the first argument on the command line.
-# API backend defaults to ALSA on Linux.
-port = sys.argv[1] if len(sys.argv) > 1 else None
+player.set_instrument(0)
 
-try:
-    midiout, port_name = open_midioutput(port)
-except (EOFError, KeyboardInterrupt):
-    sys.exit()
+print('Playing...')
 
-note_on = [NOTE_ON, 60, 112]  # channel 1, middle C, velocity 112
-note_off = [NOTE_OFF, 60, 0]
+player.note_on(64, 100)
+time.sleep(1)
+player.note_off(64)
 
-with midiout:
-    print("Sending NoteOn event.")
-    midiout.send_message(note_on)
-    time.sleep(1)
-    print("Sending NoteOff event.")
-    midiout.send_message(note_off)
-    time.sleep(0.1)
+print('Played')
 
-del midiout
-print("Exit.")
+pygame.midi.quit()

@@ -15,7 +15,6 @@ debounce = {
 sequencer = {
   # Sequencer window
 
-
   "bpm": 120,                 # Tempo
   "seqstep": 0,               # Current step of sequencer
   "seqstepmax": 16,           # Total sequencer steps
@@ -47,7 +46,7 @@ pattern = {
   "patternWinHeight": 5,      # Height of pattern window
   "patternWinWidth": 13,      # Width of pattern window
   "patternStep": 1,           # Current pattern step
-  "patternAmount": 4,         # Max amount of patterns
+  "patternAmount": 2,         # Max amount of patterns
   "patternMode": "auto"       # Auto mode makes pattern follow seqstep stuff
 }
 

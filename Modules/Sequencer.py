@@ -34,7 +34,7 @@ class Sequencer:
     self.pendingPattern = 0                                                           # Used in changing pattern
     self.patternEditing = False                                                       # Currently in editing mode?
 
-    self.midi = Midi.Midi()
+    self.midi = Midi.MidiInterface()
 
   def play(self):
     # Plays. (i don't know what you expected, tbh)

@@ -130,5 +130,5 @@ class Sequencer:
     #   self.patternStep -= 1
 
   def sendMidi(self):
-    #self.midi.playNoteTest()
+    self.midi.playNote()
     pass

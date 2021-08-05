@@ -10,17 +10,18 @@ class MidiInterface:
 
     #print(pygame.midi.get_default_output_id())
     #print(pygame.midi.get_device_info(2))
+    # TODO: Figure out way to select midi device
 
-    player = pygame.midi.Output(0)
+    self.player = pygame.midi.Output(2)
 
-    player.set_instrument(0)
+    self.player.set_instrument(0)
 
-    print('Playing...')
+    # print('Playing...')
 
-player.note_on(64, 100)
-time.sleep(1)
-player.note_off(64)
+  def playNote(self):
+    self.player.note_off(64)
 
-print('Played')
+    self.player.note_on(64, 100)
 
-pygame.midi.quit()
+  def cleanUp(self):
+    pygame.midi.quit()

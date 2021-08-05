@@ -56,24 +56,25 @@ class MidiInterface:
     #       output.write for multiple
     
     ## DISABLING OLD NOTES ##
-    # Compare current note. If channel matches and note = 0 (will always be sustain cus of sequencer code)
-    # don't turn it off. If no match was found on channel and no new note is played, turn off.
-    #
-    # [i for i in range(len(a)) if a[i] > 2]
-    #  > [2, 5]
+    # pastNotes is a list of notes that are still playing. If there's a new note that matches
+    # an entry (criteria: no new note on channel but sustain is enabled), don't delete it and check next time
 
     toRemove = []         # Will hold indexes of items that should be removed from pastNotes
-    for idx, playedNote in enumerate(self.pastNotes):
+    for idx, playedNote in enumerate(self.pastNotes):   # playedNote[0] = note; [1] = channel
+      
+      for noteLayer in midiData:
+        if not noteLayer.midiChannel == playedNote[1] and not noteLayer.note == 0 and not noteLayer.sustain:
 
-      # [0] = played note; [1] = channel
-      self.interface.note_off(playedNote[0], 0, playedNote[1])    # Stop playing note
-      toRemove.append(idx)                                        # Add idx to removelist
+          # Note doesn't match criteria for staying - add to yeet list
+          self.interface.note_off(playedNote[0], 0, playedNote[1])    # Stop playing note
+          toRemove.append(idx)                                        # Add idx to removelist      
 
     for item in toRemove:                                       # Loop over to-be-removed items
       try: del self.pastNotes[item]                                    # YEEEET
       except: pass
-      
-    toRemove.clear()                                            # Clear list
+      # FIXME: find out what goes wrong here
+
+    toRemove.clear()                                            # Clear list. Is this really necessary?
       
 
     ## PLAYING NEW NOTES ##

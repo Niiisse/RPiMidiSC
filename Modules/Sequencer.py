@@ -132,7 +132,8 @@ class Sequencer:
 
     midiData = []     # List of noteLayer objects
 
-    # Check all noteLayers in current step
+    # Check all noteLayers in current step, if that step is enabled; send their data, if relevant, to midi processing
+
     if self.patterns[self.patternStep].patternSteps[self.seqstep].enabled:
       for noteLayer in self.patterns[self.patternStep].patternSteps[self.seqstep].noteLayers:
 

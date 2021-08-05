@@ -126,7 +126,7 @@ def doInput(self, char):
     octaveDownDb.setState(btnOctaveDown, True)
 
     btnMidiChannelDown = hwInput[4]
-    channelUpDb.setState(btnOctaveDown, True)
+    channelDownDb.setState(btnOctaveDown, True)
     
     btnSustain = hwInput[5]
     sustainDb.setState(btnSustain, True)

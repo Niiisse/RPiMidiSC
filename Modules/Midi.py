@@ -60,26 +60,22 @@ class MidiInterface:
     # an entry (criteria: no new note on channel but sustain is enabled), don't delete it and check next time
 
     toRemove = []         # Will hold indexes of items that should be removed from pastNotes
-    toKeep = []
-    
+  
+    # TODO: sustain!?
+
     # Loop over received midiData
     for noteLayer in midiData: 
       
       ## DELETE OLD NOTES?
       for idx, playedNote in enumerate(self.noteOnList):   # playedNote[0] = note; [1] = channel
         
-        if playedNote[1] == noteLayer.midiChannel and noteLayer.note == 0 and noteLayer.sustain:
-          toKeep.append(idx)
-        
-        else:
-          self.interface.note_off(playedNote[0], 0, playedNote[1])    # Stop playing note
-          toRemove.append(idx)                                        # Add idx to removelist      
+        self.interface.note_off(playedNote[0], 0, playedNote[1])    # Stop playing note
+        toRemove.append(idx)                                        # Add idx to removelist      
 
-      for idd, item in enumerate(toRemove):                            # Loop over to-be-removed items
-        if not idd in toKeep:
-          try: del self.pastNotes[item]                                    # YEEEET
-          except: pass
-          # FIXME: find out what goes wrong here
+      for item in toRemove:                                       # Loop over to-be-removed items
+        try: del self.pastNotes[item]                                    # YEEEET
+        except: pass
+        # FIXME: find out what goes wrong here
 
       toRemove.clear()                                            # Clear list. Is this really necessary?
 
@@ -93,12 +89,6 @@ class MidiInterface:
         
         playedNote = [outputNote, noteLayer.midiChannel]                          # Save as playedNote
         self.noteOnList.append(playedNote)                                         # Add to list of played notes
-
-    #self.pastNotes.append(outputNote)
-    
-    #self.player.note_off(outputNote)
-
-    #self.interface.note_on(outputNote, 100)
 
   def cleanUp(self):
     pygame.midi.quit()

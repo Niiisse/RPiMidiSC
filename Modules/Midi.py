@@ -70,8 +70,9 @@ class MidiInterface:
       toRemove.append(idx)                                        # Add idx to removelist
 
     for item in toRemove:                                       # Loop over to-be-removed items
-      del self.pastNotes[item]                                    # YEEEET
-
+      try: del self.pastNotes[item]                                    # YEEEET
+      except: pass
+      
     toRemove.clear()                                            # Clear list
       
 

@@ -24,7 +24,7 @@ class Sequencer:
     self.patternChange = 0                                                            # Signals pattern change for next measure
     self.pendingPattern = 0                                                           # Used in changing pattern
     self.patternEditing = False                                                       # Currently in editing mode?
-
+    self.patternMode = "auto"                                                         # Auto loops patterns, single loops 1
     self.midiInterface = Midi.MidiInterface()
 
   def play(self):
@@ -88,19 +88,25 @@ class Sequencer:
     self.patternStep += changeValue
     # TODO: clamping?
 
+  def togglePatternMode(self):
+    """ Toggles pattern mode between auto or single """
+
+    self.patternMode = "auto" if self.patternMode == "single" else "single"
+
   def sequencerStep(self):
     # Executes each step
-    self.sendMidi() # Midi Output
+    self.sendMidi(False) # Midi Output
 
     # Checks if we should increase seqstep or roll back
     if self.seqstep < self.sequencerSteps - 1:
       self.seqstep += self.stepSize
     else:
       self.finalStepInPattern()
-    
 
   def finalStepInPattern(self):
-    # Handles pattern changing and such as well
+    """ Executed at the final step in a pattern
+    
+    Decides if pattern will be changed, depending on patternMode. """
 
     # Clamp step; roll back when too high and process pattern stuff
     self.seqstep = 0
@@ -109,11 +115,12 @@ class Sequencer:
     if self.patternChange != 0:
       self.changePendingPattern()
 
-    # Else, increment pattern by 1
-    elif self.patternStep < self.patternAmount:
-      self.patternStep += 1
-    else:
-      self.patternStep = 1
+    # Else, increment pattern by 1 if mode = auto
+    elif self.patternMode == "auto":
+      if self.patternStep < self.patternAmount:
+        self.patternStep += 1
+      else:
+        self.patternStep = 1
     
     # # Stepping backwards?
     # elif self.seqstep < 0:

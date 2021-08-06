@@ -96,6 +96,10 @@ def doInput(self, char):
   elif char == ord('c'):
     return "octaveDown"
 
+  # pattern switch
+  elif char == ord('s'):
+    return "togglePatternMode"
+
   # GPIO INPUT
   if config.general['hardware_enabled']: 
     # GPIO Input String Layout (10 bits):

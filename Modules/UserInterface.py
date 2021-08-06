@@ -425,6 +425,10 @@ def processInput(outputByteString, sequencer):
 	elif action == "patternEdit":
 		sequencer.toggleEditMode()
 
+	# Pattern mode switch
+	elif action == "togglePatternMode":
+		sequencer.togglePatternMode()
+
 	elif action == "toggleStep":
 		sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].toggleStep()
 

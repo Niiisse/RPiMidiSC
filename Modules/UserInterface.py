@@ -502,6 +502,14 @@ def processInput(outputByteString, sequencer):
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].toggleArm()
 
+	# Save
+	elif action == "save": 
+		sequencer.save()
+
+	elif action == "load":
+		sequencer.load()
+		
+
 	return outputByteString
 
 def clampPatternStepping(sequencer):

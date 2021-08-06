@@ -16,8 +16,9 @@ class PatternStep():
 
   def __init__(self):
     self.enabled = True
-    self.noteLayers = [NoteLayer.NoteLayer() for i in range(10)]
-    self.selectedLayer = [0, 1, 2]
+    self.noteLayerAmount = 10
+    self.noteLayers = [NoteLayer.NoteLayer() for i in range(self.noteLayerAmount)]
+    self.selectedLayer = [0, 1, 2, 3]
 
   def disableStep(self):
     # Disables step

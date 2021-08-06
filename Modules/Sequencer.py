@@ -1,5 +1,5 @@
 import time
-from . import Pattern, Clamp, Midi
+from . import Pattern, Clamp, Midi, SaveLoad
 
 class Sequencer:
   """ Handles all sequencer-related functions & midi output """
@@ -27,6 +27,11 @@ class Sequencer:
     self.patternMode = "auto"                                                         # Auto loops patterns, single loops 1
     self.midiInterface = Midi.MidiInterface()
 
+    self.noteLayerAmount = 10
+
+    # Saving / Loading
+    self.saveLoad = SaveLoad.SaveLoad()
+
   def play(self):
     # Plays. (i don't know what you expected, tbh)
 
@@ -36,6 +41,17 @@ class Sequencer:
     # You won't believe it. Pauses sequencer.
     
     if self.playing: self.playing = False
+
+  def save(self):
+    """ TODO: all the things """
+
+    self.saveLoad.save(0, self)
+    pass
+
+  def load(self):
+    """ TODO: all the things """
+
+    self.saveLoad.load(0, self)
 
   def togglePlay(self):
     # Prepare to be amazed. Toggles pause/play

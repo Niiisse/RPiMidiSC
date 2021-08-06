@@ -1,1 +1,2 @@
-pattern,step,note,octave,channel,sustain,arm,lastPlayedNote,lastPlayedChannel
+pattern,step,layer,note,octave,channel,sustain,arm,lastPlayedNote,lastPlayedChannel, selectedLayer, enabled
+

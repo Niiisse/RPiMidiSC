@@ -100,6 +100,12 @@ def doInput(self, char):
   elif char == ord('s'):
     return "togglePatternMode"
 
+  # Save / load
+  elif char == ord('1'):
+    return "save"     # TODO: multiple saves
+  elif char == ord('2'):
+    return "load"
+
   # GPIO INPUT
   if config.general['hardware_enabled']: 
     # GPIO Input String Layout (10 bits):

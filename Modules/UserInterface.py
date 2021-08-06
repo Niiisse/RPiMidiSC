@@ -442,13 +442,13 @@ def processInput(outputByteString, sequencer):
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].noteUp()
 		
-		sequencer.sendMidi()
+		sequencer.sendMidi(True)
 
 	elif action == "noteDown":
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].noteDown()
 	
-		sequencer.sendMidi()
+		sequencer.sendMidi(True)
 
 	# Note layer
 	elif action == "layerUp":
@@ -456,13 +456,14 @@ def processInput(outputByteString, sequencer):
 		currentStep.layerUp() # TODO: when multiple NCMs are connected, add second variable to layerUpDown for selecting specific layer
 													# (that's why selectedLayer[] is a list; first item = first NCM)
 
-		sequencer.sendMidi()
+		sequencer.sendMidi(True)
+
 
 	elif action == "layerDown":
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
 		currentStep.layerDown()
 
-		sequencer.sendMidi()
+		sequencer.sendMidi(True)
 
 	# Note Octave
 	elif action == "octaveUp":
@@ -470,13 +471,13 @@ def processInput(outputByteString, sequencer):
 		currentStep.noteLayers[currentStep.selectedLayer[0]].octaveUp()
 
 
-		sequencer.sendMidi()
+		sequencer.sendMidi(True)
 
 	elif action == "octaveDown":
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].octaveDown()
 
-		sequencer.sendMidi()
+		sequencer.sendMidi(True)
 		
 	# MIDI channel
 	elif action == "midiChannelUp":

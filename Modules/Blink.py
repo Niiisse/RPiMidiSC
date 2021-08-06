@@ -1,16 +1,15 @@
 import time
 
-  # Blink Class
-  #
-  # Used for blinking hardware elements. String returned will be original string, or
-  # empty string. Second argument can be used to invert empty string (for 7 seg displays)
-  #
-  # Example usage:
-  #   blink(byteString, True)
-  #
   # By Niisse (2021-07-13)
 
 class Blink:
+  """Handles blinking output for hardware elements.
+  
+  Returned string is original string or empty string (thus causing output to blink), 
+  depending on timer. Second argument is used to invert result, for use with the 
+  7 segment displays. 
+  Example usage: blink(byteString, True)"""
+
   def __init__(self, blinkTime):
     self.blinkTime = blinkTime
     self.blank = False
@@ -18,7 +17,7 @@ class Blink:
     self.toc = 0
 
   def timer(self):
-    # Takes current time, compares it against old time.
+    """Takes current time, compares it against old time."""
 
     self.toc = time.time()
 
@@ -29,8 +28,8 @@ class Blink:
       self.blank = True
 
 
-  def blink(self, byteString, inverted):
-    # Takes input, returns output
+  def blink(self, byteString: str, inverted: bool) -> str:
+    """Takes input, returns output"""
     
     self.timer()
 

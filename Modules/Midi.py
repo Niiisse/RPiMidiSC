@@ -1,7 +1,6 @@
 # MIDI Interface
 
 import pygame.midi
-#import time
 
 class MidiInterface:
 

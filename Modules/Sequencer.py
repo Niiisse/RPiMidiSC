@@ -1,17 +1,8 @@
 import time
 from . import Pattern, Clamp, Midi
 
-# Sequencer 
-#
-# Handles most, if not all, of the music-related functions.
-# TODO: seqstep, pending clamping 
-# 
-# By Niisse
-
-
 class Sequencer:
-
-  clamp = Clamp.clamp
+  """ Handles all sequencer-related functions & midi output """
 
   def __init__(self, patternAmount, sequencerSteps, bpm, seqstepsize):
 
@@ -129,18 +120,23 @@ class Sequencer:
     #   self.seqstep = self.sequencerSteps
     #   self.patternStep -= 1
 
-  def sendMidi(self):
-    # Collects all notes that should get played
+  def sendMidi(self, previewNote: bool):
+    """ Collects all notes that should get played.
+
+    previewNote = only changed note (for previewing inputs)
+    previewNote off sends all notes in current layer (normal behaviour) """
 
     midiData = []     # List of noteLayer objects
 
+    # If preview, send only current activelayer
+    if previewNote:
+      x = self.patterns[self.patternStep].patternSteps[self.seqstep]
+      midiData.append(self.patterns[self.patternStep].patternSteps[self.seqstep].noteLayers[x.selectedLayer[0]])
+    
+    else:
     # Check all noteLayers in current step, if that step is enabled; send their data, if relevant, to midi processing
-
-    if self.patterns[self.patternStep].patternSteps[self.seqstep].enabled:
-      for noteLayer in self.patterns[self.patternStep].patternSteps[self.seqstep].noteLayers:
-        midiData.append(noteLayer)
-        # Make sure we get notes that are played or notes that are sustained
-        #if noteLayer.note != 0: midiData.append(noteLayer)
-        #elif noteLayer.note == 0 and noteLayer.sustain: midiData.append(noteLayer)
+      if self.patterns[self.patternStep].patternSteps[self.seqstep].enabled:
+        for noteLayer in self.patterns[self.patternStep].patternSteps[self.seqstep].noteLayers:
+          midiData.append(noteLayer)
 
       self.midiInterface.playNote(midiData)

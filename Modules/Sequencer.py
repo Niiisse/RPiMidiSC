@@ -138,12 +138,13 @@ class Sequencer:
     # If preview, send only current activelayer
     if previewNote:
       x = self.patterns[self.patternStep].patternSteps[self.seqstep]
-      midiData.append(self.patterns[self.patternStep].patternSteps[self.seqstep].noteLayers[x.selectedLayer[0]])
+      midiData.append(x.noteLayers[x.selectedLayer[0]])
     
     else:
     # Check all noteLayers in current step, if that step is enabled; send their data, if relevant, to midi processing
       if self.patterns[self.patternStep].patternSteps[self.seqstep].enabled:
         for noteLayer in self.patterns[self.patternStep].patternSteps[self.seqstep].noteLayers:
           midiData.append(noteLayer)
+          noteLayer.lastPlayed = (noteLayer.note, noteLayer.midiChannel)
 
-      self.midiInterface.playNote(midiData)
+    self.midiInterface.playNote(midiData)

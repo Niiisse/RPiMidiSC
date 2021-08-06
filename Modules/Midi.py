@@ -60,8 +60,6 @@ class MidiInterface:
 
     toRemove = []         # Will hold indexes of items that should be removed from pastNotes
   
-    # TODO: sustain!?
-
     # Loop over received midiData
     for noteLayer in midiData: 
       

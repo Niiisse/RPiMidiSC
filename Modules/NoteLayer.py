@@ -8,7 +8,6 @@ class NoteLayer:
     self.note = 0
     self.octave = 3
     self.midiChannel = 0
-    self.layer = 0
     self.sustain = False
     self.arm = True
     self.lastPlayed = (0, 0)      # Used for sustain logic [0] note, [1] channel.
@@ -71,7 +70,7 @@ class NoteLayer:
     
     self.sustain = False if self.sustain else True
   
-  def toggleEnabled(self):
+  def toggleArm(self):
     """ Toggles arm on/off; disabled arm will show notes but not play them"""
     
     self.arm = False if self.arm else True

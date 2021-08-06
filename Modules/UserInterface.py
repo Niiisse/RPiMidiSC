@@ -630,6 +630,13 @@ def createOutputString(sequencer):
 	else:
 		octaveString = octaveString[:-1] + '0'
 
+	# Arm Bit
+	if currentStep.noteLayers[currentStep.selectedLayer[0]].arm:
+		channelString = channelString[:-1] + '1'
+	else:
+		channelString = channelString[:-1] + '0'
+		
+
 	# OUTPUT #
 	 
 	return bpmOutput + patternStepOutput + ledString + noteString + layerString + octaveString + channelString

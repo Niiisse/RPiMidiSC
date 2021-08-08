@@ -1,7 +1,8 @@
 general = {
   "app_version": "v 0.2.3",     # General version nr
-  "hardware_enabled": True,    # Whether to enable or disable the hardware interface
-  "blinkTime": 0.25             # Blinking time duration  fd
+  "hardware_enabled": False,    # Whether to enable or disable the hardware interface
+  "midiEnabled": False,         # Whether to enable MIDI output
+  "blinkTime": 0.25             # Blinking time duration  
 }
 
 debounce = {
@@ -43,15 +44,22 @@ status = {
 pattern = {
   # Pattern Window
 
-  "patternWinHeight": 5,      # Height of pattern window
+  "patternWinHeight": 6,      # Height of pattern window
   "patternWinWidth": 13,      # Width of pattern window
   "patternStep": 1,           # Current pattern step
   "patternAmount": 2,         # Max amount of patterns
   "patternMode": "auto"       # Auto mode makes pattern follow seqstep stuff
 }
 
+noteWindow = {
+  # Note Window config 
+
+  "noteWinHeight": 5,
+  "noteWinWidth": 13,
+}
+
 interface = {
-  # Interface options
+  # Interface options  FIXME: change to userInterface for clarity
   
   "drawKeybinds": False,      # Whether the UI should show keybinds
 }

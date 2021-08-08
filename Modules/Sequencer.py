@@ -1,10 +1,10 @@
 import time
-from . import Pattern, Clamp, Midi, SaveLoad
+from . import Pattern, SaveLoad
 
 class Sequencer:
   """ Handles all sequencer-related functions & midi output """
 
-  def __init__(self, patternAmount, sequencerSteps, bpm, seqstepsize):
+  def __init__(self, patternAmount: int, sequencerSteps: int, bpm: int, seqstepsize: int, midiEnabled: bool):
 
     # Sequencer Variables
     self.playing = True                           # Whether the sequencer is currently playing or paused 
@@ -25,9 +25,14 @@ class Sequencer:
     self.pendingPattern = 0                                                           # Used in changing pattern
     self.patternEditing = False                                                       # Currently in editing mode?
     self.patternMode = "auto"                                                         # Auto loops patterns, single loops 1
-    self.midiInterface = Midi.MidiInterface()
 
-    self.noteLayerAmount = 10
+    # Misc
+    self.noteLayerAmount = 10         # Added this for not having to hardcode noteLayer amount when saving/loading, i think
+    self.midiEnabled = midiEnabled    # Whether or not to enable MIDI output
+    
+    if midiEnabled:
+      from . import Midi
+      self.midiInterface = Midi.MidiInterface()
 
     # Saving / Loading
     self.saveLoad = SaveLoad.SaveLoad()
@@ -149,18 +154,20 @@ class Sequencer:
     previewNote = only changed note (for previewing inputs)
     previewNote off sends all notes in current layer (normal behaviour) """
 
-    midiData = []     # List of noteLayer objects
+    if self.midiEnabled:
+      
+      midiData = []     # List of noteLayer objects
 
-    # If preview, send only current activelayer
-    if previewNote:
-      x = self.patterns[self.patternStep].patternSteps[self.seqstep]
-      midiData.append(x.noteLayers[x.selectedLayer[0]])
-    
-    else:
-    # Check all noteLayers in current step, if that step is enabled; send their data, if relevant, to midi processing
-      if self.patterns[self.patternStep].patternSteps[self.seqstep].enabled:
-        for noteLayer in self.patterns[self.patternStep].patternSteps[self.seqstep].noteLayers:
-          midiData.append(noteLayer)
-          noteLayer.lastPlayed = (noteLayer.note, noteLayer.midiChannel)
+      # If preview, send only current activelayer
+      if previewNote:
+        x = self.patterns[self.patternStep].patternSteps[self.seqstep]
+        midiData.append(x.noteLayers[x.selectedLayer[0]])
+      
+      else:
+      # Check all noteLayers in current step, if that step is enabled; send their data, if relevant, to midi processing
+        if self.patterns[self.patternStep].patternSteps[self.seqstep].enabled:
+          for noteLayer in self.patterns[self.patternStep].patternSteps[self.seqstep].noteLayers:
+            midiData.append(noteLayer)
+            noteLayer.lastPlayed = (noteLayer.note, noteLayer.midiChannel)
 
-    self.midiInterface.playNote(midiData)
+      self.midiInterface.playNote(midiData)

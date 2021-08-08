@@ -4,7 +4,8 @@ import csv
 class SaveLoad:
 	""" Handles saving / loading songs
 	
-	Basically dumps the sequencer into a CSV file, or loads the sequencer with values from one """
+	Basically dumps the sequencer into a CSV file, or loads the sequencer with values from one.
+	TODO: Save selecting logic """
 
 	def __init(self):
 		pass
@@ -74,7 +75,7 @@ class SaveLoad:
 
 		
 	def load(self, index: int, sequencer: object) -> None:
-		""" Loads a CSV file and returns a dict """
+		""" Loads a CSV file, applies contents to Sequencer. """
 
 		path = "songs/" + str(index) + ".csv"
 

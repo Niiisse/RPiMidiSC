@@ -41,7 +41,12 @@ class Ui:
 		"space: play/pause",
 		"e: pattern edit",
 		"d: toggle step",
-		"z: show/hide keybinds"
+		"z: show/hide keybinds",
+		"v / b: note",
+		"f / g: layer",
+		"x / c: octave",
+		"s: toggle pattern mode",
+		"1 / 2: save / load"
 	)
 
 	seqwin = None
@@ -53,7 +58,7 @@ class Ui:
 	sequencer = None
 
 	blink = Blink.Blink(config.general['blinkTime'])
-	sequencer = Sequencer.Sequencer(config.pattern['patternAmount'], config.sequencer['seqstepmax'], config.sequencer['bpm'], config.sequencer['seqstepsize'])
+	sequencer = Sequencer.Sequencer(config.pattern['patternAmount'], config.sequencer['seqstepmax'], config.sequencer['bpm'], config.sequencer['seqstepsize'], config.general['midiEnabled'])
 	
 def main():
 	# Sets up main window
@@ -152,6 +157,12 @@ def createPatternWindow(windowSize):
 	Ui.patternWin = curses.newwin(Ui.patternWinSize[0], Ui.patternWinSize[1], begin_y, begin_x)
 	Ui.patternWin.border()
 	Ui.patternWin.addstr(0, 2, " Pattern ", curses.A_BOLD | curses.A_REVERSE)
+
+def createNoteWindow(windowSize):
+	""" Curses stuff for initializing note window """
+
+	
+	pass
 
 def drawSequencer(seqwin, sequencer):
 	# Draws main sequencer.
@@ -288,7 +299,7 @@ def drawStatusWindow(statusWin, sequencer):
 			statusWin.addstr(2, 3, "Pausing", curses.A_NORMAL | curses.A_BLINK)
 
 def drawPatternWindow(patternWin, sequencer):
-	# Function for filling pattern window contents
+	""" Function for filling pattern window contents"""
 
 	# Logic for deciding whether resultingString should blink (if there's a pattern change upcoming)
 	if sequencer.patternChange != 0:
@@ -310,7 +321,17 @@ def drawPatternWindow(patternWin, sequencer):
 
 	resultingString = patternStepString + " / " + patternMaxString
 
+	# Pattern mode
+	patternModeString = sequencer.patternMode
+	modeStringLength = len(patternModeString)
+	windowSize = Ui.patternWin.getmaxyx()
+	width = math.floor(windowSize[1] / 2 - modeStringLength / 2)
+	clearString = " " * (windowSize[1] - modeStringLength)
+
+	# Draw the strings
 	patternWin.addstr(2, 3, resultingString, stringModifier)
+	patternWin.addstr(3, 1, clearString, curses.A_NORMAL)
+	patternWin.addstr(3, width, patternModeString, curses.A_NORMAL)
 
 def drawTitle():
 	# Function for drawing the window title, figuring out where it's supposed to go

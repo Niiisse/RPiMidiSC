@@ -66,8 +66,8 @@ class MidiInterface:
       
       #if midiData[playedNote[2]].note != 0:
         
-      #self.interface.note_off(playedNote[0], 0, playedNote[1])    # Stop playing note
-      #self.toRemove.append(idx)                                   # Add idx to removelist      
+      self.interface.note_off(playedNote[0], 0, playedNote[1])    # Stop playing note
+      self.toRemove.append(idx)                                   # Add idx to removelist      
 
       for item in self.toRemove:                                 # Loop over to-be-removed items
         try: del self.noteOnList[item]                              # YEEEET

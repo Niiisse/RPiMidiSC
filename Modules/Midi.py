@@ -64,10 +64,11 @@ class MidiInterface:
     ## DELETE OLD NOTES?
     for idx, playedNote in enumerate(self.noteOnList):   # playedNote[0] = note; [1] = channel, [2] = noteLayer
       
-      if not midiData[playedNote[2]].note == 0 and midiData[playedNote[2]].sustain == True:
+      if not midiData[playedNote[2]].note == 0:
+        if not midiData[playedNote[2]].sustain == True:
         
-        self.interface.note_off(playedNote[0], 0, playedNote[1])    # Stop playing note
-        self.toRemove.append(idx)                                   # Add idx to removelist      
+          self.interface.note_off(playedNote[0], 0, playedNote[1])    # Stop playing note
+          self.toRemove.append(idx)                                   # Add idx to removelist      
 
       for item in self.toRemove:                                 # Loop over to-be-removed items
         try: del self.noteOnList[item]                              # YEEEET

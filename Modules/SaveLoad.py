@@ -17,15 +17,16 @@ class SaveLoad:
 		metaHeader = [
 			'id',
 			'bpm',
-			'patternAmount'
+			'patternAmount',
+			'patternMode'
 		]
 
 		# Get old data, update relevant rows, then save
 		# Normally a list of dicts is returned. We need to convert this  to a list of lists,
 		# because we can't re-save the CSV file properly otherwise.
-		
+
 		metaRowList = self.convertMetadataToList(self.readMetadata())
-		metaRow = [index, sequencer.bpm, sequencer.patternAmount]
+		metaRow = [index, sequencer.bpm, sequencer.patternAmount, sequencer.patternMode]
 		metaRowList[index] = metaRow
 		
 		metaPath = self.folderName + "metadata.csv"
@@ -113,6 +114,7 @@ class SaveLoad:
 		sequencer.seqstep = 0
 		sequencer.patternStep = 1
 		sequencer.patternAmount = int(metaRowList[index]['patternAmount'])
+		sequencer.patternMode = metaRowList[index]['patternMode']
 		sequencer.bpm = int(metaRowList[index]['bpm'])
 		
 		# Loop over all rows, copy data to sequencer

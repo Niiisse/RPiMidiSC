@@ -7,7 +7,7 @@ class MidiInterface:
   def __init__(self):
     pygame.midi.init()                    # Init pygame midi library
 
-    self.velocity = 100
+    self.velocity = 100 
 
     # TODO: Figure out way to select midi device
 
@@ -17,7 +17,7 @@ class MidiInterface:
     # For checking whether notes should be disabled
     self.pastNotes = []
 
-    # For keeping track of what notes are currently on
+    # For keeping track of wehat notes are currently on
     self.noteOnList = []
 
     # Dict that holds my note structure (1-12) and converts it to midi note

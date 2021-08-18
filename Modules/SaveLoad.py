@@ -5,14 +5,38 @@ class SaveLoad:
 	""" Handles saving / loading songs
 	
 	Basically dumps the sequencer into a CSV file, or loads the sequencer with values from one.
-	TODO: Save selecting logic """
+	TODO: Save-selecting logic """
 
-	def __init(self):
-		pass
-
+	def __init__(self):
+		self.folderName = "saves/"				# Name of folder containing saves
+		
 	def save(self, index: int, sequencer: object) -> None:
 		""" Saves sequencer state to CSV """
 		
+		# Metadata
+		metaHeader = [
+			'id',
+			'bpm',
+			'patternAmount'
+		]
+
+		# Get old data, update relevant rows, then save
+		# Normally a list of dicts is returned. We need to convert this  to a list of lists,
+		# because we can't re-save the CSV file properly otherwise.
+		
+		metaRowList = self.convertMetadataToList(self.readMetadata())
+		metaRow = [index, sequencer.bpm, sequencer.patternAmount]
+		metaRowList[index] = metaRow
+		
+		metaPath = self.folderName + "metadata.csv"
+		with open(metaPath, mode='w') as metaFile:
+
+			# Init CSV Writer, write header data then row data
+			writer = csv.writer(metaFile)
+			writer.writerow(metaHeader)
+			writer.writerows(metaRowList)
+
+		# Savedata
 		header = [              # Holds CSV Header Row
 			'pattern',
 			'step',
@@ -64,7 +88,7 @@ class SaveLoad:
 					sequencerData.append(rowData)
 
 		# Get path string, open file and write data
-		path = "songs/" + str(index) + ".csv"
+		path = self.folderName + str(index) + ".csv"
 
 		with open(path, mode='w') as csvFile:
 
@@ -72,22 +96,26 @@ class SaveLoad:
 			writer = csv.writer(csvFile)
 			writer.writerow(header)
 			writer.writerows(sequencerData)
-
 		
 	def load(self, index: int, sequencer: object) -> None:
 		""" Loads a CSV file, applies contents to Sequencer. """
 
-		path = "songs/" + str(index) + ".csv"
+		metaRowList = self.readMetadata()
+
+		# Get savedata
+		path = self.folderName + str(index) + ".csv"
 
 		with open(path, mode='r') as csvFile:
 			reader = csv.DictReader(csvFile)
 			rowList = list(reader)
 
-			sequencer.seqstep = 0
-			sequencer.patternStep = 1
+		# Re-setup sequencer
+		sequencer.seqstep = 0
+		sequencer.patternStep = 1
+		sequencer.patternAmount = int(metaRowList[index]['patternAmount'])
+		sequencer.bpm = int(metaRowList[index]['bpm'])
 		
-		#TODO: get patternAmount
-
+		# Loop over all rows, copy data to sequencer
 		for row in rowList:
 			step = sequencer.patterns[int(row['pattern'])].patternSteps[int(row['step'])]
 			layer = sequencer.patterns[int(row['pattern'])].patternSteps[int(row['step'])].noteLayers[int(row['layer'])]
@@ -99,5 +127,27 @@ class SaveLoad:
 			layer.octave = int(row['octave'])
 			layer.sustain = bool(row['sustain'])
 			step.selectedLayer=[int(row['selectedLayer0']), int(row['selectedLayer1']), int(row['selectedLayer2']), int(row['selectedLayer3'])]
-			step.enabled = bool(row['enabled'])
+			step.enabled = bool(row['enabled'])		
 
+	def readMetadata(self) -> dict:
+		""" Gets metadata from file, returns dict 
+		
+		Used for loading data """
+
+		# Get metadata
+		metaPath = self.folderName + "metadata.csv"
+		
+		with open(metaPath, mode='r') as metaCsvFile:
+			metaReader = csv.DictReader(metaCsvFile)
+			return list(metaReader)
+
+	def convertMetadataToList(self, metadata: dict) -> list:
+		""" Takes metadata list of dicts and converts it to lists
+
+		Used for re-saving metadata file """
+
+		metaList = []
+		for row in metadata:
+			metaList.append(list(row.values()))
+
+		return metaList

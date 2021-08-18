@@ -184,7 +184,7 @@ class Sequencer:
   def checkPreviewNotesOff(self):
     """ Check if any previewNotes     are ready to be turned off, to prevent them from playing indefinitely """
 
-    if len(self.previewNotesOff) > 0:       # Items exist
+    if len(self.previewNotesOff) != 0:       # Items exist
       toc = time.time()                           # Get current time
       removalList = []                            # Init list of items we can remove after stopping them
 
@@ -193,6 +193,6 @@ class Sequencer:
           self.midiInterface.stopNote(note[0])                  # The end of the universe is nigh
           removalList.append(idx)                               # Add id to temp list
 
-      if len(removalList) > 0:                                # Removallist has candidates?
+      if len(removalList) != 0:                                # Removallist has candidates?
         for item in removalList:                                # Loop over candidates
           del self.previewNotesOff[:item]                       # Remove them from main list

@@ -74,7 +74,7 @@ class MidiInterface:
         except: pass
         # FIXME: find out what goes wrong here
 
-      toRemove.clear()                                            # Clear list. Is this really necessary?
+      #toRemove.clear()                                            # Clear list. Is this really necessary?
 
       ## PLAY NEW NOTES
       

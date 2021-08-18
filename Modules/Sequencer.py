@@ -164,7 +164,7 @@ class Sequencer:
       if previewNote:
         x = self.patterns[self.patternStep].patternSteps[self.seqstep]
         midiData.append(x.noteLayers[x.selectedLayer[0]])
-        addPreviewNoteOff(x.noteLayers[x.selectedLayer[0]])
+        self.addPreviewNoteOff(x.noteLayers[x.selectedLayer[0]])
       
       else:
       # Check all noteLayers in current step, if that step is enabled; send their data, if relevant, to midi processing
@@ -175,18 +175,24 @@ class Sequencer:
 
       self.midiInterface.playNote(midiData)
     
-    def addPreviewNoteOff(self, midiData):
-      """ Add notes to a temp list that will send noteOff for preview notes """
-      data = (midiData, time.time())
-      self.previewNotesOff.append(data)
-      
-    def checkPreviewNotesOff(self):
-      """ Check if any previewNotes are ready to be turned off, to prevent them from playing indefinitely """
+  def addPreviewNoteOff(self, midiData):
+    """ Add notes to a temp list that will send noteOff for preview notes """
 
-      if len(self.previewNotesOff) > 0:
-        toc = time.time()
-        
-        for note in self.previewNotesOff:
-          if note[1] - toc > self.previewNoteDuration:
-            self.midiInterface
-            pass
+    data = (midiData, time.time())
+    self.previewNotesOff.append(data)
+    
+  def checkPreviewNotesOff(self):
+    """ Check if any previewNotes     are ready to be turned off, to prevent them from playing indefinitely """
+
+    if len(self.previewNotesOff) > 0:       # Items exist
+      toc = time.time()                           # Get current time
+      removalList = []                            # Init list of items we can remove after stopping them
+
+      for idx, note in enumerate(self.previewNotesOff):       # Loop over playing previewNotes
+        if note[1] - toc > self.previewNoteDuration:            # Has time run out?
+          self.midiInterface.stopNote(note[0])                  # The end of the universe is nigh
+          removalList.append(idx)                               # Add id to temp list
+
+      if len(removalList) > 0:                                # Removallist has candidates?
+        for item in removalList:                                # Loop over candidates
+          del self.previewNotesOff[:item]                       # Remove them from main list

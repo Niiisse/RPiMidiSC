@@ -25,6 +25,7 @@ sequencer = {
   "seqWinHeight": 9,          # Sequencer window height
   "seqWinWidth": 36,          # Sequencer window width
   "playing": True,            # Playing or paused
+  "previewNoteDuration": 0.5  # How long a previewNote should play for
 }
 
 tempo = {

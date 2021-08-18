@@ -4,14 +4,16 @@ from . import Pattern, SaveLoad
 class Sequencer:
   """ Handles all sequencer-related functions & midi output """
 
-  def __init__(self, patternAmount: int, sequencerSteps: int, bpm: int, seqstepsize: int, midiEnabled: bool):
+  def __init__(self, patternAmount: int, sequencerSteps: int, bpm: int, seqstepsize: int, midiEnabled: bool, previewNoteDuration: int):
 
     # Sequencer Variables
-    self.playing = True                           # Whether the sequencer is currently playing or paused 
-    self.seqstep = 0                              # Current step within pattern         
-    self.stepSize = seqstepsize                   # Amount to increment with per step. TODO: see if this can go
-    self.sequencerSteps = sequencerSteps          # Total amout of steps per pattern
-    self.bpm = bpm                                # Current tempo
+    self.playing = True                               # Whether the sequencer is currently playing or paused 
+    self.seqstep = 0                                  # Current step within pattern         
+    self.stepSize = seqstepsize                       # Amount to increment with per step. TODO: see if this can go
+    self.sequencerSteps = sequencerSteps              # Total amout of steps per pattern
+    self.bpm = bpm                                    # Current tempo
+    self.previewNotesOff = []                         # List that holds notes that are to be turned off
+    self.previewNoteDuration = previewNoteDuration  # How long preview nots should play
     
     # Timer Variables
     self.timerShouldTick = True                   # Make sequencer go brrr
@@ -162,6 +164,7 @@ class Sequencer:
       if previewNote:
         x = self.patterns[self.patternStep].patternSteps[self.seqstep]
         midiData.append(x.noteLayers[x.selectedLayer[0]])
+        addPreviewNoteOff(x.noteLayers[x.selectedLayer[0]])
       
       else:
       # Check all noteLayers in current step, if that step is enabled; send their data, if relevant, to midi processing
@@ -171,3 +174,19 @@ class Sequencer:
             noteLayer.lastPlayed = (noteLayer.note, noteLayer.midiChannel)
 
       self.midiInterface.playNote(midiData)
+    
+    def addPreviewNoteOff(self, midiData):
+      """ Add notes to a temp list that will send noteOff for preview notes """
+      data = (midiData, time.time())
+      self.previewNotesOff.append(data)
+      
+    def checkPreviewNotesOff(self):
+      """ Check if any previewNotes are ready to be turned off, to prevent them from playing indefinitely """
+
+      if len(self.previewNotesOff) > 0:
+        toc = time.time()
+        
+        for note in self.previewNotesOff:
+          if note[1] - toc > self.previewNoteDuration:
+            self.midiInterface
+            pass

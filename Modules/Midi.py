@@ -6,6 +6,7 @@ class MidiInterface:
 
   def __init__(self):
     pygame.midi.init()                    # Init pygame midi library
+    self.toRemove = []
 
     self.velocity = 100 
 
@@ -58,27 +59,18 @@ class MidiInterface:
     # pastNotes is a list of notes that are still playing. If there's a new note that matches
     # an entry (criteria: no new note on channel but sustain is enabled), don't delete it and check next time
 
-    toRemove = []         # Will hold indexes of items that should be removed from pastNotes
-  
+    ## DELETE OLD NOTES?
+    for idx, playedNote in enumerate(self.noteOnList):   # playedNote[0] = note; [1] = channel
+      
+      self.interface.note_off(playedNote[0], 0, playedNote[1])    # Stop playing note
+      self.toRemove.append(idx)                                        # Add idx to removelist      
+
+    for item in self.toRemove:                                       # Loop over to-be-removed items
+      try: del self.noteOnList[item]                              # YEEEET
+      except: pass
+    
     # Loop over received midiData
     for noteLayer in midiData: 
-      
-      ## DELETE OLD NOTES?
-      for idx, playedNote in enumerate(self.noteOnList):   # playedNote[0] = note; [1] = channel
-        
-        self.interface.note_off(playedNote[0], 0, playedNote[1])    # Stop playing note
-        toRemove.append(idx)                                        # Add idx to removelist      
-
-      for item in toRemove:                                       # Loop over to-be-removed items
-        try: del self.noteOnList[item]                                    # YEEEET
-        except: pass
-        # FIXME: find out what goes wrong here
-
-      #toRemove.clear()                                            # Clear list. Is this really necessary?
-
-      ## PLAY NEW NOTES
-      
-      # New note
       if noteLayer.note != 0:
         
         outputNote = self.calculateNoteValue(noteLayer.note, noteLayer.octave)    # Calculate note value; store it
@@ -87,5 +79,8 @@ class MidiInterface:
         playedNote = [outputNote, noteLayer.midiChannel]                          # Save as playedNote
         self.noteOnList.append(playedNote)                                         # Add to list of played notes
 
+  def stopNote(self, midiData):
+    pass
+  
   def cleanUp(self):
     pygame.midi.quit()

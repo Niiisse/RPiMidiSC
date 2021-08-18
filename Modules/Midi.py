@@ -52,6 +52,8 @@ class MidiInterface:
     pass
 
   def playNote(self, midiData):
+    # midiData holds 10 noteLayers
+    
     # TODO: figure out how to decide if currently playing notes should be stopped
     #       output.write for multiple
     
@@ -60,27 +62,24 @@ class MidiInterface:
     # an entry (criteria: no new note on channel but sustain is enabled), don't delete it and check next time
 
     ## DELETE OLD NOTES?
-    for idx, playedNote in enumerate(self.noteOnList):   # playedNote[0] = note; [1] = channel
-      
-      self.interface.note_off(playedNote[0], 0, playedNote[1])    # Stop playing note
-      self.toRemove.append(idx)                                        # Add idx to removelist      
+    for idx, playedNote in enumerate(self.noteOnList):   # playedNote[0] = note; [1] = channel, [2] = noteLayer
+      if midiData[playedNote[2]].note != 0 and midiData[playedNote[2]].sustain == False:
+        self.interface.note_off(playedNote[0], 0, playedNote[1])    # Stop playing note
+        self.toRemove.append(idx)                                   # Add idx to removelist      
 
-    for item in self.toRemove:                                       # Loop over to-be-removed items
+    for item in self.toRemove:                                 # Loop over to-be-removed items
       try: del self.noteOnList[item]                              # YEEEET
       except: pass
     
     # Loop over received midiData
-    for noteLayer in midiData: 
+    for idx, noteLayer in enumerate(midiData): 
       if noteLayer.note != 0:
         
         outputNote = self.calculateNoteValue(noteLayer.note, noteLayer.octave)    # Calculate note value; store it
         self.interface.note_on(outputNote, self.velocity, noteLayer.midiChannel)  # Play it
         
-        playedNote = [outputNote, noteLayer.midiChannel]                          # Save as playedNote
+        playedNote = [outputNote, noteLayer.midiChannel, idx]                          # Save as playedNote
         self.noteOnList.append(playedNote)                                         # Add to list of played notes
-
-  def stopNote(self, midiData):
-    pass
   
   def cleanUp(self):
     pygame.midi.quit()

@@ -85,7 +85,7 @@ def updateUi():
 	clampPatternStepping(Ui.sequencer)
 	clampPendingStepping(Ui.sequencer)
 
-	Ui.sequencer.checkPreviewNotesOff()
+	#Ui.sequencer.checkPreviewNotesOff()
 
 	# Drawing, updating subwindows + associated processing
 	drawInfo(Ui.seqwin, Ui.sequencer)

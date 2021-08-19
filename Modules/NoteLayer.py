@@ -49,8 +49,11 @@ class NoteLayer:
     else:
       self.octave = 9
   
-  def channelUp(self):
-    """ Increment current midi channel"""
+  def channelUp(self, lastUsedChannel):
+    """ Increment current midi channel. Sets last used channel if midiChannel == 0"""
+
+    if self.midiChannel == 0:
+      self.midiChannel = lastUsedChannel
 
     if self.midiChannel < 9:
       self.midiChannel += 1

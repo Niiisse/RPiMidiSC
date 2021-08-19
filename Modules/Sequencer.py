@@ -13,7 +13,8 @@ class Sequencer:
     self.sequencerSteps = sequencerSteps              # Total amout of steps per pattern
     self.bpm = bpm                                    # Current tempo
     self.previewNotesOff = []                         # List that holds notes that are to be turned off
-    self.previewNoteDuration = previewNoteDuration  # How long preview nots should play
+    self.previewNoteDuration = previewNoteDuration    # How long preview notes should play
+    self.lastUsedMidiChannel = 0                      # Last-entered MIDI channel
     
     # Timer Variables
     self.timerShouldTick = True                   # Make sequencer go brrr

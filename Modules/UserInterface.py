@@ -507,15 +507,17 @@ def processInput(outputByteString, sequencer):
 	# MIDI channel
 	elif action == "midiChannelUp":
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
-		currentStep.noteLayers[currentStep.selectedLayer[0]].channelUp()
+		currentStep.noteLayers[currentStep.selectedLayer[0]].channelUp(sequencer.lastUsedMidiChannel)
 
 		sequencer.sendMidi(True)
+		sequencer.lastUsedMidiChannel = currentStep.noteLayers[currentStep.selectedLayer[0]].midiChannel	# TODO: multi NCM support 
 
 	elif action == "midiChannelDown":
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].channelDown()
 
 		sequencer.sendMidi(True)
+		#sequencer.lastUsedMidiChannel = currentStep.noteLayers[currentStep.selectedLayer[0]].midiChannel	# TODO: multi NCM support 
 
 	# Sustain
 	elif action == "toggleSustain":

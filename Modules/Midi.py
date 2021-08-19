@@ -13,7 +13,7 @@ class MidiInterface:
     # TODO: Figure out way to select midi device
 
     self.interface = pygame.midi.Output(2)
-    self.interface.set_instrument(0, 0)      # instrument id, channel #TODO: use set instrument for midi channel change
+    self.interface.set_instrument(0, 0)      
     
     # For checking whether notes should be disabled
     self.pastNotes = []
@@ -69,7 +69,7 @@ class MidiInterface:
         self.interface.note_off(playedNote[0], 0, playedNote[1])    # Stop playing note
         self.toRemove.append(idx)                                   # Add idx to removelist      
 
-      for item in self.toRemove:                                 # Loop over to-be-removed items
+      for item in self.toRemove:                                    # Loop over to-be-removed items
         try: del self.noteOnList[item]                              # YEEEET
         except: pass
     
@@ -80,7 +80,7 @@ class MidiInterface:
         outputNote = self.calculateNoteValue(noteLayer.note, noteLayer.octave)    # Calculate note value; store it
         self.interface.note_on(outputNote, self.velocity, noteLayer.midiChannel)  # Play it
         
-        playedNote = [outputNote, noteLayer.midiChannel, idx]                          # Save as playedNote
+        playedNote = [outputNote, noteLayer.midiChannel, idx]                       # Save as playedNote
         self.noteOnList.append(playedNote)                                         # Add to list of played notes
   
   def cleanUp(self):

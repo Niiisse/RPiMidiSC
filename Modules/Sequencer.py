@@ -15,6 +15,7 @@ class Sequencer:
     self.previewNotesOff = []                         # List that holds notes that are to be turned off
     self.previewNoteDuration = previewNoteDuration    # How long preview notes should play
     self.lastUsedMidiChannel = 0                      # Last-entered MIDI channel
+    self.lastUsedLayer = 0
     
     # Timer Variables
     self.timerShouldTick = True                   # Make sequencer go brrr

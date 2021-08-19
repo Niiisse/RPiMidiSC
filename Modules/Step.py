@@ -45,8 +45,10 @@ class Step():
     
     return self.enabled
 
-  def layerUp(self):
+  def layerUp(self, lastUsedLayer):
     # Changes note layer. TODO: multiple NCM support goes here, eventually
+    if self.selectedLayer[0] == 0:
+      self.selectedLayer[0] = lastUsedLayer
 
     if self.selectedLayer[0] < 9:
       self.selectedLayer[0] += 1

@@ -480,10 +480,11 @@ def processInput(outputByteString, sequencer):
 	# Note layer
 	elif action == "layerUp":
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
-		currentStep.layerUp() # TODO: when multiple NCMs are connected, add second variable to layerUpDown for selecting specific layer
+		currentStep.layerUp(sequencer.lastUsedLayer) # TODO: when multiple NCMs are connected, add second variable to layerUpDown for selecting specific layer
 													# (that's why selectedLayer[] is a list; first item = first NCM)
 
 		sequencer.sendMidi(True)
+		sequencer.lastUsedLayer = currentStep.selectedLayer[0]
 
 	elif action == "layerDown":
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]

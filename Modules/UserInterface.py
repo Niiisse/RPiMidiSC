@@ -466,12 +466,16 @@ def processInput(outputByteString, sequencer):
 
 	# note up/down
 	elif action == "noteUp":
+		# TODO: move this code to sequencer; check if step = 0 and if so, apply last used layer, octave and channel
+
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].noteUp()
 		
 		sequencer.sendMidi(True)
 
 	elif action == "noteDown":
+		# TODO: move this code to sequencer; check if step = 0 and if so, apply last used layer, octave and channel
+
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].noteDown()
 	

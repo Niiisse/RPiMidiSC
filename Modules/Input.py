@@ -100,6 +100,10 @@ def doInput(self, char):
   elif char == ord('s'):
     return "togglePatternMode"
 
+  # sustain
+  elif char == ord('w'):
+    return "toggleSustain"
+
   # Save / load
   elif char == ord('1'):
     return "save"     # TODO: multiple saves

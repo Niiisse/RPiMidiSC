@@ -485,7 +485,6 @@ def processInput(outputByteString, sequencer):
 
 		sequencer.sendMidi(True)
 
-
 	elif action == "layerDown":
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
 		currentStep.layerDown()
@@ -496,7 +495,6 @@ def processInput(outputByteString, sequencer):
 	elif action == "octaveUp":
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].octaveUp()
-
 
 		sequencer.sendMidi(True)
 
@@ -531,6 +529,11 @@ def processInput(outputByteString, sequencer):
 
 	elif action == "load":
 		sequencer.load()
+
+	# Sustain
+	elif action == "toggleSustain":
+		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
+		currentStep.noteLayers[currentStep.selectedLayer[0]].toggleSustain()
 		
 
 	return outputByteString

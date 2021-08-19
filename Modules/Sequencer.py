@@ -30,7 +30,7 @@ class Sequencer:
 
     # Misc
     self.noteLayerAmount = 10         # Added this for not having to hardcode noteLayer amount when saving/loading, i think
-    self.midiEnabled = midiEnabled    # Whether or not to enable MIDI output
+    self.midiEnabled = midiEnabled    # Whether or not to enable MIDI output 
     
     if midiEnabled:
       from . import Midi
@@ -48,12 +48,12 @@ class Sequencer:
     # You won't believe it. Pauses sequencer.
     
     if self.playing: self.playing = False
+    self.midiInterface.allNotesOff()
 
   def save(self):
     """ TODO: all the things """
 
     self.saveLoad.save(0, self)
-    pass
 
   def load(self):
     """ TODO: all the things """
@@ -63,7 +63,9 @@ class Sequencer:
   def togglePlay(self):
     # Prepare to be amazed. Toggles pause/play
 
-    if self.playing: self.playing = False
+    if self.playing: 
+      self.playing = False
+      self.midiInterface.allNotesOff()
     else:
       self.playing = True
       #self.seqstep -= 1

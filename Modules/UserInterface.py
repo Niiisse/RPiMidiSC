@@ -509,9 +509,13 @@ def processInput(outputByteString, sequencer):
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].channelUp()
 
+		sequencer.sendMidi(True)
+
 	elif action == "midiChannelDown":
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].channelDown()
+
+		sequencer.sendMidi(True)
 
 	# Sustain
 	elif action == "toggleSustain":
@@ -647,7 +651,7 @@ def createOutputString(sequencer):
 
 		octaveString = convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].octave)
 		channelString = convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].midiChannel)
-
+	
 	else:
 		octaveString = "11111111"
 		channelString = "11111111"

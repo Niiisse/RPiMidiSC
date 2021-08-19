@@ -29,19 +29,14 @@ while (True):
   
   if uiResult == "quit":           
     ui.restoreScreen()
-
-    # Some debugging code for sequencer object
-    # sequencer = ui.getSequencer()
-    # for i in range(sequencer.seqstepmax):
-    #   print(sequencer.patterns[1].patternSteps[i].getState())
-    # pprint(vars(ui.getSequencer()))
-    #pprint(vars(sequencer.patterns[1]))
+    # TODO: gracefully exit MIDI too
 
     sys.exit(0)     
   
   elif uiResult == "reset":
     ui.resetScreen()
     ui.startUI()
+
   
   elif config.general['hardware_enabled']:
     sr.outputBits(uiResult)

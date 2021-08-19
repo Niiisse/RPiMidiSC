@@ -5,7 +5,8 @@ class SaveLoad:
 	""" Handles saving / loading songs
 	
 	Dumps the sequencer into a CSV file, or loads the sequencer with values from one.
-	TODO: Save-selecting logic """
+	TODO: Save-selecting logic 
+	TODO: backup file before writing """
 
 	def __init__(self):
 		self.folderName = "saves/"				# Name of folder containing saves
@@ -63,7 +64,7 @@ class SaveLoad:
 		# Then, write each row to the csv file.
 
 		# Loop de loop
-		for i in range(sequencer.patternAmount):
+		for i in range(1, sequencer.patternAmount+1):			# FIXME: this +1 business is no good. should have pattern and patternAmount internally count from 0
 			for o in range(sequencer.sequencerSteps):
 				for u in range(sequencer.noteLayerAmount):
 					step = sequencer.patterns[i].patternSteps[o]
@@ -123,11 +124,11 @@ class SaveLoad:
 			layer = sequencer.patterns[int(row['pattern'])].patternSteps[int(row['step'])].noteLayers[int(row['layer'])]
 			
 			layer.arm = bool(row['arm'])
-			layer.channel = int(row['channel'])
+			layer.midiChannel = int(row['channel'])
 			layer.lastNote = (int(row['lastPlayedNote']), int(row['lastPlayedChannel']))
 			layer.note = int(row['note'])
 			layer.octave = int(row['octave'])
-			layer.sustain = bool(row['sustain'])
+			layer.sustain = True if row['sustain'] == 'True' else False		# FIXME: save sustain as 0/1
 			step.selectedLayer=[int(row['selectedLayer0']), int(row['selectedLayer1']), int(row['selectedLayer2']), int(row['selectedLayer3'])]
 			step.enabled = bool(row['enabled'])		
 

@@ -12,7 +12,7 @@ from . import NoteLayer
 #
 # TODO: Rename to Step?
 
-class PatternStep():
+class Step():
 
   def __init__(self):
     self.enabled = True
@@ -65,7 +65,9 @@ class PatternStep():
     # Looks thru other layers and sees if a note is active, if so, show LED
     output = False
 
-    for x in range(10):
-      if x != self.selectedLayer[0] and self.noteLayers[x].note != 0: output = True 
+    for x in range(10):                                                                     # Loop over all layers
+      if x != self.selectedLayer[0]:                                                        # Exclude self
+        if self.noteLayers[x].note != 0 or self.noteLayers[x].sustain:            # No other notes and sustain is off?
+          output = True 
 
     return output

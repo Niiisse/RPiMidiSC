@@ -1,4 +1,4 @@
-from . import PatternStep
+from . import Step
 
   # Pattern Class
   # 
@@ -7,4 +7,4 @@ from . import PatternStep
 class Pattern:
   def __init__(self, sequencerSteps):
     self.steps = sequencerSteps
-    self.patternSteps = [PatternStep.PatternStep() for i in range(self.steps)]
+    self.patternSteps = [Step.Step() for i in range(self.steps)]

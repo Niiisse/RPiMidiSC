@@ -51,7 +51,7 @@ class MidiInterface:
 
     pass
 
-  def playNote(self, midiData):
+  def playNote(self, noteLayers):
     # midiData holds 10 noteLayers
     
     # TODO: figure out how to decide if currently playing notes should be stopped
@@ -64,7 +64,7 @@ class MidiInterface:
     ## DELETE OLD NOTES?
     for idx, playedNote in enumerate(self.noteOnList):   # playedNote[0] = note; [1] = channel, [2] = noteLayer
       
-      if midiData[playedNote[2]].note == 0 and midiData[playedNote[2]].sustain == False:
+      if noteLayers[playedNote[2]].note != 0 and noteLayers[playedNote[2]].sustain == False:
         
         self.interface.note_off(playedNote[0], 0, playedNote[1])    # Stop playing note
         self.toRemove.append(idx)                                   # Add idx to removelist      
@@ -74,7 +74,7 @@ class MidiInterface:
         except: pass
     
     # Loop over received midiData
-    for idx, noteLayer in enumerate(midiData): 
+    for idx, noteLayer in enumerate(noteLayers): 
       if noteLayer.note != 0:
         
         outputNote = self.calculateNoteValue(noteLayer.note, noteLayer.octave)    # Calculate note value; store it

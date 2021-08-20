@@ -191,7 +191,7 @@ class Sequencer:
 			self.finalStepInPattern()
 
 		# Select topmost layer for displaying #FIXME: temporary, don't do this w multiple NCMs
-		for idx in range(self.noteLayerAmount):
+		for idx in range(self.noteLayerAmount, 0, -1):
 			if self.patterns[self.patternStep].patternSteps[self.seqstep].noteLayers[idx].note != 0:
 				self.patterns[self.patternStep].patternSteps[self.seqstep].selectedLayer[0] = idx
 

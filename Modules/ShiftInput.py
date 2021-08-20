@@ -32,7 +32,7 @@ class NoteModule:
   # Pulses the latch pin - write the output to data lines
   def loadData(self):
     GPIO.output(self.PLOAD, 0)
-    time.sleep(0.001)
+    time.sleep(0.0001)
     GPIO.output(self.PLOAD, 1)
     #time.sleep(0.1)
 
@@ -41,7 +41,7 @@ class NoteModule:
     GPIO.output(self.CLOCK, 0)
     #time.sleep(0.005)
     GPIO.output(self.CLOCK, 1)
-    time.sleep(0.002)
+    time.sleep(0.0001)
     GPIO.output(self.CLOCK, 0)
     #time.sleep(1)
 

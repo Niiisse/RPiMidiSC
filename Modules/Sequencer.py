@@ -181,6 +181,12 @@ class Sequencer:
 
 	def sequencerStep(self):
 		# Executes each step
+
+		# Select topmost layer for displaying #FIXME: temporary, don't do this w multiple NCMs
+		for idx in range(self.noteLayerAmount):
+			if self.patterns[self.patternStep].patternSteps[self.seqstep].noteLayers[idx].note != 0:
+				self.patterns[self.patternStep].patternSteps[self.seqstep].selectedLayer[0] = idx
+
 		self.sendMidi(False) # Midi Output
 
 		# Checks if we should increase seqstep or roll back

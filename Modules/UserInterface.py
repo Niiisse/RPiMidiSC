@@ -424,19 +424,28 @@ def processInput(outputByteString, sequencer):
 			sequencer.bpm = 999
 
 
-	# Sequencer stepping next & previous; clamping
+	# Sequencer stepping next & previous; clamping 
+	# FIXME: Move to Sequencer
+	# TODO: NCM
 	elif action == "seqStepUp":
 		sequencer.seqstep += sequencer.stepSize
 		
 		if sequencer.seqstep > sequencer.sequencerSteps - sequencer.stepSize:
 			sequencer.seqstep = 0
+		
+		sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].selectedLayer[0] = sequencer.lastUsedLayer
 
 	elif action == "seqStepDown":
+		# FIXME: move to sequencer
+		# TODO: NCM
 		sequencer.seqstep -= sequencer.stepSize
 
 		if sequencer.seqstep < 0:
 			sequencer.seqstep = sequencer.sequencerSteps - sequencer.stepSize
-	
+
+		# Set last used layer as active layer
+		sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep].selectedLayer[0] = sequencer.lastUsedLayer
+
 
 	# Pattern Stepping
 	elif action == "patternStepUp":

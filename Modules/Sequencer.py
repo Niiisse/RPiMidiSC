@@ -144,6 +144,25 @@ class Sequencer:
 		self.patternChange = 0
 		self.pendingPattern = 0
 
+	def patternUp(self):
+		""" Instantly change pattern, used when sequencer is paused. Also moves step back to 0. """
+		if self.patternStep == self.patternAmount:
+			self.patternStep = 1
+		else:
+			self.patternStep += 1
+
+		self.seqstep = 0
+
+	def patternDown(self):
+		""" Instantly change pattern, used when sequencer is paused. Also moves step back to 0. """
+
+		if self.patternStep == 1:
+			self.patternStep = self.patternAmount
+		else:
+			self.patternStep -= 1
+
+		self.seqstep = 0
+
 	def changePattern(self, changeValue):
 		# Instantly changes pattern. Useful in editing mode. changeValue needs an int
 		

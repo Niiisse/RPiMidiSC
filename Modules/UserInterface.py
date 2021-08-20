@@ -440,9 +440,16 @@ def processInput(outputByteString, sequencer):
 
 	# Pattern Stepping
 	elif action == "patternStepUp":
-		sequencer.patternChange += 1
+		if sequencer.playing:
+			sequencer.patternChange += 1
+		else:
+			sequencer.patternUp()
+
 	elif action == "patternStepDown":
-		sequencer.patternChange -= 1
+		if sequencer.playing:
+			sequencer.patternChange -= 1
+		else:
+			sequencer.patternDown()
 
 	# Pattern Editing
 	elif action == "patternEdit":

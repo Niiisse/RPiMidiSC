@@ -115,6 +115,7 @@ class SaveLoad:
 		sequencer.seqstep = 0
 		sequencer.patternStep = 1
 		sequencer.patternAmount = int(metaRowList[index]['patternAmount'])
+		sequencer.initPatterns()
 		sequencer.patternMode = metaRowList[index]['patternMode']
 		sequencer.bpm = int(metaRowList[index]['bpm'])
 		

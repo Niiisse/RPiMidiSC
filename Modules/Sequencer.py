@@ -63,6 +63,11 @@ class Sequencer:
 
 		self.saveLoad.load(0, self)
 
+	def initPatterns(self):
+		""" Re-initializes pattern list to deal with differing saves """
+
+		self.patterns = [Pattern.Pattern(self.sequencerSteps) for i in range(self.patternAmount+1)] 
+
 	def togglePlay(self):
 		# Prepare to be amazed. Toggles pause/play
 

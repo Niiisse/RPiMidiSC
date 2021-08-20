@@ -121,7 +121,7 @@ class SaveLoad:
 		
 		# Loop over all rows, copy data to sequencer
 		for idx, row in enumerate(rowList):
-			if idx <= sequencer.patternAmount:
+			if idx <= sequencer.patternAmount * sequencer.noteLayerAmount * sequencer.sequencerSteps:
 				step = sequencer.patterns[int(row['pattern'])].patternSteps[int(row['step'])]
 				layer = sequencer.patterns[int(row['pattern'])].patternSteps[int(row['step'])].noteLayers[int(row['layer'])]
 				

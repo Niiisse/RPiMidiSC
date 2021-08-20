@@ -120,18 +120,19 @@ class SaveLoad:
 		sequencer.bpm = int(metaRowList[index]['bpm'])
 		
 		# Loop over all rows, copy data to sequencer
-		for row in rowList:
-			step = sequencer.patterns[int(row['pattern'])].patternSteps[int(row['step'])]
-			layer = sequencer.patterns[int(row['pattern'])].patternSteps[int(row['step'])].noteLayers[int(row['layer'])]
-			
-			layer.arm = bool(row['arm'])
-			layer.midiChannel = int(row['channel'])
-			layer.lastNote = (int(row['lastPlayedNote']), int(row['lastPlayedChannel']))
-			layer.note = int(row['note'])
-			layer.octave = int(row['octave'])
-			layer.sustain = True if row['sustain'] == 'True' else False		# FIXME: save sustain as 0/1
-			step.selectedLayer=[int(row['selectedLayer0']), int(row['selectedLayer1']), int(row['selectedLayer2']), int(row['selectedLayer3'])]
-			step.enabled = bool(row['enabled'])		
+		for idx, row in enumerate(rowList):
+			if idx <= sequencer.patternAmount:
+				step = sequencer.patterns[int(row['pattern'])].patternSteps[int(row['step'])]
+				layer = sequencer.patterns[int(row['pattern'])].patternSteps[int(row['step'])].noteLayers[int(row['layer'])]
+				
+				layer.arm = bool(row['arm'])
+				layer.midiChannel = int(row['channel'])
+				layer.lastNote = (int(row['lastPlayedNote']), int(row['lastPlayedChannel']))
+				layer.note = int(row['note'])
+				layer.octave = int(row['octave'])
+				layer.sustain = True if row['sustain'] == 'True' else False		# FIXME: save sustain as 0/1
+				step.selectedLayer=[int(row['selectedLayer0']), int(row['selectedLayer1']), int(row['selectedLayer2']), int(row['selectedLayer3'])]
+				step.enabled = bool(row['enabled'])		
 
 	def readMetadata(self) -> dict:
 		""" Gets metadata from file, returns dict 

@@ -9,10 +9,9 @@ from pprint import pprint
 
 if config.general['hardware_enabled']:
   import Modules.HardwareInterface as HWi
-  sr = HWi.ShiftRegister()
+  sr = HWi.ShiftRegister(21, 20, 16)
 
 # Program start
-#midi = Midi.Midi()
 
 print("RPiMidiSC")
 ui.startUI()
@@ -37,7 +36,6 @@ while (True):
     ui.resetScreen()
     ui.startUI()
 
-  
   elif config.general['hardware_enabled']:
     sr.outputBits(uiResult)
     

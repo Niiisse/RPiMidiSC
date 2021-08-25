@@ -556,7 +556,13 @@ def processInput(outputByteString, sequencer):
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].toggleSustain()
 		
+	# save up/down
+	elif action == "saveUp":
+		sequencer.saveUp()
 
+	elif action == "saveDown":
+		sequencer.saveDown()
+		
 	return outputByteString
 
 def clampPatternStepping(sequencer):

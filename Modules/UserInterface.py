@@ -786,7 +786,7 @@ def binarySaveCounter(index: int) -> str:
 		0b0000		# 16
 	]
 
-	return list(format(saveArr[index]), '04b')
+	return list(format(saveArr[index], '04b'))
 
 ##
 ## Curses Starting & Resetting 

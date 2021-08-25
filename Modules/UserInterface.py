@@ -692,7 +692,7 @@ def createOutputString(sequencer):
 		channelString = channelString[:-1] + '0'
 		
 	# PLAY / GENERAL CONTROL BOARD
-	gcOutput = list("00000000")
+	gcOutput = list("0000")
 
 	# Green LED ON, red OFF if playing, inverted otherwise
 	if sequencer.playing:
@@ -706,10 +706,8 @@ def createOutputString(sequencer):
 	if sequencer.patternMode == 'auto':
 		gcOutput[3] = '1'
 	
-	# Replace last 4 items with save counter 
-	saveList = binarySaveCounter(sequencer.saveIndex)
-	gcOutput[4:] += saveList
-	gcOutputString = str(gcOutput)
+	# Add 4 bits for SaveIndex
+	gcOutputString = str(gcOutput) + binarySaveCounter(sequencer.saveIndex)
 
 	# OUTPUT #
 	# 0 = original module (steps, bpm, pattern), note control module(s)
@@ -787,7 +785,7 @@ def binarySaveCounter(index: int) -> str:
 		0b0000		# 16
 	]
 
-	return list(format(saveArr[index], '04b'))
+	return format(saveArr[index], '04b')
 
 ##
 ## Curses Starting & Resetting 

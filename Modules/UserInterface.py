@@ -716,9 +716,9 @@ def createOutputString(sequencer):
 
 	output = (
 		bpmOutput + patternStepOutput + ledString + noteString + layerString + octaveString + channelString, 
-		"01010101"
+		gcOutputString
 		)
-
+		
 	return output 
 
 def convertDecimalToByteString(decimal):
@@ -786,7 +786,7 @@ def binarySaveCounter(index: int) -> str:
 		0b0000		# 16
 	]
 
-	return "0101"
+	return list(format(saveArr[index]), '04b')
 
 ##
 ## Curses Starting & Resetting 

@@ -714,11 +714,12 @@ def createOutputString(sequencer):
 	# 0 = original module (steps, bpm, pattern), note control module(s)
 	# 1 = playing board
 
-	
-	return (
+	output = (
 		bpmOutput + patternStepOutput + ledString + noteString + layerString + octaveString + channelString, 
 		gcOutputString
 		)
+		
+	return output 
 
 def convertDecimalToByteString(decimal):
 	""" Creates outputbytestring """ 

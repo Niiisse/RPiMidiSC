@@ -709,9 +709,9 @@ def createOutputString(sequencer):
 	# Add 4 bits for SaveIndex
 	gcOutputString = "".join(gcOutput) + binarySaveCounter(sequencer.saveIndex)
 
-	# OUTPUT #
-	# 0 = original module (steps, bpm, pattern), note control module(s)
-	# 1 = playing board
+	# OUTPUT # 
+		# 0 = original module (steps, bpm, pattern), note control module(s)
+		# 1 = playing board
 
 	output = (
 		bpmOutput + patternStepOutput + ledString + noteString + layerString + octaveString + channelString, 

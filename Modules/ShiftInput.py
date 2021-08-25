@@ -10,23 +10,24 @@ class NoteModule:
     GPIO.setwarnings(False)
     self.OCTAVEUP = 6
     self.OCTAVEDOWN = 12
-    self.SERIAL = 13
-    self.CLOCK = 19
-    self.CLOCKENABLE = 6 
-    self.PLOAD = 26
+
+    self.SERIALNCM = 13        # Input for NCM(s)
+    self.SERIALGCM = 24        # Input for General Control Module
+    self.CLOCK = 19            # 
+    self.PLOAD = 26            # Equivalent to LATCH?
 
     #old = ''
-
-    GPIO.setup(self.SERIAL, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.setup(self.SERIALNCM, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.setup(self.SERIALGCM, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.setup(self.OCTAVEUP, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.setup(self.OCTAVEDOWN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     
     GPIO.setup(self.PLOAD, GPIO.OUT)
-    GPIO.setup(self.CLOCKENABLE, GPIO.OUT)
+    #GPIO.setup(self.CLOCKENABLE, GPIO.OUT)
     GPIO.setup(self.CLOCK, GPIO.OUT)
 
     GPIO.output(self.PLOAD, 1)
-    GPIO.output(self.CLOCKENABLE, 1)
+    #GPIO.output(self.CLOCKENABLE, 1)
     GPIO.output(self.CLOCK, 0)
 
   # Pulses the latch pin - write the output to data lines
@@ -49,21 +50,25 @@ class NoteModule:
     # Gets data from shift register and seperate pins (couldn't hook everything up in one go yet)
 
     receivedByte = ''
+    receivedGCMByte = ''
+
     self.loadData()
     
-    GPIO.output(self.CLOCKENABLE, 0)
+    #GPIO.output(self.CLOCKENABLE, 0)
 
     ocUp = GPIO.input(self.OCTAVEUP)
     ocDown = GPIO.input(self.OCTAVEDOWN)
 
     for x in range(8):
-      i = GPIO.input(self.SERIAL)
-      #print(i, end=', ')
+      i = GPIO.input(self.SERIALNCM)
+      o = GPIO.input(self.SERIALGCM)
+
       receivedByte += str(i)
+      receivedGCMByte += str(o)
       self.tick()
 
-    GPIO.output(self.CLOCKENABLE, 1)
+    #GPIO.output(self.CLOCKENABLE, 1)
 
-    output = str(ocUp) + str(ocDown) + receivedByte
+    output = str(ocUp) + str(ocDown) + receivedByte + receivedGCMByte
 
     return output

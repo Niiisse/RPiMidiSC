@@ -8,7 +8,8 @@ if config.general['hardware_enabled']:
   from . import ShiftInput
   shiftInput = ShiftInput.ShiftInput()
 
-  # Debounce instances
+  # DEBOUNCE
+  # NCM 1
   noteUpDb = Debounce.Debounce()
   noteDownDb = Debounce.Debounce()
   layerUpDb = Debounce.Debounce()
@@ -19,10 +20,16 @@ if config.general['hardware_enabled']:
   channelDownDb = Debounce.Debounce()
   sustainDb = Debounce.Debounce()
   armDb = Debounce.Debounce()
-  
-#class Input:
-#  char = None
 
+  # GCM buttons
+  patternModeToggleDb = Debounce.Debounce()
+  patternDownDb = Debounce.Debounce()
+  stepDownDb = Debounce.Debounce()
+  saveDownDb = Debounce.Debounce()
+  saveUpDb = Debounce.Debounce()
+  stepUpDb = Debounce.Debounce()
+  patternUpDb = Debounce.Debounce()
+  playDb = Debounce.Debounce()
 
 def doInput(self, char):
   # Handles inputs, returns action to be executed
@@ -112,7 +119,7 @@ def doInput(self, char):
 
   # GPIO INPUT
   if config.general['hardware_enabled']: 
-    # GPIO Input String Layout (10 bits):
+    # GPIO Input String Layout:
     # 0: currentNoteUp
     # 1: currentNoteDown
     # 2: noteLayerDown
@@ -123,6 +130,15 @@ def doInput(self, char):
     # 7: midiChannelUp
     # 8: octaveUp
     # 9: noteLayerUp
+
+    # 10: patternToggle
+    # 11: pattern down
+    # 12: step down
+    # 13: save down
+    # 14: save up
+    # 15: step up
+    # 16: pattern up
+    # 17: play/pause
 
     # Read inputs; set debouncing state    
     hwInput = shiftInput.readData()
@@ -157,6 +173,29 @@ def doInput(self, char):
     btnNoteLayerUp = hwInput[9]
     layerUpDb.setState(btnNoteLayerUp, True)
 
+    btnPatternToggle = hwInput[10]
+    patternModeToggleDb.setState(btnPatternToggle, True)
+
+    btnPatternDown = hwInput[11]
+    patternDownDb.setState(btnPatternDown, True)
+
+    btnStepDown = hwInput[12]
+    stepDownDb.setState(btnStepDown, True)
+
+    btnSaveDown = hwInput[13]
+    saveDownDb.setState(btnSaveDown, True)
+
+    btnSaveUp = hwInput[14]
+    saveUpDb.setState(btnSaveUp, True)
+
+    btnStepUp = hwInput[15]
+    stepUpDb.setState(btnStepUp, True)
+
+    btnPatternUp = hwInput[16]
+    patternUpDb.setState(btnPatternUp, True)
+
+    btnPlay = hwInput[17]
+    playDb.setState(btnPlay, True)
 
     # Output returns
     if btnCurrentNoteUp == '1' and noteUpDb.checkDebounce():
@@ -188,3 +227,27 @@ def doInput(self, char):
 
     elif btnArm == '1' and armDb.checkDebounce():
       return "toggleArm"
+
+    elif btnPatternToggle == '1' and patternModeToggleDb.checkDebounce():
+      return "togglePatternMode"
+
+    elif btnPatternDown == '1' and patternDownDb.checkDebounce():
+      return "patternStepDown"
+
+    elif btnPatternUp == '1' and patternUpDb.checkDebounce():
+      return "patternStepUp"
+
+    elif btnStepDown == '1' and stepDownDb.checkDebounce():
+      return "seqStepDown"
+
+    elif btnStepUp == '1' and stepUpDb.checkDebounce():
+      return "seqStepUp"
+
+    elif btnSaveDown == '1' and saveDownDb.checkDebounce():
+      return "saveDown"
+
+    elif btnSaveUp == '1' and saveUpDb.checkDebounce():
+      return "saveUp"
+
+    elif btnPlay == '1' and playDb.checkDebounce():
+      return "playPause"

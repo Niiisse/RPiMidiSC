@@ -1,7 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 
-class NoteModule:
+class ShiftInput:
 
   def __init__(self):
 
@@ -12,7 +12,7 @@ class NoteModule:
     self.OCTAVEDOWN = 12
 
     self.SERIALNCM = 13        # Input for NCM(s)
-    self.SERIALGCM = 24        # Input for General Control Module
+    self.SERIALGCM = 5         # Input for General Control Module
     self.CLOCK = 19            # 
     self.PLOAD = 26            # Equivalent to LATCH?
 

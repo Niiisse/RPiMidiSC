@@ -6,7 +6,7 @@ from . import Debounce
 
 if config.general['hardware_enabled']:
   from . import ShiftInput
-  noteModule = ShiftInput.NoteModule()
+  shiftInput = ShiftInput.ShiftInput()
 
   # Debounce instances
   noteUpDb = Debounce.Debounce()
@@ -125,7 +125,7 @@ def doInput(self, char):
     # 9: noteLayerUp
 
     # Read inputs; set debouncing state    
-    hwInput = noteModule.readData()
+    hwInput = shiftInput.readData()
     
     btnCurrentNoteUp = hwInput[0]
     noteUpDb.setState(btnCurrentNoteUp, True)

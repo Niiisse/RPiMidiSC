@@ -705,18 +705,23 @@ def createOutputString(sequencer):
 	# Yellow LED if patternMode == auto	
 	if sequencer.patternMode == 'auto':
 		gcOutput[3] = '1'
-
+	
+	# Replace last 4 items with save counter 
 	gcOutput[4:] = binarySaveCounter(sequencer.saveIndex)
+	gcOutputString = str(gcOutput)
+
 	# OUTPUT #
 	# 0 = original module (steps, bpm, pattern), note control module(s)
 	# 1 = playing board
+
+	
 	return (
 		bpmOutput + patternStepOutput + ledString + noteString + layerString + octaveString + channelString, 
-		gcOutput
+		gcOutputString
 		)
 
 def convertDecimalToByteString(decimal):
-	""" Used for creating the outputbytestring """ 
+	""" Creates outputbytestring """ 
 
 	numericArr = [        # Stores the numeric display bytes
 	0b10000001,
@@ -736,7 +741,7 @@ def convertDecimalToByteString(decimal):
 	return byteString
 
 def convertDecimalToNote(decimal):
-	""" Used for converting note number to actual note """
+	""" Converts note number to actual note """
 
 	noteArr = [        # Stores the numeric display bytes
 	0b01111110,		# -

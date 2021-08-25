@@ -10,8 +10,8 @@ from pprint import pprint
 if config.general['hardware_enabled']:
   import Modules.HardwareInterface as HWi
   sr = HWi.ShiftRegister(21, 20, 16)
-  playModule = HWi.ShiftRegister(7, 8, 25)
-  playModule.outputBits("01111111")
+  gc = HWi.ShiftRegister(7, 8, 25)
+  gc.outputBits("01111111")
 
 # Program start
 
@@ -39,7 +39,8 @@ while (True):
     ui.startUI()
 
   elif config.general['hardware_enabled']:
-    sr.outputBits(uiResult)
+    sr.outputBits(uiResult[0])
+    gc.outputBits(uiResult[1])
     
 # def sendByteString(outputByteString):
 #   sr.outputBits(outputByteString)

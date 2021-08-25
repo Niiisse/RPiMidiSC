@@ -12,7 +12,7 @@ class MidiInterface:
 
 		# TODO: Figure out way to select midi device
 
-		self.interface = pygame.midi.Output(2)
+		self.interface = pygame.midi.Output(0)
 		self.interface.set_instrument(0, 0)      
 
 		# For keeping track of wehat notes are currently on

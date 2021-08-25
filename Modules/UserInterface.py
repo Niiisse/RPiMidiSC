@@ -707,7 +707,7 @@ def createOutputString(sequencer):
 		gcOutput[3] = '1'
 	
 	# Add 4 bits for SaveIndex
-	gcOutputString = str(gcOutput) + str(binarySaveCounter(sequencer.saveIndex))
+	gcOutputString = "".join(gcOutput) + binarySaveCounter(sequencer.saveIndex)
 
 	# OUTPUT #
 	# 0 = original module (steps, bpm, pattern), note control module(s)

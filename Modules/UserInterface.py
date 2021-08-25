@@ -716,7 +716,7 @@ def createOutputString(sequencer):
 
 	output = (
 		bpmOutput + patternStepOutput + ledString + noteString + layerString + octaveString + channelString, 
-		gcOutputString
+		"01010101"
 		)
 
 	return output 

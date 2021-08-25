@@ -30,7 +30,7 @@ class Ui:
 	patternMode = config.pattern['patternMode']
 	patternAmount = config.pattern['patternAmount']
 	showKeyBinds = config.interface['drawKeybinds']
-	keysLastFrame = False
+	keysLastFrame = False						# Used for re-drawing things cus Curses is (curses)
 
 	keyBinds = (
 		"q: quit",

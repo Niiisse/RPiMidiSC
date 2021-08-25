@@ -34,6 +34,7 @@ class Sequencer:
 		# Misc
 		self.noteLayerAmount = 10         # Added this for not having to hardcode noteLayer amount when saving/loading, i think
 		self.midiEnabled = midiEnabled    # Whether or not to enable MIDI output 
+		self.saveIndex = 0								# Index of loaded savefile
 		
 		if midiEnabled:
 			from . import Midi
@@ -189,11 +190,6 @@ class Sequencer:
 			self.seqstep += self.stepSize
 		else:
 			self.finalStepInPattern()
-
-		# Select topmost layer for displaying #FIXME: temporary, don't do this w multiple NCMs
-		# for idx in range(self.noteLayerAmount-1, -1, -1):
-		# 	if self.patterns[self.patternStep].patternSteps[self.seqstep].noteLayers[idx].note != 0:
-		# 		self.patterns[self.patternStep].patternSteps[self.seqstep].selectedLayer[0] = idx
 
 	def finalStepInPattern(self):
 		""" Executed at the final step in a pattern

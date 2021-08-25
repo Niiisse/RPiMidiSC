@@ -708,7 +708,7 @@ def createOutputString(sequencer):
 	
 	# Replace last 4 items with save counter 
 	saveList = binarySaveCounter(sequencer.saveIndex)
-	gcOutput[4:] = saveList
+	gcOutput[4:] += saveList
 	gcOutputString = str(gcOutput)
 
 	# OUTPUT #

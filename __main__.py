@@ -10,6 +10,8 @@ from pprint import pprint
 if config.general['hardware_enabled']:
   import Modules.HardwareInterface as HWi
   sr = HWi.ShiftRegister(21, 20, 16)
+  playModule = HWi.ShiftRegister(7, 8, 25)
+  playModule.outputBits("01111111")
 
 # Program start
 

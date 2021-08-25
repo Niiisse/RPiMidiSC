@@ -9,7 +9,8 @@ class NoteModule:
     GPIO.setwarnings(False)
     self.OCTAVEUP = 6
     self.OCTAVEDOWN = 12
-    self.SERIAL = 5
+
+    self.SERIAL = 13
     self.CLOCK = 19
     #self.CLOCKENABLE = 6
     self.PLOAD = 26

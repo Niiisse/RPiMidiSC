@@ -11,7 +11,7 @@ class MidiInterface:
 		self.velocity = 100 
 
 		# TODO: Figure out way to select midi device
-
+		
 		self.interface = pygame.midi.Output(0)
 		self.interface.set_instrument(0, 0)      
 

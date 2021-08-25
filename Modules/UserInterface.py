@@ -632,6 +632,7 @@ def createOutputString(sequencer):
 		#		all LEDs OFF, current step: LED ON
 		#		pausing: BLINK current LED
 
+		# editing mode
 		if sequencer.patternEditing:
 			if i == ledStep:
 				ledState = Ui.blink.blink("1", False)
@@ -651,7 +652,6 @@ def createOutputString(sequencer):
 		ledString += ledState
 
 	# NOTEMODULE #
-	# TODO: set last layerString bit correctly
 
 	noteString = "11111110"
 	layerString = "11111110"
@@ -691,13 +691,32 @@ def createOutputString(sequencer):
 	else:
 		channelString = channelString[:-1] + '0'
 		
+	# PLAY / GENERAL CONTROL BOARD
+	gcOutput = list("00000000")
 
+	# Green LED ON, red OFF if playing, inverted otherwise
+	if sequencer.playing:
+		gcOutput[1] = '1'
+		gcOutput[2] = '0'
+	else:
+		gcOutput[1] = '0'
+		gcOutput[2] = '1'
+
+	# Yellow LED if patternMode == auto	
+	if sequencer.patternMode == 'auto':
+		gcOutput[3] = '1'
+
+	gcOutput[4:] = binarySaveCounter(sequencer.saveIndex)
 	# OUTPUT #
-	 
-	return bpmOutput + patternStepOutput + ledString + noteString + layerString + octaveString + channelString
+	# 0 = original module (steps, bpm, pattern), note control module(s)
+	# 1 = playing board
+	return (
+		bpmOutput + patternStepOutput + ledString + noteString + layerString + octaveString + channelString, 
+		gcOutput
+		)
 
 def convertDecimalToByteString(decimal):
-	# Used for creating the outputbytestring
+	""" Used for creating the outputbytestring """ 
 
 	numericArr = [        # Stores the numeric display bytes
 	0b10000001,
@@ -717,7 +736,7 @@ def convertDecimalToByteString(decimal):
 	return byteString
 
 def convertDecimalToNote(decimal):
-	# Used for converting note number to actual note
+	""" Used for converting note number to actual note """
 
 	noteArr = [        # Stores the numeric display bytes
 	0b01111110,		# -
@@ -738,6 +757,30 @@ def convertDecimalToNote(decimal):
 	byteString = format(noteArr[decimal], '08b')
 
 	return byteString
+
+def binarySaveCounter(index: int) -> str:
+	""" Convert save index decimalto LED output string """
+
+	saveArr = [
+		0b0001,		# 1
+		0b0010,		# 2
+		0b0011,		# 3
+		0b0100,		# 4
+		0b0101,		# 5
+		0b0110,		# 6
+		0b0111,		# 7
+		0b1000,		# 8
+		0b1001,		# 9
+		0b1010,		# 10
+		0b1011,		# 11
+		0b1100,		# 12
+		0b1101,		# 13
+		0b1110,		# 14
+		0b1111,		# 15
+		0b0000		# 16
+	]
+
+	return format(saveArr[index], '04b')
 
 ##
 ## Curses Starting & Resetting 

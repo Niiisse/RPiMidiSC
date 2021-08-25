@@ -41,6 +41,3 @@ while (True):
   elif config.general['hardware_enabled']:
     sr.outputBits(uiResult[0])
     gc.outputBits(uiResult[1])
-    
-# def sendByteString(outputByteString):
-#   sr.outputBits(outputByteString)

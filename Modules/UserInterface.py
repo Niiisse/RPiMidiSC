@@ -720,7 +720,7 @@ def createOutputString(sequencer):
 		# 1 = playing board
 
 	output = (
-		bpmOutput + patternStepOutput + ledString + noteString + layerString + octaveString + channelString, 
+		bpmOutput + patternStepOutput + ledString + noteString + layerString + octaveString + channelString + gcOutputString, 
 		gcOutputString
 		)
 		

@@ -24,7 +24,7 @@ while (True):
   # Runs UI (which, admittedly, runs most of the program)
   # UI can return 0 for graceful exit - necessary because Curses will fuck up the console otherwise
   # UI can also return 1 for reset; this resets Curses, but not the program state
-  # If none of that happens, it returns the bytestring which can be sent to the hardware interface
+  # If none of that happens, it returns the bytestring which can be sent to the hardware interfaces
 
   uiResult = ui.updateUi()   
   
@@ -39,5 +39,5 @@ while (True):
     ui.startUI()
 
   elif config.general['hardware_enabled']:
-    sr.outputBits(uiResult[0])
-    gc.outputBits(uiResult[1])
+    sr.outputBits(uiResult[0])      # Sequencer info; Note control modules
+    gc.outputBits(uiResult[1])      # General control module

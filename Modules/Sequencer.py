@@ -195,6 +195,8 @@ class Sequencer:
 
 	def sequencerStep(self):
 		# Executes each step
+		#sequencer.lastUsedLayer = currentStep.selectedLayer[0]
+		self.patterns[self.patternStep].steps[self.patternStep].selectedLayer[0] = self.lastUsedLayer 
 
 		self.sendMidi(False) # Midi Output
 

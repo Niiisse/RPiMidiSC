@@ -114,6 +114,7 @@ def doInput(self, char):
   # Save / load
   elif char == ord('1'):
     return "save"     # TODO: multiple saves
+    
   elif char == ord('2'):
     return "load"
 

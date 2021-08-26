@@ -40,4 +40,4 @@ while (True):
 
   elif config.general['hardware_enabled']:
     sr.outputBits(uiResult[0])      # Sequencer info; Note control modules
-    gc.outputBits(uiResult[1])      # General control module
+    #gc.outputBits(uiResult[1])      # General control module

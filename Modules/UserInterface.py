@@ -14,8 +14,7 @@ from . import Sequencer
 # Handles, well, user interface. Reports program state back to main with a return.
 
 class Ui:
-	def __init__(self, midi):
-		self.midi = midi
+	def __init__(self):
 
 	app_version = config.general['app_version']
 	outputByteString = "no data"

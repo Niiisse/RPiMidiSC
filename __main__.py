@@ -1,4 +1,4 @@
-import Modules.UserInterface as ui
+import Modules.UserInterface as UserInterface
 import Modules.Midi as Midi
 
 import config
@@ -16,6 +16,7 @@ if config.general['hardware_enabled']:
 # Program start
 
 print("RPiMidiSC")
+ui = UserInterface.Ui()
 ui.startUI()
 
 while (True):
@@ -30,6 +31,7 @@ while (True):
   
   if uiResult == "quit":           
     ui.restoreScreen()
+    
     # TODO: gracefully exit MIDI too
 
     sys.exit(0)     

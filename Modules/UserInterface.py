@@ -14,51 +14,50 @@ from . import Sequencer
 # Handles, well, user interface. Reports program state back to main with a return.
 
 class Ui:
-	def __init__(self):
 
-		app_version = config.general['app_version']
-		outputByteString = "no data"
+	app_version = config.general['app_version']
+	outputByteString = "no data"
 
-		seqWinHeight = config.sequencer['seqWinHeight']
-		seqWinWidth = config.sequencer['seqWinWidth']
-		tempoWinHeight = config.tempo['tempoWinHeight'] 
-		tempoWinWidth = config.tempo['tempoWinWidth']
-		tempoWinSize = (config.tempo['tempoWinHeight'], config.tempo['tempoWinWidth'])
-		statusWinSize = (config.status['statusWinHeight'], config.status['statusWinWidth'])
-		patternWinSize = (config.pattern['patternWinHeight'], config.pattern['patternWinWidth'])
-		patternMode = config.pattern['patternMode']
-		patternAmount = config.pattern['patternAmount']
-		showKeyBinds = config.interface['drawKeybinds']
-		keysLastFrame = False						# Used for re-drawing things cus Curses is (curses)
+	seqWinHeight = config.sequencer['seqWinHeight']
+	seqWinWidth = config.sequencer['seqWinWidth']
+	tempoWinHeight = config.tempo['tempoWinHeight'] 
+	tempoWinWidth = config.tempo['tempoWinWidth']
+	tempoWinSize = (config.tempo['tempoWinHeight'], config.tempo['tempoWinWidth'])
+	statusWinSize = (config.status['statusWinHeight'], config.status['statusWinWidth'])
+	patternWinSize = (config.pattern['patternWinHeight'], config.pattern['patternWinWidth'])
+	patternMode = config.pattern['patternMode']
+	patternAmount = config.pattern['patternAmount']
+	showKeyBinds = config.interface['drawKeybinds']
+	keysLastFrame = False						# Used for re-drawing things cus Curses is (curses)
 
-		keyBinds = (
-			"q: quit",
-			"r: reset",
-			"k / l: bpm",
-			"o / p: step",
-			"n / m: pattern",
-			"space: play/pause",
-			"e: pattern edit",
-			"d: toggle step",
-			"z: show/hide keybinds",
-			"v / b: note",
-			"f / g: layer",
-			"x / c: octave",
-			"s: toggle pattern mode",
-			"1 / 2: save / load"
-		)
+	keyBinds = (
+		"q: quit",
+		"r: reset",
+		"k / l: bpm",
+		"o / p: step",
+		"n / m: pattern",
+		"space: play/pause",
+		"e: pattern edit",
+		"d: toggle step",
+		"z: show/hide keybinds",
+		"v / b: note",
+		"f / g: layer",
+		"x / c: octave",
+		"s: toggle pattern mode",
+		"1 / 2: save / load"
+	)
 
-		seqwin = None
-		tempoWin = None
-		statusWin = None
-		patternWin = None
-		window = None
-		char = None
-		sequencer = None
+	seqwin = None
+	tempoWin = None
+	statusWin = None
+	patternWin = None
+	window = None
+	char = None
+	sequencer = None
 
-		blink = Blink.Blink(config.general['blinkTime'])
-		sequencer = Sequencer.Sequencer(config.pattern['patternAmount'], config.sequencer['seqstepmax'], config.sequencer['bpm'], config.sequencer['seqstepsize'], config.general['midiEnabled'], config.sequencer['previewNoteDuration'])
-		
+	blink = Blink.Blink(config.general['blinkTime'])
+	sequencer = Sequencer.Sequencer(config.pattern['patternAmount'], config.sequencer['seqstepmax'], config.sequencer['bpm'], config.sequencer['seqstepsize'], config.general['midiEnabled'], config.sequencer['previewNoteDuration'])
+
 def main():
 	# Sets up main window
 
@@ -817,6 +816,14 @@ def resetScreen():
 
 	restoreScreen()
 	curses.endwin()
+
+def safeExit():
+	""" program is asked to exit, do so properly """
+
+	restoreScreen()
+	# TODO: midi
+	
+	return "111111111111111111111111111111101111111000000000000000001111111011111110111111101111111000000000" 
 
 def startUI():
 	try: 

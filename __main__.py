@@ -2,7 +2,7 @@ import Modules.UserInterface as ui
 import Modules.Midi as Midi
 
 import config
-import time.sleep
+import time
 import sys
 from pprint import pprint
 

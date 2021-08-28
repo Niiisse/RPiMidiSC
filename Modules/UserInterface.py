@@ -546,10 +546,10 @@ def processInput(outputByteString, sequencer):
 
 	# Save
 	elif action == "save": 
-		sequencer.save()
+		sequencer.save(0)
 
 	elif action == "load":
-		sequencer.load()
+		sequencer.load(0)
 
 	# Sustain
 	elif action == "toggleSustain":

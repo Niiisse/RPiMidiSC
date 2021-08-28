@@ -55,16 +55,16 @@ class Sequencer:
 		if self.playing: self.playing = False
 		self.midiInterface.allNotesOff()
 
-	def save(self):
+	def save(self, index: int):
 		""" TODO: all the things """
 
-		self.saveLoad.save(0, self)
+		self.saveLoad.save(index, self)
 
-	def load(self):
+	def load(self, index: int):
 		""" TODO: all the things """
 
-		self.saveLoad.load(0, self)
-
+		self.saveLoad.load(index, self)
+		
 	def initPatterns(self):
 		""" Re-initializes pattern list to deal with differing saves """
 
@@ -171,16 +171,33 @@ class Sequencer:
 		self.seqstep = 0
 
 	def saveUp(self):
+		""" Handles saveIndex logic """
+		oldSaveIndex = self.saveIndex
+
 		if self.saveIndex == self.savesTotal:
 			self.saveIndex = 0
 		else:
 			self.saveIndex += 1
 
+		self.changeSave(oldSaveIndex)
+		
 	def saveDown(self):
+		""" Handles saveIndex logic """
+		
+		oldSaveIndex = self.saveIndex
+
 		if self.saveIndex == 0:
 			self.saveIndex = self.savesTotal
 		else:
 			self.saveIndex -= 1
+
+		self.changeSave(oldSaveIndex)
+
+	def changeSave(self, oldSaveIndex: int):
+		""" Changes save slot. Saves current save, then loads new save """
+
+		self.saveLoad.save(oldSaveIndex, self)
+		self.saveLoad.load(self.saveIndex, self)
 
 	def changePattern(self, changeValue):
 		# Instantly changes pattern. Useful in editing mode. changeValue needs an int
@@ -195,8 +212,6 @@ class Sequencer:
 
 	def sequencerStep(self):
 		# Executes each step
-		#sequencer.lastUsedLayer = currentStep.selectedLayer[0]
-		self.patterns[self.patternStep].patternSteps[self.seqstep].selectedLayer[0] = self.lastUsedLayer 
 
 		self.sendMidi(False) # Midi Output
 

@@ -821,7 +821,7 @@ def safeExit():
 	""" program is asked to exit, do so properly """
 
 	restoreScreen()
-	# TODO: midi
+	Ui.sequencer.midiInterface.cleanUp()
 	
 	return "111111111111111111111111111111101111111000000000000000001111111011111110111111101111111000000000" 
 

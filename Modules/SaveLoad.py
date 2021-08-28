@@ -160,7 +160,7 @@ class SaveLoad:
 
 		header = ['lastLoadedSave']
 
-		#rowList = [str(index)]
+		rowList = [index, 0]
 		
 		path = self.folderName + "data.csv"
 		with open(path, mode='w') as file:
@@ -168,7 +168,7 @@ class SaveLoad:
 			# Init CSV Writer, write header data then row data
 			writer = csv.writer(file)
 			writer.writerow(header)
-			writer.writerow(list(index))
+			writer.writerow(rowList)
 
 	def readMetadata(self) -> dict:
 		""" Gets metadata from file, returns dict 

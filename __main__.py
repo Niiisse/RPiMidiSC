@@ -42,7 +42,7 @@ while (True):
       outputString = outputString.join(outputList)
       sr.outputBits(outputString)  
 
-    time.sleep(0.25) 
+    time.sleep(0.1) 
 
     for bit in range(len(outputList)):
       if outputList[bit] == '0':
@@ -54,7 +54,7 @@ while (True):
       outputString = outputString.join(outputList)
       sr.outputBits(outputString)  
     
-    time.sleep(0.25) 
+    time.sleep(0.1) 
 
     for bit in range(len(outputList)):
       if outputList[bit] == '0':
@@ -66,7 +66,7 @@ while (True):
       outputString = outputString.join(outputList)
       sr.outputBits(outputString)  
     
-    time.sleep(0.25) 
+    time.sleep(0.1) 
 
   elif uiResult == "quit":  
     val = ui.safeExit()         

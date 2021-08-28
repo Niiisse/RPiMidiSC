@@ -34,7 +34,7 @@ def saveLoadAnim():
       outputString = outputString.join(outputList)
       sr.outputBits(outputString)  
 
-    time.sleep(0.1) 
+    time.sleep(0.075) 
 
 while (True):
   # Main program loop

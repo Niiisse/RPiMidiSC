@@ -34,9 +34,9 @@ while (True):
 
     for bit in outputList:
         if bit == '0':
-          bit == '1'
+          bit = '1'
         else:
-          bit == '0'
+          bit = '0'
         
         outputString = ""
         outputString = outputString.join(outputList)

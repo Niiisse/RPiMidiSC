@@ -160,7 +160,7 @@ class SaveLoad:
 
 		header = ['lastLoadedSave']
 
-		rowList = [index]
+		rowList = list(index)
 		
 		path = self.folderName + "data.csv"
 		with open(path, mode='w') as file:

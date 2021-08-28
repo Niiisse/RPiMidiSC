@@ -33,16 +33,16 @@ while (True):
     outputList = list(outputString)
 
     for bit in outputList:
-        if bit == '0':
-          bit = '1'
-        else:
-          bit = '0'
-        
-        outputString = ""
-        outputString = outputString.join(outputList)
-        sr.outputBits(outputString)  
+      if bit == '0':
+        bit = '1'
+      else:
+        bit = '0'
+      
+      outputString = ""
+      outputString = outputString.join(outputList)
+      sr.outputBits(outputString)  
 
-        time.sleep(0.01) 
+      time.sleep(0.01) 
 
   elif uiResult == "quit":  
     val = ui.safeExit()         

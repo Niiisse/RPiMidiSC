@@ -42,7 +42,7 @@ while (True):
       outputString = outputString.join(outputList)
       sr.outputBits(outputString)  
 
-      time.sleep(0.005) 
+      time.sleep(0.01) 
 
   elif uiResult == "quit":  
     val = ui.safeExit()         

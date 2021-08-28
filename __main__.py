@@ -44,7 +44,7 @@ while (True):
 
         time.sleep(0.01) 
 
-  if uiResult == "quit":  
+  elif uiResult == "quit":  
     val = ui.safeExit()         
     sr.outputBits(val)
     sys.exit(0)     

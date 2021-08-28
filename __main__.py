@@ -18,6 +18,58 @@ print("RPiMidiSC")
 
 ui.startUI()
 
+def saveLoadAnim():
+  outputString = config.misc['hw_off_string']
+  outputList = list(outputString)
+
+  for bit in range(len(outputList)):
+    if outputList[bit] == '0':
+      outputList[bit] = '1'
+    else:
+      outputList[bit] = '0'
+    
+    outputString = ""
+    outputString = outputString.join(outputList)
+    sr.outputBits(outputString)  
+
+  time.sleep(0.1) 
+
+  for bit in range(len(outputList)):
+    if outputList[bit] == '0':
+      outputList[bit] = '1'
+    else:
+      outputList[bit] = '0'
+    
+    outputString = ""
+    outputString = outputString.join(outputList)
+    sr.outputBits(outputString)  
+  
+  time.sleep(0.1) 
+
+  for bit in range(len(outputList)):
+    if outputList[bit] == '0':
+      outputList[bit] = '1'
+    else:
+      outputList[bit] = '0'
+    
+    outputString = ""
+    outputString = outputString.join(outputList)
+    sr.outputBits(outputString)  
+  
+  time.sleep(0.1) 
+
+  for bit in range(len(outputList)):
+    if outputList[bit] == '0':
+      outputList[bit] = '1'
+    else:
+      outputList[bit] = '0'
+    
+    outputString = ""
+    outputString = outputString.join(outputList)
+    sr.outputBits(outputString)  
+  
+  time.sleep(0.1) 
+
 while (True):
   # Main program loop
 
@@ -29,44 +81,7 @@ while (True):
   uiResult = ui.updateUi()   
 
   if uiResult == "saveAnim":
-    outputString = config.misc['hw_off_string']
-    outputList = list(outputString)
-
-    for bit in range(len(outputList)):
-      if outputList[bit] == '0':
-        outputList[bit] = '1'
-      else:
-        outputList[bit] = '0'
-      
-      outputString = ""
-      outputString = outputString.join(outputList)
-      sr.outputBits(outputString)  
-
-    time.sleep(0.1) 
-
-    for bit in range(len(outputList)):
-      if outputList[bit] == '0':
-        outputList[bit] = '1'
-      else:
-        outputList[bit] = '0'
-      
-      outputString = ""
-      outputString = outputString.join(outputList)
-      sr.outputBits(outputString)  
-    
-    time.sleep(0.1) 
-
-    for bit in range(len(outputList)):
-      if outputList[bit] == '0':
-        outputList[bit] = '1'
-      else:
-        outputList[bit] = '0'
-      
-      outputString = ""
-      outputString = outputString.join(outputList)
-      sr.outputBits(outputString)  
-    
-    time.sleep(0.1) 
+    saveLoadAnim()
 
   elif uiResult == "quit":  
     val = ui.safeExit()         

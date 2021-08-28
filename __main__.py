@@ -29,7 +29,7 @@ while (True):
   uiResult = ui.updateUi()   
 
   if uiResult == "saveAnim":
-    outputString = "01111111111111111111111111111111111111110000000000000000"
+    outputString = config.misc['hw_off_string']
     outputList = list(outputString)
 
     for bit in range(len(outputList)):
@@ -42,7 +42,7 @@ while (True):
       outputString = outputString.join(outputList)
       sr.outputBits(outputString)  
 
-      time.sleep(0.01) 
+      time.sleep(0.005) 
 
   elif uiResult == "quit":  
     val = ui.safeExit()         

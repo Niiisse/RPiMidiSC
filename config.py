@@ -64,3 +64,7 @@ interface = {
   
   "drawKeybinds": False,      # Whether the UI should show keybinds
 }
+
+misc = {
+  "hw_off_string": "011111111111111111111111111111111111111100000000000000001111111011111110111111101111111000000000"
+}

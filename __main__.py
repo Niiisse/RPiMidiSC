@@ -19,7 +19,7 @@ print("RPiMidiSC")
 ui.startUI()
 
 def saveLoadAnim():
-  for i in range(4):
+  for i in range(6):
     outputString = config.misc['hw_off_string']
     outputList = list(outputString)
 
@@ -33,7 +33,7 @@ def saveLoadAnim():
       outputString = outputString.join(outputList)
       sr.outputBits(outputString)  
 
-    time.sleep(0.1) 
+    time.sleep(0.05) 
 
 
 while (True):

@@ -5,14 +5,19 @@ class SaveLoad:
 	""" Handles saving / loading songs
 	
 	Dumps the sequencer into a CSV file, or loads the sequencer with values from one.
-	TODO: Save-selecting logic 
 	TODO: backup file before writing """
 
 	def __init__(self):
 		self.folderName = "saves/"				# Name of folder containing saves
 		
 	def save(self, index: int, sequencer: object) -> None:
-		""" Saves sequencer state to CSV """
+		""" Saves sequencer state to CSV 
+
+		First, load metadata. Make relevant changes to metadata and save it.
+		Then, save sequencer's data into a big ol' list. Save this list to correct file.
+		TODO: Make backup of old file before writing to it.
+		
+		"""
 		
 		# Metadata
 		metaHeader = [
@@ -26,7 +31,7 @@ class SaveLoad:
 		# Normally a list of dicts is returned. We need to convert this  to a list of lists,
 		# because we can't re-save the CSV file properly otherwise.
 
-		metaRowList = self.convertMetadataToList(self.readMetadata())
+		metaRowList = self.convertDictToList(self.readMetadata())
 		metaRow = [index, sequencer.bpm, sequencer.patternAmount, sequencer.patternMode]
 		metaRowList[index] = metaRow
 		
@@ -89,7 +94,7 @@ class SaveLoad:
 
 					sequencerData.append(rowData)
 
-		# Get path string, open file and write data
+		# Get path string, open file and write our data
 		path = self.folderName + str(index) + ".csv"
 
 		with open(path, mode='w') as csvFile:
@@ -100,7 +105,10 @@ class SaveLoad:
 			writer.writerows(sequencerData)
 		
 	def load(self, index: int, sequencer: object) -> None:
-		""" Loads a CSV file, applies contents to Sequencer. """
+		""" Loads a CSV file, applies contents to Sequencer. 
+		
+		Load metadata and a big ol' CSV file containing the song's data, then loop over relevant sequencer sections 
+		and fill it with the CSV's data. Lastly, save currently loaded save index to lastLoadedSave in data.csv"""
 
 		metaRowList = self.readMetadata()
 
@@ -134,6 +142,34 @@ class SaveLoad:
 				step.selectedLayer=[int(row['selectedLayer0']), int(row['selectedLayer1']), int(row['selectedLayer2']), int(row['selectedLayer3'])]
 				step.enabled = bool(row['enabled'])		
 
+		self.saveLastLoadedSaveIndex(index)
+
+	def readLastLoadedSaveIndex(self) -> int:
+		""" Gets last used save-index for startup """
+
+		path = self.folderName + "data.csv"
+
+		with open(path, mode='r') as csvFile:
+			reader = csv.DictReader(csvFile)
+			rowList = list(reader)
+
+		return int(rowList[0]['lastLoadedSave'])
+
+	def saveLastLoadedSaveIndex(self, index: int) -> None:
+		""" Saves loaded song index to file """
+
+		header = ['lastLoadedSave']
+
+		rowList = [index]
+		
+		path = self.folderName + "data.csv"
+		with open(path, mode='w') as file:
+
+			# Init CSV Writer, write header data then row data
+			writer = csv.writer(file)
+			writer.writerow(header)
+			writer.writerows(rowList)
+
 	def readMetadata(self) -> dict:
 		""" Gets metadata from file, returns dict 
 		
@@ -146,8 +182,8 @@ class SaveLoad:
 			metaReader = csv.DictReader(metaCsvFile)
 			return list(metaReader)
 
-	def convertMetadataToList(self, metadata: dict) -> list:
-		""" Takes metadata list of dicts and converts it to lists
+	def convertDictToList(self, metadata: dict) -> list:
+		""" Takes CSV list of dicts and converts it to lists
 
 		Used for re-saving metadata file """
 

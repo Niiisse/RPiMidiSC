@@ -32,11 +32,11 @@ while (True):
     outputString = "01111111111111111111111111111111111111110000000000000000"
     outputList = list(outputString)
 
-    for bit in outputList:
-      if bit == '0':
-        bit = '1'
+    for bit in range(len(outputList)):
+      if outputList[bit] == '0':
+        outputList[bit] = '1'
       else:
-        bit = '0'
+        outputList[bit] = '0'
       
       outputString = ""
       outputString = outputString.join(outputList)

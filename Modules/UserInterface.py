@@ -401,7 +401,6 @@ def processInput(outputByteString, sequencer):
 
 	# Quit
 	if action == "quit":
-		restoreScreen()
 		return "quit"
 
 	# Reset

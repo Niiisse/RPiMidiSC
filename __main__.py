@@ -2,6 +2,7 @@ import Modules.UserInterface as ui
 import Modules.Midi as Midi
 
 import config
+import time.sleep
 import sys
 from pprint import pprint
 
@@ -26,7 +27,23 @@ while (True):
   # If none of that happens, it returns the bytestring which can be sent to the hardware interfaces
 
   uiResult = ui.updateUi()   
-  
+  if uiResult == "saveAnim":
+    outputString = "01111111111111111111111111111111111111110000000000000000"
+    outputList = list(outputString)
+
+    for bit in outputList:
+        if bit == '0':
+          bit == '1'
+        else:
+          bit == '0'
+        
+        outputString = ""
+        outputString = outputString.join(outputList)
+        sr.outputBits(outputString)  
+
+        time.sleep(0.01) 
+    pass
+
   if uiResult == "quit":  
     val = ui.safeExit()         
     sr.outputBits(val)

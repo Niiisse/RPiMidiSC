@@ -500,7 +500,6 @@ def processInput(outputByteString, sequencer):
 		sequencer.sendMidi(True)
 		sequencer.lastUsedLayer = currentStep.selectedLayer[0]
 
-
 	# Note Octave
 	elif action == "octaveUp":
 		currentStep = sequencer.patterns[sequencer.patternStep].patternSteps[sequencer.seqstep]

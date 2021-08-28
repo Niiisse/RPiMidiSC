@@ -27,6 +27,7 @@ while (True):
   # If none of that happens, it returns the bytestring which can be sent to the hardware interfaces
 
   uiResult = ui.updateUi()   
+
   if uiResult == "saveAnim":
     outputString = "01111111111111111111111111111111111111110000000000000000"
     outputList = list(outputString)
@@ -42,7 +43,6 @@ while (True):
         sr.outputBits(outputString)  
 
         time.sleep(0.01) 
-    pass
 
   if uiResult == "quit":  
     val = ui.safeExit()         

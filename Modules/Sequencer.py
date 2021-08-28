@@ -19,8 +19,8 @@ class Sequencer:
 		self.lastUsedOctave = 3														# Last-entered octave
 		
 		# Timer Variables
-		self.timerShouldTick = True                   # Make sequencer go brrr
-		self.tic = time.perf_counter()                # Sets timestamp to compare against
+		self.timerShouldTick = True                   		# Make sequencer go brrr
+		self.tic = time.perf_counter()                		# Sets timestamp to compare against
 
 		# Pattern Variables
 		self.patternAmount = patternAmount                                                # Amount of patterns

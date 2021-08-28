@@ -7,7 +7,7 @@ class Sequencer:
 	def __init__(self, patternAmount: int, sequencerSteps: int, bpm: int, seqstepsize: int, midiEnabled: bool, previewNoteDuration: int):
 
 		# Sequencer Variables
-		self.playing = True                               # Whether the sequencer is currently playing or paused 
+		self.playing = False                              # Whether the sequencer is currently playing or paused 
 		self.seqstep = 0                                  # Current step within pattern         
 		self.stepSize = seqstepsize                       # Amount to increment with per step. TODO: see if this can go
 		self.sequencerSteps = sequencerSteps              # Total amout of steps per pattern

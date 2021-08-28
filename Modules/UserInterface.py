@@ -556,9 +556,11 @@ def processInput(outputByteString, sequencer):
 	# save up/down
 	elif action == "saveUp":
 		sequencer.saveUp()
+		return "saveAnim"
 
 	elif action == "saveDown":
 		sequencer.saveDown()
+		return "saveAnim"
 		
 	return outputByteString
 

@@ -47,7 +47,11 @@ class ShiftInput:
     #time.sleep(1)
 
   def readData(self):
-    # Gets data from shift register and seperate pins (couldn't hook everything up in one go yet)
+    """ Reads data from input shift registers
+    
+    Two seperate for loops: 8 ticks for NCM (8 ticks * NCM count)
+    16 ticks for input of GCM - GCM and NCM data load / clock wires are identical,
+    output wires differ. """
 
     receivedByte = ''
     receivedGCMByte = ''
@@ -61,13 +65,15 @@ class ShiftInput:
 
     for x in range(8):
       i = GPIO.input(self.SERIALNCM)
-      o = GPIO.input(self.SERIALGCM)
-
       receivedByte += str(i)
-      receivedGCMByte += str(o)
+
       self.tick()
 
-    #GPIO.output(self.CLOCKENABLE, 1)
+    for x in range(16):
+      o = GPIO.input(self.SERIALGCM)
+      receivedGCMByte += str(o)
+
+      self.tick()
 
     output = str(ocUp) + str(ocDown) + receivedByte + receivedGCMByte
 

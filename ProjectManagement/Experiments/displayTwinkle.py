@@ -72,7 +72,7 @@ numericArr = [        # Stores the numeric display bytes
 
 inputString = "01010101"
 inputList = list(inputString)
-sleepTime = 0.5
+sleepTime = 0.2
 
 while True: 
   outputList = inputList[:-1]

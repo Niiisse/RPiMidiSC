@@ -31,6 +31,8 @@ if config.general['hardware_enabled']:
   patternUpDb = Debounce.Debounce()
   playDb = Debounce.Debounce()
 
+  testDb = Debounce.Debounce()
+
 def doInput(self, char):
   # Handles inputs, returns action to be executed
   # TODO: change to dynamic keyboard bindings thru config
@@ -141,6 +143,15 @@ def doInput(self, char):
     # 16: pattern up
     # 17: play/pause
 
+    # 
+    #
+    #
+    #
+    #
+    #
+    #
+    # 
+
     # Read inputs; set debouncing state    
     hwInput = shiftInput.readData()
     
@@ -198,6 +209,9 @@ def doInput(self, char):
     btnPlay = hwInput[17]
     playDb.setState(btnPlay, True)
 
+    btnTest = hwInput[18]
+    testDb.setState(btnTest, True)
+
     # Output returns
     if btnCurrentNoteUp == '1' and noteUpDb.checkDebounce():
       return "noteUp"
@@ -251,4 +265,7 @@ def doInput(self, char):
       return "saveUp"
 
     elif btnPlay == '1' and playDb.checkDebounce():
+      return "playPause"
+
+    elif btnTest == '1' and testDb.checkDebounce():
       return "playPause"

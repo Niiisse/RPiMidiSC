@@ -41,7 +41,7 @@ class ShiftInput:
   def tick(self):
     GPIO.output(self.CLOCK, 0)
     #time.sleep(0.005)
-    GPIO.output(self.CLOCK, 1)
+    GPIO.output(self.CLOCK)
     time.sleep(0.0001)
     GPIO.output(self.CLOCK, 0)
     #time.sleep(1)

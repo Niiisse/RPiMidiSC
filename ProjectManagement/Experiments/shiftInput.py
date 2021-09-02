@@ -1,7 +1,8 @@
 import RPi.GPIO as GPIO
 import time
 
-class NoteModule:
+class ShiftInput:
+
   def __init__(self):
 
     # GPIO Setup
@@ -10,14 +11,14 @@ class NoteModule:
     self.OCTAVEUP = 6
     self.OCTAVEDOWN = 12
 
-    self.SERIAL = 5
-    self.CLOCK = 19
-    #self.CLOCKENABLE = 6
-    self.PLOAD = 26
+    self.SERIALNCM = 13        # Input for NCM(s)
+    self.SERIALGCM = 5         # Input for General Control Module
+    self.CLOCK = 19            # 
+    self.PLOAD = 26            # Equivalent to LATCH?
 
     #old = ''
-
-    GPIO.setup(self.SERIAL, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.setup(self.SERIALNCM, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.setup(self.SERIALGCM, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.setup(self.OCTAVEUP, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.setup(self.OCTAVEDOWN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     
@@ -32,7 +33,7 @@ class NoteModule:
   # Pulses the latch pin - write the output to data lines
   def loadData(self):
     GPIO.output(self.PLOAD, 0)
-    time.sleep(0.001)
+    time.sleep(0.0001)
     GPIO.output(self.PLOAD, 1)
     #time.sleep(0.1)
 
@@ -41,38 +42,45 @@ class NoteModule:
     GPIO.output(self.CLOCK, 0)
     #time.sleep(0.005)
     GPIO.output(self.CLOCK, 1)
-    time.sleep(0.002)
+    time.sleep(0.0001)
     GPIO.output(self.CLOCK, 0)
     #time.sleep(1)
 
   def readData(self):
-    # TODO: get additional two inputs 
+    """ Reads data from input shift registers
+    
+    Two seperate for loops: 8 ticks for NCM (8 ticks * NCM count)
+    16 ticks for input of GCM - GCM and NCM data load / clock wires are identical,
+    output wires differ. """
 
     receivedByte = ''
+    receivedGCMByte = ''
+
     self.loadData()
     
-    #tick()
     #GPIO.output(self.CLOCKENABLE, 0)
 
     ocUp = GPIO.input(self.OCTAVEUP)
     ocDown = GPIO.input(self.OCTAVEDOWN)
-    print(ocUp, end=', ')
-    print(ocDown, end=', ')
 
     for x in range(8):
-      i = GPIO.input(self.SERIAL)
-      print(i, end=', ')
+      i = GPIO.input(self.SERIALNCM)
       receivedByte += str(i)
+
       self.tick()
 
-    print("")
+    for x in range(16):
+      o = GPIO.input(self.SERIALGCM)
+      receivedGCMByte += str(o)
 
-    #GPIO.output(self.CLOCKENABLE, 1)
+      self.tick()
 
-    #time.sleep(0.2)
-    return receivedByte
+    output = receivedGCMByte
+    
 
-noteModule = NoteModule()
+    return output
+
+shiftInput = ShiftInput()
 
 while True:
-  noteModule.readData()
+  print(shiftInput.readData())

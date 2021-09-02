@@ -216,7 +216,7 @@ def drawSequencer(seqwin, sequencer):
 					if x == drawStep and y > 2:
 						colorPair = curses.color_pair(1)
 				
-				if sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[xStep].getState() == False:
+				if sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[xStep].getState() == False:
 					drawString = "    "
 
 				# Finally! Draw the *, but don't draw 3rd line
@@ -245,7 +245,7 @@ def drawSequencer(seqwin, sequencer):
 
 				# Color selecting for first row
 				if y < 2:
-					if sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[xStep].getState() == False:
+					if sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[xStep].getState() == False:
 						colorPair = curses.color_pair(3)
 						selectedState = False
 
@@ -260,7 +260,7 @@ def drawSequencer(seqwin, sequencer):
 
 				# Second row color selecting
 				elif y > 2:
-					if sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[xStep].getState() == False:
+					if sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[xStep].getState() == False:
 						colorPair = curses.color_pair(3)
 						modifier = curses.A_NORMAL
 						selectedState = False
@@ -430,7 +430,7 @@ def processInput(outputByteString, sequencer):
 		if sequencer.seqstep > sequencer.sequencerSteps - sequencer.stepSize:
 			sequencer.seqstep = 0
 		
-		sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep].selectedLayer[0] = sequencer.lastUsedLayer
+		sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep].selectedLayer[0] = sequencer.lastUsedLayer
 
 	elif action == "seqStepDown":
 		# FIXME: move to sequencer
@@ -441,7 +441,7 @@ def processInput(outputByteString, sequencer):
 			sequencer.seqstep = sequencer.sequencerSteps - sequencer.stepSize
 
 		# Set last used layer as active layer
-		sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep].selectedLayer[0] = sequencer.lastUsedLayer
+		sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep].selectedLayer[0] = sequencer.lastUsedLayer
 
 
 	# Pattern Stepping
@@ -466,7 +466,7 @@ def processInput(outputByteString, sequencer):
 		sequencer.togglePatternMode()
 
 	elif action == "toggleStep":
-		sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep].toggleStep()
+		sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep].toggleStep()
 
 	# Play / Pause toggle
 	elif action == "playPause":
@@ -486,7 +486,7 @@ def processInput(outputByteString, sequencer):
 
 	# Note layer
 	elif action == "layerUp":
-		currentStep = sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
+		currentStep = sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
 		currentStep.layerUp() # TODO: when multiple NCMs are connected, add second variable to layerUpDown for selecting specific layer
 													# (that's why selectedLayer[] is a list; first item = first NCM)
 
@@ -494,7 +494,7 @@ def processInput(outputByteString, sequencer):
 		sequencer.lastUsedLayer = currentStep.selectedLayer[0]
 
 	elif action == "layerDown":
-		currentStep = sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
+		currentStep = sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
 		currentStep.layerDown()
 
 		sequencer.sendMidi(True)
@@ -502,14 +502,14 @@ def processInput(outputByteString, sequencer):
 
 	# Note Octave
 	elif action == "octaveUp":
-		currentStep = sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
+		currentStep = sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].octaveUp()
 		sequencer.lastUsedOctave = currentStep.noteLayers[currentStep.selectedLayer[0]].octave
 
 		sequencer.sendMidi(True)
 
 	elif action == "octaveDown":
-		currentStep = sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
+		currentStep = sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].octaveDown()
 		sequencer.lastUsedOctave = currentStep.noteLayers[currentStep.selectedLayer[0]].octave
 
@@ -517,14 +517,14 @@ def processInput(outputByteString, sequencer):
 		
 	# MIDI channel
 	elif action == "midiChannelUp":
-		currentStep = sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
+		currentStep = sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].channelUp()
 
 		sequencer.sendMidi(True)
 		sequencer.lastUsedMidiChannel = currentStep.noteLayers[currentStep.selectedLayer[0]].midiChannel	# TODO: multi NCM support 
 
 	elif action == "midiChannelDown":
-		currentStep = sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
+		currentStep = sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].channelDown()
 
 		sequencer.sendMidi(True)
@@ -532,12 +532,12 @@ def processInput(outputByteString, sequencer):
 
 	# Sustain
 	elif action == "toggleSustain":
-		currentStep = sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
+		currentStep = sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].toggleSustain()
 
 	# Arm
 	elif action == "toggleArm":
-		currentStep = sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
+		currentStep = sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].toggleArm()
 
 	# Save
@@ -549,7 +549,7 @@ def processInput(outputByteString, sequencer):
 
 	# Sustain
 	elif action == "toggleSustain":
-		currentStep = sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
+		currentStep = sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
 		currentStep.noteLayers[currentStep.selectedLayer[0]].toggleSustain()
 		
 	# save up/down
@@ -650,12 +650,12 @@ def createOutputString(sequencer):
 			if i == ledStep:
 				ledState = Ui.blink.blink("1", False)
 			else:
-				ledState = "1" if sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[i].getState() else "0"
+				ledState = "1" if sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[i].getState() else "0"
 	
 		# playing mode
 		else:
 			if i == ledStep:
-				if sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[i].getState():
+				if sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[i].getState():
 					ledState = "1" if sequencer.playing == True else Ui.blink.blink("1", False)
 				else:
 					ledState = Ui.blink.blink("1", False) if sequencer.playing == False else "0"
@@ -671,7 +671,7 @@ def createOutputString(sequencer):
 	octaveString = "11111110"
 	channelString = "11111111"
 
-	currentStep = sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
+	currentStep = sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
 
 	noteString = convertDecimalToNote(currentStep.noteLayers[currentStep.selectedLayer[0]].note)	# TODO: this 0 would be replaced with i for note control modules
 	layerString = convertDecimalToByteString(currentStep.selectedLayer[0])

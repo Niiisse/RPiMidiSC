@@ -288,7 +288,7 @@ class Sequencer:
 
 			# If preview, send only current activelayer
 			if previewNote:
-				x = selsets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep]
+				x = self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep]
 				midiData.append(x.noteLayers[x.selectedLayer[0]])
 				#self.addPreviewNoteOff(x.noteLayers[x.selectedLayer[0]])
 			

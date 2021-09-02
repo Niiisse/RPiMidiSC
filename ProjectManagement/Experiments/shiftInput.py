@@ -80,7 +80,7 @@ class ShiftInput:
 
       self.tick()
 
-    for x in range(16):
+    for x in range(24):
       o = GPIO.input(self.SERIALGCM)
       receivedGCMByte += str(o)
 

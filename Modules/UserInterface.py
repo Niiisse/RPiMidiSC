@@ -561,6 +561,15 @@ def processInput(outputByteString, sequencer):
 		sequencer.saveDown()
 		#return "saveAnim"
 		
+	elif action == "setUp":
+		sequencer.setUp()
+
+	elif action == "setDown":
+		sequencer.setDown()
+
+	elif action == "setRepeat":
+		sequencer.setRepeat()
+
 	return outputByteString
 
 def clampPatternStepping(sequencer):
@@ -712,6 +721,10 @@ def createOutputString(sequencer):
 	
 	# Add 4 bits for SaveIndex
 	gcOutputString = "".join(gcOutput) + binarySaveCounter(sequencer.saveIndex)
+
+	# Set display + LED
+	setString = convertDecimalToByteString(sequencer.setIndex)
+	setString = setString[:-1] + '1' if sequencer.setRepeat else setString[:-1] + '0'
 
 	# OUTPUT # 
 		# 0 = original module (steps, bpm, pattern), note control module(s)

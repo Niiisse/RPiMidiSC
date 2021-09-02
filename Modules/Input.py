@@ -31,7 +31,9 @@ if config.general['hardware_enabled']:
   patternUpDb = Debounce.Debounce()
   playDb = Debounce.Debounce()
 
-  testDb = Debounce.Debounce()
+  setDownDb = Debounce.Debounce()
+  setUpDb = Debounce.Debounce()
+  setRepeatDb = Debounce.Debounce()
 
 def doInput(self, char):
   # Handles inputs, returns action to be executed
@@ -143,14 +145,14 @@ def doInput(self, char):
     # 16: pattern up
     # 17: play/pause
 
-    # 
+    # 18: set down
     #
     #
     #
     #
     #
-    #
-    # 
+    # 24: set repeat
+    # 25: set up
 
     # Read inputs; set debouncing state    
     hwInput = shiftInput.readData()
@@ -209,8 +211,16 @@ def doInput(self, char):
     btnPlay = hwInput[17]
     playDb.setState(btnPlay, True)
 
-    btnTest = hwInput[18]
-    testDb.setState(btnTest, True)
+    btnSetDown = hwInput[18]
+    setDownDb.setState(btnSetDown, True)
+
+    # ...
+
+    btnSetRepeat = hwInput[24]
+    setRepeatDb.setState(btnSetRepeat, True)
+
+    btnSetUp = hwInput[25]
+    setUpDb.setState(btnSetUp, True)
 
     # Output returns
     if btnCurrentNoteUp == '1' and noteUpDb.checkDebounce():
@@ -267,5 +277,11 @@ def doInput(self, char):
     elif btnPlay == '1' and playDb.checkDebounce():
       return "playPause"
 
-    elif btnTest == '1' and testDb.checkDebounce():
-      return "playPause"
+    elif btnSetDown == '1' and setDownDb.checkDebounce():
+      return "setDown"
+
+    elif btnSetUp == '1' and setUpDb.checkDebounce():
+      return "setUp"
+
+    elif btnSetRepeat == '1' and setRepeatDb.checkDebounce():
+      return "setRepeat"

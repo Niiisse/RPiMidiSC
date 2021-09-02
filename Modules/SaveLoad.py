@@ -120,6 +120,7 @@ class SaveLoad:
 			rowList = list(reader)
 
 		# Re-setup sequencer
+		sequencer.playing = False
 		sequencer.seqstep = 0
 		sequencer.patternStep = 1
 		sequencer.patternAmount = int(metaRowList[index]['patternAmount'])

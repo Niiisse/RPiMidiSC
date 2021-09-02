@@ -50,11 +50,11 @@ class ShiftInput:
     GPIO.output(self.CLOCK, 0)
     GPIO.output(self.GCMCLOCK, 0)
 
-    #time.sleep(0.005)
     GPIO.output(self.CLOCK, 1)
     GPIO.output(self.GCMCLOCK, 1)
 
     time.sleep(0.0001)
+
     GPIO.output(self.CLOCK, 0)
     GPIO.output(self.GCMCLOCK, 0)
 
@@ -80,7 +80,7 @@ class ShiftInput:
 
       self.tick()
 
-    for x in range(8):
+    for x in range(16):
       o = GPIO.input(self.SERIALGCM)
       receivedGCMByte += str(o)
 

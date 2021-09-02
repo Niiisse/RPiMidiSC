@@ -74,13 +74,13 @@ class ShiftInput:
     ocUp = GPIO.input(self.OCTAVEUP)
     ocDown = GPIO.input(self.OCTAVEDOWN)
 
-    for x in range(8):
+    for x in range(24):
       i = GPIO.input(self.SERIALNCM)
       receivedByte += str(i)
 
       self.tick()
 
-    for x in range(16):
+    for x in range(1):
       o = GPIO.input(self.SERIALGCM)
       receivedGCMByte += str(o)
       

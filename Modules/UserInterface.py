@@ -568,7 +568,7 @@ def processInput(outputByteString, sequencer):
 		sequencer.setDown()
 
 	elif action == "setRepeat":
-		sequencer.setRepeat()
+		sequencer.toggleSetRepeat()
 
 	return outputByteString
 

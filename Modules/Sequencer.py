@@ -18,6 +18,10 @@ class Sequencer:
 		self.lastUsedLayer = 0														# Last-entered layer
 		self.lastUsedOctave = 3														# Last-entered octave
 		
+		# Sets
+		self.setstep = 0																	# Currently active set
+		self.sets = []
+		
 		# Timer Variables
 		self.timerShouldTick = True                   		# Make sequencer go brrr
 		self.tic = time.perf_counter()                		# Sets timestamp to compare against
@@ -116,7 +120,7 @@ class Sequencer:
 		If note == 0 (off), set selectedLayer, octave and midiChannel to last-used values
 		TODO: multiple NCM support """
 
-		currentStep = self.patterns[self.patternStep].patternSteps[self.seqstep]
+		currentStep = self.patterns[self.patternStep].steps[self.seqstep]
 
 		if currentStep.noteLayers[currentStep.selectedLayer[0]].note == 0:
 			currentStep.selectedLayer[0] = self.lastUsedLayer
@@ -133,7 +137,7 @@ class Sequencer:
 		If note == 0 (off), set selectedLayer, octave and midiChannel to last-used values
 		TODO: multiple NCM support """
 
-		currentStep = self.patterns[self.patternStep].patternSteps[self.seqstep]
+		currentStep = self.patterns[self.patternStep].steps[self.seqstep]
 
 		if currentStep.noteLayers[currentStep.selectedLayer[0]].note == 0:
 			currentStep.selectedLayer[0] = self.lastUsedLayer
@@ -262,14 +266,14 @@ class Sequencer:
 
 			# If preview, send only current activelayer
 			if previewNote:
-				x = self.patterns[self.patternStep].patternSteps[self.seqstep]
+				x = self.patterns[self.patternStep].steps[self.seqstep]
 				midiData.append(x.noteLayers[x.selectedLayer[0]])
 				#self.addPreviewNoteOff(x.noteLayers[x.selectedLayer[0]])
 			
 			else:
 			# Check all noteLayers in current step, if that step is enabled; send their data, if relevant, to midi processing
-				if self.patterns[self.patternStep].patternSteps[self.seqstep].enabled:
-					for noteLayer in self.patterns[self.patternStep].patternSteps[self.seqstep].noteLayers:
+				if self.patterns[self.patternStep].steps[self.seqstep].enabled:
+					for noteLayer in self.patterns[self.patternStep].steps[self.seqstep].noteLayers:
 						midiData.append(noteLayer)
 						noteLayer.lastPlayed = (noteLayer.note, noteLayer.midiChannel)
 

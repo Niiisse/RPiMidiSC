@@ -72,8 +72,8 @@ class SaveLoad:
 		for i in range(1, sequencer.patternAmount+1):			# FIXME: this +1 business is no good. should have pattern and patternAmount internally count from 0
 			for o in range(sequencer.sequencerSteps):
 				for u in range(sequencer.noteLayerAmount):
-					step = sequencer.patterns[i].patternSteps[o]
-					layer = sequencer.patterns[i].patternSteps[o].noteLayers[u]
+					step = sequencer.patterns[i].steps[o]
+					layer = sequencer.patterns[i].steps[o].noteLayers[u]
 					rowData = [
 						i, 
 						o,
@@ -131,8 +131,8 @@ class SaveLoad:
 		# Loop over all rows, copy data to sequencer
 		for idx, row in enumerate(rowList):
 			if idx < sequencer.patternAmount * sequencer.noteLayerAmount * sequencer.sequencerSteps:
-				step = sequencer.patterns[int(row['pattern'])].patternSteps[int(row['step'])]
-				layer = sequencer.patterns[int(row['pattern'])].patternSteps[int(row['step'])].noteLayers[int(row['layer'])]
+				step = sequencer.patterns[int(row['pattern'])].steps[int(row['step'])]
+				layer = sequencer.patterns[int(row['pattern'])].steps[int(row['step'])].noteLayers[int(row['layer'])]
 				
 				layer.arm = bool(row['arm'])
 				layer.midiChannel = int(row['channel'])

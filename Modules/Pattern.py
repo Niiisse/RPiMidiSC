@@ -6,5 +6,5 @@ from . import Step
 
 class Pattern:
   def __init__(self, sequencerSteps):
-    self.steps = sequencerSteps
-    self.patternSteps = [Step.Step() for i in range(self.steps)]
+    self.stepsAmount = sequencerSteps
+    self.steps = [Step.Step() for i in range(self.stepsAmount)]

@@ -17,23 +17,23 @@ class Sequencer:
 		self.lastUsedMidiChannel = 0                      # Last-entered MIDI channel
 		self.lastUsedLayer = 0														# Last-entered layer
 		self.lastUsedOctave = 3														# Last-entered octave
-		self.setsAmount = 10
 		
 		# Timer Variables
 		self.timerShouldTick = True                   		# Make sequencer go brrr
 		self.tic = time.perf_counter()                		# Sets timestamp to compare against
 
 		# Pattern Variables
-		self.patternAmount = patternAmount                                                # Amount of patterns
-		self.patternIndex = 1                                                              # Current pattern
-		self.patternChange = 0                                                            # Signals pattern change for next measure
-		self.pendingPattern = 0                                                           # Used in changing pattern
-		self.patternEditing = False                                                       # Currently in editing mode?
-		self.patternMode = "auto"                                                         # Auto loops patterns, single loops 1
+		self.patternAmount = patternAmount               	# Amount of patterns
+		self.patternIndex = 1                             # Current pattern
+		self.patternChange = 0                            # Signals pattern change for next measure
+		self.pendingPattern = 0                           # Used in changing pattern
+		self.patternEditing = False                       # Currently in editing mode?
+		self.patternMode = "auto"                         # Auto loops patterns, single loops 1
 
 		# Sets
+		self.setsAmount = 9
 		self.setIndex = 0																	# Currently active set
-		self.sets = [Set.Set(self.sequencerSteps, self.patternAmount) for i in range(self.setsAmount)]
+		self.sets = [Set.Set(self.sequencerSteps, self.patternAmount) for i in range(self.setsAmount + 1)]
 		self.setRepeat = False														# Whether sets loop or not
 		
 		# Misc

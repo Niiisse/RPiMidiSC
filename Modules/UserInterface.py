@@ -724,7 +724,7 @@ def createOutputString(sequencer):
 
 	# Set display + LED
 	setString = convertDecimalToByteString(sequencer.setIndex)
-	setString = setString[:-1] + '1' if sequencer.setRepeat else setString[:-1] + '0'
+	setString = '1' + setString[:-1] if sequencer.setRepeat else '0' + setString[:-1]
 
 	# OUTPUT # 
 		# 0 = original module (steps, bpm, pattern), note control module(s)

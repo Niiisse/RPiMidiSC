@@ -7,6 +7,8 @@ class SaveLoad:
 	Dumps the sequencer into a CSV file, or loads the sequencer with values from one.
 	TODO: backup file before writing """
 
+	# FIXME: set integration
+
 	def __init__(self):
 		self.folderName = "saves/"				# Name of folder containing saves
 		
@@ -122,7 +124,7 @@ class SaveLoad:
 		# Re-setup sequencer
 		sequencer.playing = False
 		sequencer.seqstep = 0
-		sequencer.patternStep = 1
+		sequencer.patternIndex = 1
 		sequencer.patternAmount = int(metaRowList[index]['patternAmount'])
 		sequencer.initPatterns()
 		sequencer.patternMode = metaRowList[index]['patternMode']

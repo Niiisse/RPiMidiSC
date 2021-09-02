@@ -25,7 +25,7 @@ class Sequencer:
 
 		# Pattern Variables
 		self.patternAmount = patternAmount                                                # Amount of patterns
-		self.patternStep = 1                                                              # Current pattern
+		self.patternIndex = 1                                                              # Current pattern
 		self.patternChange = 0                                                            # Signals pattern change for next measure
 		self.pendingPattern = 0                                                           # Used in changing pattern
 		self.patternEditing = False                                                       # Currently in editing mode?
@@ -121,7 +121,7 @@ class Sequencer:
 		If note == 0 (off), set selectedLayer, octave and midiChannel to last-used values
 		TODO: multiple NCM support """
 
-		currentStep = self.patterns[self.patternStep].steps[self.seqstep]
+		currentStep = self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep]
 
 		if currentStep.noteLayers[currentStep.selectedLayer[0]].note == 0:
 			currentStep.selectedLayer[0] = self.lastUsedLayer
@@ -138,7 +138,7 @@ class Sequencer:
 		If note == 0 (off), set selectedLayer, octave and midiChannel to last-used values
 		TODO: multiple NCM support """
 
-		currentStep = self.patterns[self.patternStep].steps[self.seqstep]
+		currentStep = self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep]
 
 		if currentStep.noteLayers[currentStep.selectedLayer[0]].note == 0:
 			currentStep.selectedLayer[0] = self.lastUsedLayer
@@ -157,26 +157,26 @@ class Sequencer:
 	def changePendingPattern(self):
 		# Changes pattern to pending pattern
 		
-		self.patternStep = self.pendingPattern
+		self.patternIndex = self.pendingPattern
 		self.patternChange = 0
 		self.pendingPattern = 0
 
 	def patternUp(self):
 		""" Instantly change pattern, used when sequencer is paused. Also moves step back to 0. """
-		if self.patternStep == self.patternAmount:
-			self.patternStep = 1
+		if self.patternIndex == self.patternAmount:
+			self.patternIndex = 1
 		else:
-			self.patternStep += 1
+			self.patternIndex += 1
 
 		self.seqstep = 0
 
 	def patternDown(self):
 		""" Instantly change pattern, used when sequencer is paused. Also moves step back to 0. """
 
-		if self.patternStep == 1:
-			self.patternStep = self.patternAmount
+		if self.patternIndex == 1:
+			self.patternIndex = self.patternAmount
 		else:
-			self.patternStep -= 1
+			self.patternIndex -= 1
 
 		self.seqstep = 0
 
@@ -233,7 +233,7 @@ class Sequencer:
 	def changePattern(self, changeValue):
 		# Instantly changes pattern. Useful in editing mode. changeValue needs an int
 		
-		self.patternStep += changeValue
+		self.patternIndex += changeValue
 		# TODO: clamping?
 
 	def togglePatternMode(self):
@@ -266,15 +266,15 @@ class Sequencer:
 
 		# Else, increment pattern by 1 if mode = auto
 		elif self.patternMode == "auto":
-			if self.patternStep < self.patternAmount:
-				self.patternStep += 1
+			if self.patternIndex < self.patternAmount:
+				self.patternIndex += 1
 			else:
-				self.patternStep = 1
+				self.patternIndex = 1
 		
 		# # Stepping backwards?
 		# elif self.seqstep < 0:
 		#   self.seqstep = self.sequencerSteps
-		#   self.patternStep -= 1
+		#   self.patternIndex -= 1
 
 	def sendMidi(self, previewNote: bool):
 		""" Collects all notes that should get played.
@@ -288,14 +288,14 @@ class Sequencer:
 
 			# If preview, send only current activelayer
 			if previewNote:
-				x = self.patterns[self.patternStep].steps[self.seqstep]
+				x = selsets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep]
 				midiData.append(x.noteLayers[x.selectedLayer[0]])
 				#self.addPreviewNoteOff(x.noteLayers[x.selectedLayer[0]])
 			
 			else:
 			# Check all noteLayers in current step, if that step is enabled; send their data, if relevant, to midi processing
-				if self.patterns[self.patternStep].steps[self.seqstep].enabled:
-					for noteLayer in self.patterns[self.patternStep].steps[self.seqstep].noteLayers:
+				if self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep].enabled:
+					for noteLayer in self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep].noteLayers:
 						midiData.append(noteLayer)
 						noteLayer.lastPlayed = (noteLayer.note, noteLayer.midiChannel)
 

@@ -5,7 +5,7 @@ from . import NoteLayer
 # Holds pattern's associated step data.
 # Sequencer has x patterns (up to 100)
 # Each Pattern has 16 PatternSteps
-# Each patternStep has 9 noteLayers which
+# Each patternIndex has 9 noteLayers which
 # contain the actual data
 # 
 # By Niisse (2021-07-14)

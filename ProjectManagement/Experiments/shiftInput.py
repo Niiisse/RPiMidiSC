@@ -54,7 +54,7 @@ class ShiftInput:
     GPIO.output(self.CLOCK, 1)
     GPIO.output(self.GCMCLOCK, 1)
 
-    time.sleep(0.0001)
+    time.sleep(0.005)
     GPIO.output(self.CLOCK, 0)
     GPIO.output(self.GCMCLOCK, 0)
 

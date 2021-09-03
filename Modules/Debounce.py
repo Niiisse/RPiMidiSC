@@ -64,15 +64,20 @@ class Debounce:
 
 			if self.toc - self.tic > self.initialWait:    # Check current time against last time
 				self.tic = time.time()												# Update tic timer
+				#canGo = True																	# Signals return
 
 		elif not self.continuousPress:										# First continous press
-			if self.toc - self.tic > self.resetWait:					# Have we waited a second?
+			if self.toc - self.tic > self.secondWait:					# Have we waited a second?
 				self.tic = time.time()													# Set new time to compare against
 				self.continuousPress = True											# For keeping track of holding down
+				#canGo = True																		# Signals return
+		
+		else:																							# Continuing continuous press
+			if self.toc - self.tic > self.resetWait:					# Compare time
+				self.tic = time.time()													# Set new time to compare against
 				canGo = True																		# Signals return
-				self.btUp = True
 
-		return canGo
+		return canGo  															# Signals return
 
 	def setState(self, btState, stringType):			# Sets current button state
 

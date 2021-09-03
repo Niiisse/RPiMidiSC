@@ -51,7 +51,8 @@ while (True):
 
   elif uiResult == "quit":  
     val = ui.safeExit()         
-    sr.outputBits(val)
+    if config.general['hardware_enabled']:
+      sr.outputBits(val)
     sys.exit(0)     
   
   elif uiResult == "reset":

@@ -735,7 +735,7 @@ def createOutputString(sequencer):
 	return output 
 
 def convertDecimalToByteString(decimal):
-	""" Creates outputbytestring """ 
+	""" Creates outputbytestring. """ 
 
 	numericArr = [        # Stores the numeric display bytes
 	0b10000001,						# 0
@@ -748,13 +748,12 @@ def convertDecimalToByteString(decimal):
 	0b11001101,						# 7
 	0b00000001,						# 8
 	0b00001001, 					# 9
-	0b00001011,						# 10 / A
+	0b00000101,						# 10 / A
 	0b00110001,						# 11 / b
 	0b01110011,						# 12 / C
 	0b01100001,						# 13 / d
 	0b00010011,						# 14 / E
-	0b10010111						# 15 / F
-
+	0b00010111						# 15 / F
 	]
 
 	byteString = format(numericArr[decimal], '08b')

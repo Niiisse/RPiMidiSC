@@ -36,6 +36,8 @@ if config.general['hardware_enabled']:
   setRepeatDb = Debounce.Debounce()
   bpmUpDb = Debounce.Debounce()
   bpmDownDb = Debounce.Debounce()
+  saveDb = Debounce.Debounce()
+  loadDb = Debounce.Debounce()
 
 def doInput(self, char):
   # Handles inputs, returns action to be executed
@@ -150,8 +152,8 @@ def doInput(self, char):
     # 18: set down
     # 
     # 20: bpm down
-    #
-    #
+    # 21: save
+    # 22: load
     # 23: bpm up
     # 24: set repeat
     # 25: set up
@@ -221,7 +223,11 @@ def doInput(self, char):
     btnBpmDown = hwInput[20]
     bpmDownDb.setState(btnBpmDown, True)
 
-    # ...
+    btnSave = hwInput[21]
+    saveDb.setState(btnSave, True)
+
+    btnLoad = hwInput[22]
+    loadDb.setState(btnLoad, True)
 
     btnBpmUp = hwInput[23]
     bpmUpDb.setState(btnBpmUp, True)
@@ -301,3 +307,9 @@ def doInput(self, char):
 
     elif btnBpmUp == '1' and bpmUpDb.checkDebounce():
       return "bpmUp"
+
+    elif btnSave == '1' and saveDb.checkDebounce():
+      return "save"
+
+    elif btnLoad == '1' and loadDb.checkDebounce():
+      return "load"

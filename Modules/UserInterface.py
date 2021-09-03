@@ -283,7 +283,7 @@ def drawTempoWindow(tempoWin):
 
 	# First string clears line. Second paints bold text. Third paints BPM. 
 	tempoWin.addstr(2, 7, "   ", curses.A_NORMAL)
-	tempoWin.addstr(2, 7, "{}".format(Ui.sequencer.bpm), curses.A_BOLD)
+	tempoWin.addstr(2, 7, "{}".format(Ui.sequencer.sets[Ui.sequencer.setIndex].bpm), curses.A_BOLD)
 	tempoWin.addstr(2, 3, "BPM ", curses.A_NORMAL)
 
 def drawStatusWindow(statusWin, sequencer):
@@ -409,16 +409,16 @@ def processInput(outputByteString, sequencer):
 	
 	# BPM up & down; clamping
 	elif action == "bpmUp":
-		if sequencer.bpm < 999:
-			sequencer.bpm += 1
+		if sequencer.sets[sequencer.setIndex].bpm < 999:
+			sequencer.sets[sequencer.setIndex].bpm += 1
 		else:
-			sequencer.bpm = 1
+			sequencer.sets[sequencer.setIndex].bpm = 1
 
 	elif action == "bpmDown":
-		if sequencer.bpm > 1:
-			sequencer.bpm -= 1
+		if sequencer.sets[sequencer.setIndex].bpm > 1:
+			sequencer.sets[sequencer.setIndex].bpm -= 1
 		else:
-			sequencer.bpm = 999
+			sequencer.sets[sequencer.setIndex].bpm = 999
 
 
 	# Sequencer stepping next & previous; clamping 
@@ -597,7 +597,7 @@ def createOutputString(sequencer):
 	
 	# BPM #
 
-	bpmString = format(sequencer.bpm)
+	bpmString = format(sequencer.sets[sequencer.setIndex].bpm)
 	bpmOutput = ""
 
 	while len(bpmString) < 3:					# Because format is '090', not '90'

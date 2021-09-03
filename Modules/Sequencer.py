@@ -11,7 +11,6 @@ class Sequencer:
 		self.seqstep = 0                                  # Current step within pattern         
 		self.stepSize = seqstepsize                       # Amount to increment with per step. TODO: see if this can go
 		self.sequencerSteps = sequencerSteps              # Total amout of steps per pattern
-		self.bpm = bpm                                    # Current tempo
 		self.previewNotesOff = []                         # List that holds notes that are to be turned off
 		self.previewNoteDuration = previewNoteDuration    # How long preview notes should play
 		self.lastUsedMidiChannel = 0                      # Last-entered MIDI channel
@@ -73,10 +72,10 @@ class Sequencer:
 
 		self.saveLoad.load(index, self)
 		
-	def initPatterns(self):
+	def initSets(self):
 		""" Re-initializes pattern list to deal with differing saves """
 
-		self.patterns = [Pattern.Pattern(self.sequencerSteps) for i in range(self.patternAmount+1)] 
+		self.sets = [Set.Set(self.sequencerSteps, self.patternAmount) for i in range(self.setsAmount + 1)]
 
 	def togglePlay(self):
 		# Prepare to be amazed. Toggles pause/play
@@ -111,7 +110,7 @@ class Sequencer:
 			# " if current time - last tic time > bpm time" ...
 			# 60 / bpm for changing bpm to bps; / 4 for sequencer spacing purposes)
 			
-			if time.perf_counter() - self.tic > (60 / self.bpm / 4):
+			if time.perf_counter() - self.tic > (60 / self.sets[self.setIndex].bpm / 4):
 				self.sequencerStep()
 				self.timerShouldTick = True
 

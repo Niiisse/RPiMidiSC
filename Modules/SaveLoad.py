@@ -24,6 +24,7 @@ class SaveLoad:
 		# Metadata
 		metaHeader = [
 			'id',
+			'set',
 			'bpm',
 			'patternAmount',
 			'patternMode'
@@ -34,7 +35,7 @@ class SaveLoad:
 		# because we can't re-save the CSV file properly otherwise.
 
 		metaRowList = self.convertDictToList(self.readMetadata())
-		metaRow = [index, sequencer.bpm, sequencer.patternAmount, sequencer.patternMode]
+		metaRow = [index, sequencer.setIndex, sequencer.bpm, sequencer.patternAmount, sequencer.patternMode]
 		metaRowList[index] = metaRow
 		
 		metaPath = self.folderName + "metadata.csv"
@@ -47,6 +48,7 @@ class SaveLoad:
 
 		# Savedata
 		header = [              # Holds CSV Header Row
+			'set',
 			'pattern',
 			'step',
 			'layer',
@@ -71,30 +73,32 @@ class SaveLoad:
 		# Then, write each row to the csv file.
 
 		# Loop de loop
-		for i in range(1, sequencer.patternAmount+1):			# FIXME: this +1 business is no good. should have pattern and patternAmount internally count from 0
-			for o in range(sequencer.sequencerSteps):
-				for u in range(sequencer.noteLayerAmount):
-					step = sequencer.patterns[i].steps[o]
-					layer = sequencer.patterns[i].steps[o].noteLayers[u]
-					rowData = [
-						i, 
-						o,
-						u, 
-						layer.note, 
-						layer.octave, 
-						layer.midiChannel, 
-						layer.sustain, 
-						layer.arm, 
-						layer.lastPlayed[0],
-						layer.lastPlayed[1],
-						step.selectedLayer[0],
-						step.selectedLayer[1],
-						step.selectedLayer[2],
-						step.selectedLayer[3],
-						step.enabled
-					] 
+		for s in range(sequencer.setsAmount+1):
+			for i in range(1, sequencer.patternAmount+1):		
+				for o in range(sequencer.sequencerSteps):
+					for u in range(sequencer.noteLayerAmount):
+						step = sequencer.sets[s].patterns[i].steps[o]
+						layer = sequencer.sets[s].patterns[i].steps[o].noteLayers[u]
+						rowData = [
+							s,
+							i, 
+							o,
+							u, 
+							layer.note, 
+							layer.octave, 
+							layer.midiChannel, 
+							layer.sustain, 
+							layer.arm, 
+							layer.lastPlayed[0],
+							layer.lastPlayed[1],
+							step.selectedLayer[0],
+							step.selectedLayer[1],
+							step.selectedLayer[2],
+							step.selectedLayer[3],
+							step.enabled
+						] 
 
-					sequencerData.append(rowData)
+						sequencerData.append(rowData)
 
 		# Get path string, open file and write our data
 		path = self.folderName + str(index) + ".csv"
@@ -124,10 +128,12 @@ class SaveLoad:
 		# Re-setup sequencer
 		sequencer.playing = False
 		sequencer.seqstep = 0
+		sequencer.setIndex = 0
 		sequencer.patternIndex = 1
 		sequencer.patternAmount = int(metaRowList[index]['patternAmount'])
-		sequencer.initPatterns()
+		sequencer.initSets()
 		sequencer.patternMode = metaRowList[index]['patternMode']
+		sequencer.setRepeat = metaRowList[index]['setRepeat']
 		sequencer.bpm = int(metaRowList[index]['bpm'])
 		
 		# Loop over all rows, copy data to sequencer

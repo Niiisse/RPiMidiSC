@@ -61,8 +61,8 @@ class SaveLoad:
 			setRow = [
 				index,
 				i,
-				sequencer.sets[sequencer.setIndex].bpm, 
-				sequencer.sets[sequencer.setIndex].patternAmount, 
+				sequencer.sets[i].bpm, 
+				sequencer.sets[i].patternAmount, 
 				sequencer.patternMode,
 				1 if sequencer.setRepeat else 0
 			]

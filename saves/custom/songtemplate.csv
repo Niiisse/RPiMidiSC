@@ -1,4 +1,4 @@
-pattern,step,layer,note,octave,channel,sustain,arm,lastPlayedNote,lastPlayedChannel,selectedLayer0,selectedLayer1,selectedLayer2,selectedLayer3,enabled
+set,pattern,step,layer,note,octave,channel,sustain,arm,lastPlayedNote,lastPlayedChannel,selectedLayer0,selectedLayer1,selectedLayer2,selectedLayer3,enabled
 1,0,0,0,3,0,False,True,0,0,0,1,2,3,True
 1,0,1,0,3,0,False,True,0,0,0,1,2,3,True
 1,0,2,0,3,0,False,True,0,0,0,1,2,3,True

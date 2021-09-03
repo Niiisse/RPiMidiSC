@@ -675,16 +675,14 @@ def createOutputString(sequencer):
 
 	noteString = convertDecimalToNote(currentStep.noteLayers[currentStep.selectedLayer[0]].note)	# TODO: this 0 would be replaced with i for note control modules
 	layerString = convertDecimalToByteString(currentStep.selectedLayer[0])
+	channelString = convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].midiChannel)
 
 	if currentStep.noteLayers[currentStep.selectedLayer[0]].note != 0: 
 		# Checks whether it should display the values or write - (in case of disabled note)
-
 		octaveString = convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].octave)
-		channelString = convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].midiChannel)
 	
 	else:
-		octaveString = "11111111"
-		channelString = "11111111"
+		octaveString = "01111111"
 
 	# Note layer bit
 	layerString = layerString[:-1] + '0'

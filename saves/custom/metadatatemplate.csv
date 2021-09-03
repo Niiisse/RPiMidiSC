@@ -1,4 +1,4 @@
-id,bpm,patternAmount,patternMode
+id,set,bpm,patternAmount,patternMode,setRepeat
 0,120,4,auto
 1,120,4,auto
 2,120,4,auto

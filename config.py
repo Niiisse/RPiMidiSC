@@ -11,6 +11,7 @@ debounce = {
   "initialWait": 0.15, 
   "secondWait": 1,
   "thirdWait": 0.1
+  "resetWait": 3.75
 }
 
 sequencer = {

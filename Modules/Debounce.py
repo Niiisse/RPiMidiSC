@@ -22,7 +22,7 @@ class Debounce:
 		self.initialWait = config.debounce['initialWait']		# Waiting time in seconds for first debounce (tapping button)
 		self.secondWait = config.debounce['secondWait']			#	Waiting time in s after which button will start continuous press
 		self.thirdWait = config.debounce['thirdWait']				# Waiting time between new continuous sends
-		self.resetWait = 5
+		self.resetWait = config.debounce['resetWait']				# Reset waiting time
 		self.continuousPress = False												# Flag used for continuous press (keeping button pressed down)
 		self.btPreviouslyPressed = False										# Flag whether button was pressed down the previous frame
 		self.btDown = False																	# Flag for whether the button is pressed down currently

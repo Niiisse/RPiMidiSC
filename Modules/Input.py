@@ -317,7 +317,7 @@ def doInput(self, char):
       return "load"
 
     elif btnReset == '1' and resetDb.resetDebounce():
-      return "DoReset"
+      return "doReset"
 
     elif btnReset == '1' and not resetDb.resetDebounce():
       return "prepareReset"

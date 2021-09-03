@@ -562,10 +562,20 @@ def processInput(outputByteString, sequencer):
 		#return "saveAnim"
 		
 	elif action == "setUp":
-		sequencer.setUp()
+		if sequencer.playing:
+			sequencer.setChange += 1
+			Ui.sequencer.clampPendingSetStepping()
+
+		else:
+			sequencer.setUp()
 
 	elif action == "setDown":
-		sequencer.setDown()
+		if sequencer.playing:
+			sequencer.setChange -= 1
+			Ui.sequencer.clampPendingSetStepping()
+
+		else:
+			sequencer.setDown()
 
 	elif action == "setRepeat":
 		sequencer.toggleSetRepeat()
@@ -573,6 +583,7 @@ def processInput(outputByteString, sequencer):
 	return outputByteString
 
 def clampPatternStepping(sequencer):
+	# TODO: move to sequencer
 	# Clamps pattern step
 
 	if sequencer.patternIndex > sequencer.patternAmount:
@@ -581,6 +592,7 @@ def clampPatternStepping(sequencer):
 		sequencer.patternIndex = Ui.patternAmount
 
 def clampPendingStepping(sequencer):
+	# TODO: move to sequencer
 	# Calculate pending pattern stepping. Basically a fancy clamp
 
 	if sequencer.patternChange != 0:																
@@ -720,8 +732,18 @@ def createOutputString(sequencer):
 	# Add 4 bits for SaveIndex
 	gcOutputString = "".join(gcOutput) + binarySaveCounter(sequencer.saveIndex)
 
-	# Set display + LED
-	setString = convertDecimalToByteString(sequencer.setIndex)
+	# Set display + LED #
+
+	# Decide whether we should show actual setIndex or pending index
+	setString = format(sequencer.setIndex) if sequencer.patternChange == 0 else format(sequencer.setPending)
+
+	setString = convertDecimalToByteString(setString)
+
+	# Should we blink?
+	if sequencer.setChange != 0:
+		setString = Ui.blink.blink(setString, True)
+
+	
 	setString = '1' + setString[:-1] if sequencer.setRepeat else '0' + setString[:-1]
 
 	# OUTPUT # 

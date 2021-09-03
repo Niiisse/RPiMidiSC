@@ -34,6 +34,8 @@ class Sequencer:
 		self.setIndex = 0																	# Currently active set
 		self.sets = [Set.Set(self.sequencerSteps, self.patternAmount) for i in range(self.setsAmount + 1)]
 		self.setRepeat = False														# Whether sets loop or not
+		self.setChange = 0																# For changing
+		self.setPending = 0
 		
 		# Misc
 		self.noteLayerAmount = 10         # Added this for not having to hardcode noteLayer amount when saving/loading, i think
@@ -160,6 +162,17 @@ class Sequencer:
 		self.patternChange = 0
 		self.pendingPattern = 0
 
+	def changePendingSet(self):
+		""" Changes set to pending set """
+
+		self.setIndex = self.setPending
+		self.setChange = 0
+		self.setPending = 0
+
+		self.patternChange = 0
+		self.pendingPattern = 0
+		self.patternIndex = 1
+
 	def patternUp(self):
 		""" Instantly change pattern, used when sequencer is paused. Also moves step back to 0. """
 		if self.patternIndex == self.patternAmount:
@@ -235,6 +248,18 @@ class Sequencer:
 		self.patternIndex += changeValue
 		# TODO: clamping?
 
+	def clampPendingSetStepping(self):
+	# Calculate pending set stepping.
+
+		if self.setChange != 0:																
+			if self.setChange > self.setsAmount - self.setIndex:		
+				self.setChange -= self.setsAmount													
+
+			if self.setChange + self.setIndex < 0:
+				self.setChange += self.setsAmount
+
+		self.setPending = self.setIndex + self.setChange
+
 	def togglePatternMode(self):
 		""" Toggles pattern mode between auto or single """
 
@@ -259,8 +284,11 @@ class Sequencer:
 		# Clamp step; roll back when too high and process pattern stuff
 		self.seqstep = 0
 
+		if self.setChange != 0:
+			self.changePendingSet()
+
 		# Apply pending pattern if applicable...
-		if self.patternChange != 0:
+		elif self.patternChange != 0:
 			self.changePendingPattern()
 
 		# Else, increment pattern by 1 if mode = auto

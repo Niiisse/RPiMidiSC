@@ -267,12 +267,14 @@ class Sequencer:
 		elif self.patternMode == "auto":
 			if self.patternIndex < self.patternAmount:
 				self.patternIndex += 1
+
 			else:
+				# Pattern rolling over means end of current Set
 				self.patternIndex = 1
-		
-		# Set switching
-		if self.setRepeat == False:
-			self.setUp()
+
+				# Set switching
+				if self.setRepeat == False:
+					self.setUp()
 
 		# # Stepping backwards?
 		# elif self.seqstep < 0:

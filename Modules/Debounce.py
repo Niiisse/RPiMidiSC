@@ -70,6 +70,7 @@ class Debounce:
 				self.tic = time.time()													# Set new time to compare against
 				self.continuousPress = True											# For keeping track of holding down
 				canGo = True																		# Signals return
+				self.btUp = True
 
 		return canGo
 

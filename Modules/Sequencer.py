@@ -72,7 +72,7 @@ class Sequencer:
 		if not self.playing: self.playing = True
 
 		# Disables canReset lockout if necessary
-		if self.canReset = False:
+		if self.canReset == False:
 			self.canReset = True
 
 	def pause(self):

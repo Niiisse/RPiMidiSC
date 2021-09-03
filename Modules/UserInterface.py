@@ -735,14 +735,13 @@ def createOutputString(sequencer):
 	# Set display + LED #
 
 	# Decide whether we should show actual setIndex or pending index
-	setString = format(sequencer.setIndex) if sequencer.patternChange == 0 else format(sequencer.setPending)
+	setString = str(sequencer.setIndex) if sequencer.patternChange == 0 else str(sequencer.setPending)
 
 	setString = convertDecimalToByteString(setString)
 
 	# Should we blink?
 	if sequencer.setChange != 0:
 		setString = Ui.blink.blink(setString, True)
-
 	
 	setString = '1' + setString[:-1] if sequencer.setRepeat else '0' + setString[:-1]
 

@@ -64,7 +64,7 @@ class SaveLoad:
 				sequencer.sets[sequencer.setIndex].bpm, 
 				sequencer.sets[sequencer.setIndex].patternAmount, 
 				sequencer.patternMode,
-				int(sequencer.setRepeat)
+				1 if sequencer.setRepeat else 0
 			]
 
 			newMetaRows.append(setRow)
@@ -127,15 +127,15 @@ class SaveLoad:
 							layer.note, 
 							layer.octave, 
 							layer.midiChannel, 
-							bool(layer.sustain), 
-							bool(layer.arm), 
+							1 if layer.sustain else 0, 
+							1 if layer.arm else 0, 
 							layer.lastPlayed[0],
 							layer.lastPlayed[1],
 							step.selectedLayer[0],
 							step.selectedLayer[1],
 							step.selectedLayer[2],
 							step.selectedLayer[3],
-							bool(step.enabled)
+							1 if step.enabled else 0
 						] 
 
 						sequencerData.append(rowData)
@@ -185,14 +185,14 @@ class SaveLoad:
 				step = sequencer.sets[int(row['set'])].patterns[int(row['pattern'])].steps[int(row['step'])]
 				layer = sequencer.sets[int(row['set'])].patterns[int(row['pattern'])].steps[int(row['step'])].noteLayers[int(row['layer'])]
 
-				layer.arm = bool(row['arm'])
+				layer.arm = bool(int(row['arm']))
 				layer.midiChannel = int(row['channel'])
 				layer.lastNote = (int(row['lastPlayedNote']), int(row['lastPlayedChannel']))
 				layer.note = int(row['note'])
 				layer.octave = int(row['octave'])
-				layer.sustain = bool(row['sustain'])
+				layer.sustain = bool(int(row['sustain']))
 				step.selectedLayer=[int(row['selectedLayer0']), int(row['selectedLayer1']), int(row['selectedLayer2']), int(row['selectedLayer3'])]
-				step.enabled = bool(row['enabled'])		
+				step.enabled = bool(int(row['enabled']))		
 
 		self.saveLastLoadedSaveIndex(index)
 

@@ -173,7 +173,7 @@ class SaveLoad:
 		sequencer.patternAmount = int(metaRowDict[index]['patternAmount'])
 		sequencer.initSets()
 		sequencer.patternMode = metaRowDict[0]['patternMode']		# TODO: change 0 to index
-		sequencer.setRepeat = (metaRowDict[0]['setRepeat'])
+		sequencer.setRepeat = bool(int((metaRowDict[0]['setRepeat'])))
 		
 		# set bpm
 		for i in range(sequencer.setsAmount + 1):

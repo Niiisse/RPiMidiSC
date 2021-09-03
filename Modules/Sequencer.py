@@ -270,6 +270,10 @@ class Sequencer:
 			else:
 				self.patternIndex = 1
 		
+		# Set switching
+		if self.setRepeat == False:
+			self.setUp()
+
 		# # Stepping backwards?
 		# elif self.seqstep < 0:
 		#   self.seqstep = self.sequencerSteps

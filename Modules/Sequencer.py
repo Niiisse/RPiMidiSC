@@ -71,10 +71,6 @@ class Sequencer:
 
 		if not self.playing: self.playing = True
 
-		# Disables canReset lockout if necessary
-		if self.canReset == False:
-			self.canReset = True
-
 	def pause(self):
 		# You won't believe it. Pauses sequencer.
 		
@@ -109,6 +105,10 @@ class Sequencer:
 			#self.seqstep -= 1
 			self.sequencerStep
 			#self.sendMidi()       # Call this so the first step starts playing when unpausing
+
+		# Disables canReset lockout if applicable
+		if self.canReset == False:
+			self.canReset = True
 
 	def tickTimer(self):
 		# 'Ticks' timer; sets new timestamp for comparison

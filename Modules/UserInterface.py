@@ -618,7 +618,7 @@ def createOutputString(sequencer):
 	""" Creates output bytestring that can be sent to Hardware Interface """
 
 	if sequencer.prepareReset:
-		resetString = "10"
+		resetString = "10101010"
 		return Ui.blink.blink(resetString, True)
 	
 	else: 

@@ -64,7 +64,7 @@ class SaveLoad:
 				sequencer.sets[sequencer.setIndex].bpm, 
 				sequencer.sets[sequencer.setIndex].patternAmount, 
 				sequencer.patternMode,
-				sequencer.setRepeat
+				int(sequencer.setRepeat)
 			]
 
 			newMetaRows.append(setRow)

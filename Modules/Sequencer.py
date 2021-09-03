@@ -49,7 +49,7 @@ class Sequencer:
 
 		# When initialised, check what save was last loaded, and reopen it
 		self.saveIndex = self.saveLoad.readLastLoadedSaveIndex()	# set index of loaded savefile
-		#self.saveLoad.load(self.saveIndex, self)
+		self.saveLoad.load(self.saveIndex, self)
 
 	def play(self):
 		# Plays. (i don't know what you expected, tbh)

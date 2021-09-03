@@ -585,7 +585,8 @@ def processInput(outputByteString, sequencer):
 		sequencer.toggleSetRepeat()
 
 	elif action == "prepareReset":
-		sequencer.prepareReset = True
+		if sequencer.canReset:
+			sequencer.prepareReset = True
 
 	elif action == "doReset":
 		sequencer.reset()

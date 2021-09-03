@@ -42,6 +42,7 @@ class Sequencer:
 		self.midiEnabled = midiEnabled    # Whether or not to enable MIDI output 
 		self.savesTotal = 15							# Total number of saves
 		self.prepareReset = False					# Reset flag
+		self.canReset = True
 
 		if midiEnabled:
 			from . import Midi
@@ -56,18 +57,23 @@ class Sequencer:
 
 	def reset(self):
 		""" Resets sequencer """
-		
+
 		self.prepareReset = False
 		self.playing = False
 		self.seqstep = 0
 		self.setIndex = 0
 		self.patternIndex = 1
+		self.canReset = False
 		self.initSets()
 
 	def play(self):
 		# Plays. (i don't know what you expected, tbh)
 
 		if not self.playing: self.playing = True
+
+		# Disables canReset lockout if necessary
+		if self.canReset = False:
+			self.canReset = True
 
 	def pause(self):
 		# You won't believe it. Pauses sequencer.

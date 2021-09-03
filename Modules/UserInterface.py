@@ -735,7 +735,7 @@ def createOutputString(sequencer):
 	# Set display + LED #
 
 	# Decide whether we should show actual setIndex or pending index
-	setString = sequencer.setIndex if sequencer.patternChange == 0 else sequencer.setPending
+	setString = sequencer.setIndex if sequencer.setChange == 0 else sequencer.setPending
 
 	setString = convertDecimalToByteString(setString)
 

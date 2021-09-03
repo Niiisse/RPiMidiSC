@@ -249,11 +249,11 @@ class Sequencer:
 		# TODO: clamping?
 
 	def clampPendingSetStepping(self):
-	# Calculate pending set stepping.
+		""" Calculate pending set stepping """
 
 		if self.setChange != 0:																
 			if self.setChange > self.setsAmount - self.setIndex:		
-				self.setChange -= self.setsAmount													
+				self.setChange -= self.setsAmount	+ 1												
 
 			if self.setChange + self.setIndex < 0:
 				self.setChange += self.setsAmount

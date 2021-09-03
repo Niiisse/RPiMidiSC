@@ -22,6 +22,7 @@ class Debounce:
 		self.initialWait = config.debounce['initialWait']		# Waiting time in seconds for first debounce (tapping button)
 		self.secondWait = config.debounce['secondWait']			#	Waiting time in s after which button will start continuous press
 		self.thirdWait = config.debounce['thirdWait']				# Waiting time between new continuous sends
+		self.resetWait = 5
 		self.continuousPress = False												# Flag used for continuous press (keeping button pressed down)
 		self.btPreviouslyPressed = False										# Flag whether button was pressed down the previous frame
 		self.btDown = False																	# Flag for whether the button is pressed down currently
@@ -51,6 +52,26 @@ class Debounce:
 				canGo = True																		# Signals return
 
 		return canGo  															# Signals return
+
+	def resetDebounce(self):
+		# mostly same as checkdebounce, but specialized for reset button
+
+		self.toc = time.time()       							# Set current time
+		canGo = False                     				# Makes sure there's an output
+
+		if not self.btPreviouslyPressed:						# New press?
+			self.btPreviouslyPressed = True						# For keeping track of button events
+
+			if self.toc - self.tic > self.initialWait:    # Check current time against last time
+				self.tic = time.time()												# Update tic timer
+
+		elif not self.continuousPress:										# First continous press
+			if self.toc - self.tic > self.resetWait:					# Have we waited a second?
+				self.tic = time.time()													# Set new time to compare against
+				self.continuousPress = True											# For keeping track of holding down
+				canGo = True																		# Signals return
+
+		return canGo
 
 	def setState(self, btState, stringType):			# Sets current button state
 

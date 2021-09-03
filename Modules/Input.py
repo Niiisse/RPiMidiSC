@@ -38,6 +38,7 @@ if config.general['hardware_enabled']:
   bpmDownDb = Debounce.Debounce()
   saveDb = Debounce.Debounce()
   loadDb = Debounce.Debounce()
+  resetDb = Debounce.Debounce()
 
 def doInput(self, char):
   # Handles inputs, returns action to be executed
@@ -150,7 +151,7 @@ def doInput(self, char):
     # 17: play/pause
 
     # 18: set down
-    # 
+    # 19: reset
     # 20: bpm down
     # 21: save
     # 22: load
@@ -218,7 +219,8 @@ def doInput(self, char):
     btnSetDown = hwInput[18]
     setDownDb.setState(btnSetDown, True)
     
-    # ...
+    btnReset = hwInput[19]
+    resetDb.setState(btnReset, True)
     
     btnBpmDown = hwInput[20]
     bpmDownDb.setState(btnBpmDown, True)
@@ -313,3 +315,9 @@ def doInput(self, char):
 
     elif btnLoad == '1' and loadDb.checkDebounce():
       return "load"
+
+    elif btnReset == '1' and resetDb.resetDebounce():
+      return "DoReset"
+
+    elif btnReset == '1' and not resetDb.resetDebounce():
+      return "prepareReset"

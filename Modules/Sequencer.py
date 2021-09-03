@@ -41,7 +41,8 @@ class Sequencer:
 		self.noteLayerAmount = 10         # Added this for not having to hardcode noteLayer amount when saving/loading, i think
 		self.midiEnabled = midiEnabled    # Whether or not to enable MIDI output 
 		self.savesTotal = 15							# Total number of saves
-		
+		self.prepareReset = False					# Reset flag
+
 		if midiEnabled:
 			from . import Midi
 			self.midiInterface = Midi.MidiInterface()
@@ -52,6 +53,16 @@ class Sequencer:
 		# When initialised, check what save was last loaded, and reopen it
 		self.saveIndex = self.saveLoad.readLastLoadedSaveIndex()	# set index of loaded savefile
 		self.saveLoad.load(self.saveIndex, self)
+
+	def reset(self):
+		""" Resets sequencer """
+		
+		self.prepareReset = False
+		self.playing = False
+		self.seqstep = 0
+		self.setIndex = 0
+		self.patternIndex = 1
+		self.initSets()
 
 	def play(self):
 		# Plays. (i don't know what you expected, tbh)

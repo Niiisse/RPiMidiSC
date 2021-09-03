@@ -399,6 +399,10 @@ def processInput(outputByteString, sequencer):
 	# Process input events sent by Input
 	action = Input.doInput(Input, Ui.window.getch())
 
+	# Reset prepareReset if button has been let go
+	if action != "prepareReset" and sequencer.prepareReset == True:
+		sequencer.prepareReset = False
+
 	# Quit
 	if action == "quit":
 		return "quit"
@@ -580,6 +584,12 @@ def processInput(outputByteString, sequencer):
 	elif action == "setRepeat":
 		sequencer.toggleSetRepeat()
 
+	elif action == "prepareReset":
+		sequencer.prepareReset = True
+
+	elif action == "doReset":
+		sequencer.reset()
+
 	return outputByteString
 
 def clampPatternStepping(sequencer):
@@ -605,153 +615,158 @@ def clampPendingStepping(sequencer):
 	sequencer.pendingPattern = sequencer.patternIndex + sequencer.patternChange
 
 def createOutputString(sequencer):
-	# Creates output bytestring that can be sent to Hardware Interface
+	""" Creates output bytestring that can be sent to Hardware Interface """
+
+	if sequencer.prepareReset:
+		resetString = "10"
+		return Ui.blink.blink(resetString, True)
 	
-	# BPM #
+	else: 
+		# BPM #
 
-	bpmString = format(sequencer.sets[sequencer.setIndex].bpm)
-	bpmOutput = ""
+		bpmString = format(sequencer.sets[sequencer.setIndex].bpm)
+		bpmOutput = ""
 
-	while len(bpmString) < 3:					# Because format is '090', not '90'
-		bpmString = "0" + bpmString
+		while len(bpmString) < 3:					# Because format is '090', not '90'
+			bpmString = "0" + bpmString
 
-	for i in range(3):								# Sends individual number off to get the bytestring
-		tempString = convertDecimalToByteString(int(bpmString[i]))
-		bpmOutput = bpmOutput + tempString
+		for i in range(3):								# Sends individual number off to get the bytestring
+			tempString = convertDecimalToByteString(int(bpmString[i]))
+			bpmOutput = bpmOutput + tempString
 
-	# PATTERN STEP #
+		# PATTERN STEP #
 
-	# Decide whether we should show actual step or pending step
-	patternStepString = format(sequencer.patternIndex) if sequencer.patternChange == 0 else format(sequencer.pendingPattern)
+		# Decide whether we should show actual step or pending step
+		patternStepString = format(sequencer.patternIndex) if sequencer.patternChange == 0 else format(sequencer.pendingPattern)
 
-	while len(patternStepString) < 2:
-		patternStepString = "0" + patternStepString
+		while len(patternStepString) < 2:
+			patternStepString = "0" + patternStepString
 
-	patternStepOutput = ""
+		patternStepOutput = ""
 
-	for i in range(2):
-		tempString = convertDecimalToByteString(int(patternStepString[i]))
-		patternStepOutput = patternStepOutput + tempString
+		for i in range(2):
+			tempString = convertDecimalToByteString(int(patternStepString[i]))
+			patternStepOutput = patternStepOutput + tempString
 
-	# Should we blink?
-	if sequencer.patternChange != 0:
-		patternStepOutput = Ui.blink.blink(patternStepOutput, True)
+		# Should we blink?
+		if sequencer.patternChange != 0:
+			patternStepOutput = Ui.blink.blink(patternStepOutput, True)
 
-	# SEQUENCER STEP #
+		# SEQUENCER STEP #
 
-	ledStep = sequencer.seqstep
+		ledStep = sequencer.seqstep
 
-	ledString = ""
-	ledState = ""
-	
-	for i in range(sequencer.sequencerSteps):
-		# Gon explain this one in detail cus ternary statements can be confusing to read
-		# Loop over all steps in current Pattern
-		# ledState sets what the potential state is going to be if this is the selected step.
-		#
-		# If editing:
-		#		BLINK current step LED; else
-		#		all LEDs ON; disabled steps: LED OFF
-		#
-		# If playing:
-		#		all LEDs OFF, current step: LED ON
-		#		pausing: BLINK current LED
+		ledString = ""
+		ledState = ""
+		
+		for i in range(sequencer.sequencerSteps):
+			# Gon explain this one in detail cus ternary statements can be confusing to read
+			# Loop over all steps in current Pattern
+			# ledState sets what the potential state is going to be if this is the selected step.
+			#
+			# If editing:
+			#		BLINK current step LED; else
+			#		all LEDs ON; disabled steps: LED OFF
+			#
+			# If playing:
+			#		all LEDs OFF, current step: LED ON
+			#		pausing: BLINK current LED
 
-		# editing mode
-		if sequencer.patternEditing:
-			if i == ledStep:
-				ledState = Ui.blink.blink("1", False)
-			else:
-				ledState = "1" if sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[i].getState() else "0"
-	
-		# playing mode
-		else:
-			if i == ledStep:
-				if sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[i].getState():
-					ledState = "1" if sequencer.playing == True else Ui.blink.blink("1", False)
+			# editing mode
+			if sequencer.patternEditing:
+				if i == ledStep:
+					ledState = Ui.blink.blink("1", False)
 				else:
-					ledState = Ui.blink.blink("1", False) if sequencer.playing == False else "0"
+					ledState = "1" if sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[i].getState() else "0"
+		
+			# playing mode
 			else:
-				ledState = "0"
-				 
-		ledString += ledState
+				if i == ledStep:
+					if sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[i].getState():
+						ledState = "1" if sequencer.playing == True else Ui.blink.blink("1", False)
+					else:
+						ledState = Ui.blink.blink("1", False) if sequencer.playing == False else "0"
+				else:
+					ledState = "0"
+					
+			ledString += ledState
 
-	# NOTEMODULE #
+		# NOTEMODULE #
 
-	noteString = "11111110"
-	layerString = "11111110"
-	octaveString = "11111110"
-	channelString = "11111111"
+		noteString = "11111110"
+		layerString = "11111110"
+		octaveString = "11111110"
+		channelString = "11111111"
 
-	currentStep = sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
+		currentStep = sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
 
-	noteString = convertDecimalToNote(currentStep.noteLayers[currentStep.selectedLayer[0]].note)	# TODO: this 0 would be replaced with i for note control modules
-	layerString = convertDecimalToByteString(currentStep.selectedLayer[0])
-	channelString = convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].midiChannel)
+		noteString = convertDecimalToNote(currentStep.noteLayers[currentStep.selectedLayer[0]].note)	# TODO: this 0 would be replaced with i for note control modules
+		layerString = convertDecimalToByteString(currentStep.selectedLayer[0])
+		channelString = convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].midiChannel)
 
-	if currentStep.noteLayers[currentStep.selectedLayer[0]].note != 0: 
-		# Checks whether it should display the values or write - (in case of disabled note)
-		octaveString = convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].octave)
-	
-	else:
-		octaveString = "01111111"
-
-	# Note layer bit
-	layerString = layerString[:-1] + '0'
-
-	if currentStep.checkOtherLayers():
-		layerString = layerString[:-1] + '1'
-
-	# Sustain Bit
-	if currentStep.noteLayers[currentStep.selectedLayer[0]].sustain:
-		octaveString = octaveString[:-1] + '1'
-	else:
-		octaveString = octaveString[:-1] + '0'
-
-	# Arm Bit
-	if currentStep.noteLayers[currentStep.selectedLayer[0]].arm:
-		channelString = channelString[:-1] + '1'
-	else:
-		channelString = channelString[:-1] + '0'
+		if currentStep.noteLayers[currentStep.selectedLayer[0]].note != 0: 
+			# Checks whether it should display the values or write - (in case of disabled note)
+			octaveString = convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].octave)
 		
-	# PLAY / GENERAL CONTROL BOARD
-	gcOutput = list("0000")
+		else:
+			octaveString = "01111111"
 
-	# Green LED ON, red OFF if playing, inverted otherwise
-	if sequencer.playing:
-		gcOutput[1] = '1'
-		gcOutput[2] = '0'
-	else:
-		gcOutput[1] = '0'
-		gcOutput[2] = '1'
+		# Note layer bit
+		layerString = layerString[:-1] + '0'
 
-	# Yellow LED if patternMode == auto	
-	if sequencer.patternMode == 'auto':
-		gcOutput[3] = '1'
-	
-	# Add 4 bits for SaveIndex
-	gcOutputString = "".join(gcOutput) + binarySaveCounter(sequencer.saveIndex)
+		if currentStep.checkOtherLayers():
+			layerString = layerString[:-1] + '1'
 
-	# Set display + LED #
+		# Sustain Bit
+		if currentStep.noteLayers[currentStep.selectedLayer[0]].sustain:
+			octaveString = octaveString[:-1] + '1'
+		else:
+			octaveString = octaveString[:-1] + '0'
 
-	# Decide whether we should show actual setIndex or pending index
-	setString = sequencer.setIndex if sequencer.setChange == 0 else sequencer.setPending
+		# Arm Bit
+		if currentStep.noteLayers[currentStep.selectedLayer[0]].arm:
+			channelString = channelString[:-1] + '1'
+		else:
+			channelString = channelString[:-1] + '0'
+			
+		# PLAY / GENERAL CONTROL BOARD
+		gcOutput = list("0000")
 
-	setString = convertDecimalToByteString(setString)
+		# Green LED ON, red OFF if playing, inverted otherwise
+		if sequencer.playing:
+			gcOutput[1] = '1'
+			gcOutput[2] = '0'
+		else:
+			gcOutput[1] = '0'
+			gcOutput[2] = '1'
 
-	# Should we blink?
-	if sequencer.setChange != 0:
-		setString = Ui.blink.blink(setString, True)
-	
-	setString = '1' + setString[:-1] if sequencer.setRepeat else '0' + setString[:-1]
-
-	# OUTPUT # 
-		# 0 = original module (steps, bpm, pattern), note control module(s)
-		# 1 = playing board
-
-	output = bpmOutput + patternStepOutput + ledString + noteString + layerString + octaveString + channelString + gcOutputString + setString
+		# Yellow LED if patternMode == auto	
+		if sequencer.patternMode == 'auto':
+			gcOutput[3] = '1'
 		
-	return output 
+		# Add 4 bits for SaveIndex
+		gcOutputString = "".join(gcOutput) + binarySaveCounter(sequencer.saveIndex)
+
+		# Set display + LED #
+
+		# Decide whether we should show actual setIndex or pending index
+		setString = sequencer.setIndex if sequencer.setChange == 0 else sequencer.setPending
+
+		setString = convertDecimalToByteString(setString)
+
+		# Should we blink?
+		if sequencer.setChange != 0:
+			setString = Ui.blink.blink(setString, True)
+		
+		setString = '1' + setString[:-1] if sequencer.setRepeat else '0' + setString[:-1]
+
+		# OUTPUT # 
+			# 0 = original module (steps, bpm, pattern), note control module(s)
+			# 1 = playing board
+
+		output = bpmOutput + patternStepOutput + ledString + noteString + layerString + octaveString + channelString + gcOutputString + setString
+			
+		return output 
 
 def convertDecimalToByteString(decimal):
 	""" Creates outputbytestring. """ 

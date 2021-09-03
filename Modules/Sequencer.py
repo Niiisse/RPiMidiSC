@@ -256,7 +256,7 @@ class Sequencer:
 				self.setChange -= self.setsAmount	+ 1												
 
 			if self.setChange + self.setIndex < 0:
-				self.setChange += self.setsAmount
+				self.setChange += self.setsAmount + 1
 
 		self.setPending = self.setIndex + self.setChange
 

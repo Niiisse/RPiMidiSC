@@ -127,15 +127,15 @@ class SaveLoad:
 							layer.note, 
 							layer.octave, 
 							layer.midiChannel, 
-							layer.sustain, 
-							layer.arm, 
+							bool(layer.sustain), 
+							bool(layer.arm), 
 							layer.lastPlayed[0],
 							layer.lastPlayed[1],
 							step.selectedLayer[0],
 							step.selectedLayer[1],
 							step.selectedLayer[2],
 							step.selectedLayer[3],
-							step.enabled
+							bool(step.enabled)
 						] 
 
 						sequencerData.append(rowData)
@@ -173,7 +173,7 @@ class SaveLoad:
 		sequencer.patternAmount = int(metaRowDict[index]['patternAmount'])
 		sequencer.initSets()
 		sequencer.patternMode = metaRowDict[0]['patternMode']		# TODO: change 0 to index
-		sequencer.setRepeat = metaRowDict[0]['setRepeat']
+		sequencer.setRepeat = (metaRowDict[0]['setRepeat'])
 		
 		# set bpm
 		for i in range(sequencer.setsAmount + 1):
@@ -190,7 +190,7 @@ class SaveLoad:
 				layer.lastNote = (int(row['lastPlayedNote']), int(row['lastPlayedChannel']))
 				layer.note = int(row['note'])
 				layer.octave = int(row['octave'])
-				layer.sustain = True if row['sustain'] == 'True' else False		# FIXME: save sustain as 0/1
+				layer.sustain = bool(row['sustain'])
 				step.selectedLayer=[int(row['selectedLayer0']), int(row['selectedLayer1']), int(row['selectedLayer2']), int(row['selectedLayer3'])]
 				step.enabled = bool(row['enabled'])		
 

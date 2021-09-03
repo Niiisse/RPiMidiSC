@@ -738,16 +738,22 @@ def convertDecimalToByteString(decimal):
 	""" Creates outputbytestring """ 
 
 	numericArr = [        # Stores the numeric display bytes
-	0b10000001,
-	0b11101101,
-	0b01000011,
-	0b01001001,
-	0b00101101,
-	0b00011001,
-	0b00010001,
-	0b11001101,
-	0b00000001,
-	0b00001001
+	0b10000001,						# 0
+	0b11101101,						# 1
+	0b01000011,						# 2
+	0b01001001,						# 3
+	0b00101101,						# 4
+	0b00011001,						# 5
+	0b00010001,						# 6
+	0b11001101,						# 7
+	0b00000001,						# 8
+	0b00001001, 					# 9
+	0b00000101,						# 10 / A
+	0b01101111,						# 11 / b
+	0b00110011,						# 12 / C
+	0b11000001,						# 13 / d
+	0b00100011,						# 14 / E
+	0b00100111						# 15 / F
 	]
 
 	byteString = format(numericArr[decimal], '08b')

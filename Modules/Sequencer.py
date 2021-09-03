@@ -31,7 +31,7 @@ class Sequencer:
 		self.patternMode = "auto"                         # Auto loops patterns, single loops 1
 
 		# Sets
-		self.setsAmount = 9
+		self.setsAmount = 15
 		self.setIndex = 0																	# Currently active set
 		self.sets = [Set.Set(self.sequencerSteps, self.patternAmount) for i in range(self.setsAmount + 1)]
 		self.setRepeat = False														# Whether sets loop or not

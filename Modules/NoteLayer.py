@@ -52,7 +52,7 @@ class NoteLayer:
   def channelUp(self):
     """ Increment current midi channel. Sets last used channel if midiChannel == 0"""
 
-    if self.midiChannel < 9:
+    if self.midiChannel < 15:
       self.midiChannel += 1
     else:
       self.midiChannel = 0
@@ -63,7 +63,7 @@ class NoteLayer:
     if self.midiChannel > 0:
       self.midiChannel -= 1
     else:
-      self.midiChannel = 9
+      self.midiChannel = 15
 
   def toggleSustain(self):
     """ Toggles sustain on/off"""

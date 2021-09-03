@@ -15,19 +15,29 @@ class SaveLoad:
 	def save(self, index: int, sequencer: object) -> None:
 		""" Saves sequencer state to CSV 
 
-		First, load metadata. Make relevant changes to metadata and save it.
+		Metadata 	- set header
+							- convert to list
+							- convert index from str to int for comparing
+							- remove all old items with current index
+							- loop over all sets; add data to list
+							- add this list of lists to metadata list
+							- sort the metadata list
+							- save it
+		
 		Then, save sequencer's data into a big ol' list. Save this list to correct file.
 		TODO: Make backup of old file before writing to it.
 		
 		"""
 		
-		# Metadata
+		# METADATA #
+
 		metaHeader = [
 			'id',
 			'set',
 			'bpm',
 			'patternAmount',
-			'patternMode'
+			'patternMode',
+			'setRepeat'
 		]
 
 		# Get old data, update relevant rows, then save
@@ -35,9 +45,38 @@ class SaveLoad:
 		# because we can't re-save the CSV file properly otherwise.
 
 		metaRowList = self.convertDictToList(self.readMetadata())
-		metaRow = [index, sequencer.setIndex, sequencer.bpm, sequencer.patternAmount, sequencer.patternMode]
-		metaRowList[index] = metaRow
+
+		# Change index to int for sorting
+		for row in metaRowList:
+			row[0] = int(row[0])
+
+		# Remove all lines with current index
+		metaRowList = [ elem for elem in metaRowList if elem[0] != index ]
 		
+		# Create new list of relevant sections
+		newMetaRows = []
+
+		# Loop over list; create rows
+		for i in range(sequencer.setsAmount+1):
+			setRow = [
+				index,
+				i,
+				sequencer.sets[sequencer.setIndex].bpm, 
+				sequencer.sets[sequencer.setIndex].patternAmount, 
+				sequencer.patternMode,
+				sequencer.setRepeat
+			]
+
+			newMetaRows.append(setRow)
+
+		# Add rows to meta info list
+		for setRow in newMetaRows:
+			metaRowList.append(setRow)
+
+		# Sort list based on index
+		metaRowList.sort(key=lambda x: x[0])
+		
+		# Save metadata
 		metaPath = self.folderName + "metadata.csv"
 		with open(metaPath, mode='w') as metaFile:
 
@@ -46,8 +85,9 @@ class SaveLoad:
 			writer.writerow(metaHeader)
 			writer.writerows(metaRowList)
 
-		# Savedata
-		header = [              # Holds CSV Header Row
+
+		# ACTUAL SAVE DATA #
+		header = [              
 			'set',
 			'pattern',
 			'step',
@@ -116,7 +156,7 @@ class SaveLoad:
 		Load metadata and a big ol' CSV file containing the song's data, then loop over relevant sequencer sections 
 		and fill it with the CSV's data. Lastly, save currently loaded save index to lastLoadedSave in data.csv"""
 
-		metaRowList = self.readMetadata()
+		metaRowDict = (self.readMetadata())
 
 		# Get savedata
 		path = self.folderName + str(index) + ".csv"
@@ -130,18 +170,21 @@ class SaveLoad:
 		sequencer.seqstep = 0
 		sequencer.setIndex = 0
 		sequencer.patternIndex = 1
-		sequencer.patternAmount = int(metaRowList[index]['patternAmount'])
+		sequencer.patternAmount = int(metaRowDict[index]['patternAmount'])
 		sequencer.initSets()
-		sequencer.patternMode = metaRowList[index]['patternMode']
-		sequencer.setRepeat = metaRowList[index]['setRepeat']
-		sequencer.bpm = int(metaRowList[index]['bpm'])
+		sequencer.patternMode = metaRowDict[0]['patternMode']		# TODO: change 0 to index
+		sequencer.setRepeat = metaRowDict[0]['setRepeat']
 		
-		# Loop over all rows, copy data to sequencer
+		# set bpm
+		for i in range(sequencer.setsAmount + 1):
+			sequencer.sets[i].bpm = int(metaRowDict[i]['bpm'])
+
+		# Loop over all rows, copy data to sequencer, check prevents index out of bounds
 		for idx, row in enumerate(rowList):
-			if idx < sequencer.patternAmount * sequencer.noteLayerAmount * sequencer.sequencerSteps:
-				step = sequencer.patterns[int(row['pattern'])].steps[int(row['step'])]
-				layer = sequencer.patterns[int(row['pattern'])].steps[int(row['step'])].noteLayers[int(row['layer'])]
-				
+			if idx < sequencer.setsAmount * sequencer.patternAmount * sequencer.noteLayerAmount * sequencer.sequencerSteps:
+				step = sequencer.sets[int(row['set'])].patterns[int(row['pattern'])].steps[int(row['step'])]
+				layer = sequencer.sets[int(row['set'])].patterns[int(row['pattern'])].steps[int(row['step'])].noteLayers[int(row['layer'])]
+
 				layer.arm = bool(row['arm'])
 				layer.midiChannel = int(row['channel'])
 				layer.lastNote = (int(row['lastPlayedNote']), int(row['lastPlayedChannel']))

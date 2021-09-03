@@ -840,7 +840,7 @@ def safeExit():
 	restoreScreen()
 	Ui.sequencer.midiInterface.cleanUp()
 	
-	return "111111111111111111111111111111101111111000000000000000001111111011111110111111101111111000000000" 
+	return config.misc['hw_off_string'] 
 
 def startUI():
 	try: 

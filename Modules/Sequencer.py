@@ -240,6 +240,9 @@ class Sequencer:
 		else:
 			self.setIndex += 1
 
+		self.patternIndex = 0
+		self.seqstep = 0
+
 	def setDown(self):
 		""" Go down 1 set """
 
@@ -247,6 +250,9 @@ class Sequencer:
 			self.setIndex = self.setsAmount
 		else:
 			self.setIndex -= 1
+
+		self.patternIndex = 0
+		self.seqstep = 0
 
 	def toggleSetRepeat(self):
 		""" Toggles set repeat (wow) """

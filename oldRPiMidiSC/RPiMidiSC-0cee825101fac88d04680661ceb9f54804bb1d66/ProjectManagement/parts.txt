@@ -1,9 +1,0 @@
-RGB Leds for sequencer
-
-Many a regular led in multiple colours
-
-Buttons
-
-7-segment display x3 for bpm
-
-power cable (duh)

@@ -159,7 +159,7 @@ class SaveLoad:
 		metaRowDict = (self.readMetadata())
 
 		# Get savedata
-		path = self.folderName + str(index) + ".csv"
+		path = self.folderName + str(index) + ".csv" 
 
 		with open(path, mode='r') as csvFile:
 			reader = csv.DictReader(csvFile)

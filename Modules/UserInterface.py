@@ -741,8 +741,8 @@ def createOutputString(sequencer):
 			gcOutput[1] = '0'
 			gcOutput[2] = '1'
 
-		# Yellow LED if patternMode == auto	
-		if sequencer.patternMode == 'auto':
+		# Yellow LED if patternMode == single	
+		if sequencer.patternMode == 'single':
 			gcOutput[3] = '1'
 		
 		# Add 4 bits for SaveIndex

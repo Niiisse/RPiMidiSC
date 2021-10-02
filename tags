@@ -1,0 +1,535 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+BPMvars	ProjectManagement/Experiments/displayBPM.py	/^class BPMvars:$/;"	c
+BTITERATE	ProjectManagement/Experiments/displayDecimalCounter3.py	/^BTITERATE = 12$/;"	v
+BT_BPM_MIN	ProjectManagement/Experiments/displayBPM.py	/^BT_BPM_MIN = 6$/;"	v
+BT_BPM_PLUS	ProjectManagement/Experiments/displayBPM.py	/^BT_BPM_PLUS = 12$/;"	v
+Blink	Modules/Blink.py	/^class Blink:$/;"	c
+Blink	Modules/UserInterface.py	/^from . import Blink$/;"	i
+CLOCK	ProjectManagement/Experiments/displayAnimBackForth fixed.py	/^CLOCK = 16$/;"	v
+CLOCK	ProjectManagement/Experiments/displayAnimBackForth.py	/^CLOCK = 16$/;"	v
+CLOCK	ProjectManagement/Experiments/displayAnimInit.py	/^CLOCK = 16$/;"	v
+CLOCK	ProjectManagement/Experiments/displayAnimNoteModuleInit.py	/^CLOCK = 16$/;"	v
+CLOCK	ProjectManagement/Experiments/displayBPM.py	/^CLOCK = 16$/;"	v
+CLOCK	ProjectManagement/Experiments/displayBitShiftAnim.py	/^CLOCK = 16$/;"	v
+CLOCK	ProjectManagement/Experiments/displayDecimalCounter.py	/^CLOCK = 16$/;"	v
+CLOCK	ProjectManagement/Experiments/displayDecimalCounter3.py	/^CLOCK = 16$/;"	v
+CLOCK	ProjectManagement/Experiments/displayExplanation.py	/^CLOCK = 16$/;"	v
+CLOCK	ProjectManagement/Experiments/displayInput.py	/^CLOCK = 16$/;"	v
+CLOCK	ProjectManagement/Experiments/displayJasperCounter.py	/^CLOCK = 16$/;"	v
+CLOCK	ProjectManagement/Experiments/displayRandom.py	/^CLOCK = 16$/;"	v
+CLOCK	ProjectManagement/Experiments/displayTwinkle.py	/^CLOCK = 16$/;"	v
+CLOCK	ProjectManagement/Experiments/prototype_1.py	/^CLOCK = 16$/;"	v
+DATA	ProjectManagement/Experiments/displayAnimBackForth fixed.py	/^DATA  = 21$/;"	v
+DATA	ProjectManagement/Experiments/displayAnimBackForth.py	/^DATA  = 21$/;"	v
+DATA	ProjectManagement/Experiments/displayAnimInit.py	/^DATA  = 21$/;"	v
+DATA	ProjectManagement/Experiments/displayAnimNoteModuleInit.py	/^DATA  = 21$/;"	v
+DATA	ProjectManagement/Experiments/displayBPM.py	/^DATA  = 21$/;"	v
+DATA	ProjectManagement/Experiments/displayBitShiftAnim.py	/^DATA  = 21$/;"	v
+DATA	ProjectManagement/Experiments/displayDecimalCounter.py	/^DATA  = 21$/;"	v
+DATA	ProjectManagement/Experiments/displayDecimalCounter3.py	/^DATA  = 21$/;"	v
+DATA	ProjectManagement/Experiments/displayExplanation.py	/^DATA  = 21$/;"	v
+DATA	ProjectManagement/Experiments/displayInput.py	/^DATA  = 21$/;"	v
+DATA	ProjectManagement/Experiments/displayJasperCounter.py	/^DATA  = 21$/;"	v
+DATA	ProjectManagement/Experiments/displayRandom.py	/^DATA  = 21$/;"	v
+DATA	ProjectManagement/Experiments/displayTwinkle.py	/^DATA  = 21$/;"	v
+DATA	ProjectManagement/Experiments/prototype_1.py	/^DATA  = 21$/;"	v
+Debounce	Modules/Debounce.py	/^class Debounce:$/;"	c
+Debounce	Modules/Input.py	/^from . import Debounce$/;"	i
+Debounce	ProjectManagement/Experiments/Debounce.py	/^class Debounce:$/;"	c
+Debounce	ProjectManagement/Experiments/displayBPM.py	/^from Debounce import Debounce$/;"	i
+GPIO	Modules/HardwareInterface.py	/^import RPi.GPIO as GPIO$/;"	i
+GPIO	Modules/ShiftInput.py	/^import RPi.GPIO as GPIO$/;"	i
+GPIO	ProjectManagement/Experiments/displayAnimBackForth fixed.py	/^import RPi.GPIO as GPIO$/;"	i
+GPIO	ProjectManagement/Experiments/displayAnimBackForth.py	/^import RPi.GPIO as GPIO$/;"	i
+GPIO	ProjectManagement/Experiments/displayAnimInit.py	/^import RPi.GPIO as GPIO$/;"	i
+GPIO	ProjectManagement/Experiments/displayAnimNoteModuleInit.py	/^import RPi.GPIO as GPIO$/;"	i
+GPIO	ProjectManagement/Experiments/displayBPM.py	/^import RPi.GPIO as GPIO$/;"	i
+GPIO	ProjectManagement/Experiments/displayBitShiftAnim.py	/^import RPi.GPIO as GPIO$/;"	i
+GPIO	ProjectManagement/Experiments/displayDecimalCounter.py	/^import RPi.GPIO as GPIO$/;"	i
+GPIO	ProjectManagement/Experiments/displayDecimalCounter3.py	/^import RPi.GPIO as GPIO$/;"	i
+GPIO	ProjectManagement/Experiments/displayExplanation.py	/^import RPi.GPIO as GPIO$/;"	i
+GPIO	ProjectManagement/Experiments/displayInput.py	/^import RPi.GPIO as GPIO$/;"	i
+GPIO	ProjectManagement/Experiments/displayJasperCounter.py	/^import RPi.GPIO as GPIO$/;"	i
+GPIO	ProjectManagement/Experiments/displayRandom.py	/^import RPi.GPIO as GPIO$/;"	i
+GPIO	ProjectManagement/Experiments/displayTwinkle.py	/^import RPi.GPIO as GPIO$/;"	i
+GPIO	ProjectManagement/Experiments/prototype_1.py	/^import RPi.GPIO as GPIO$/;"	i
+GPIO	ProjectManagement/Experiments/shiftInput.py	/^import RPi.GPIO as GPIO$/;"	i
+HWi	__main__.py	/^  import Modules.HardwareInterface as HWi$/;"	i
+Input	Modules/UserInterface.py	/^from . import Input$/;"	i
+LATCH	ProjectManagement/Experiments/displayAnimBackForth fixed.py	/^LATCH = 20$/;"	v
+LATCH	ProjectManagement/Experiments/displayAnimBackForth.py	/^LATCH = 20$/;"	v
+LATCH	ProjectManagement/Experiments/displayAnimInit.py	/^LATCH = 20$/;"	v
+LATCH	ProjectManagement/Experiments/displayAnimNoteModuleInit.py	/^LATCH = 20$/;"	v
+LATCH	ProjectManagement/Experiments/displayBPM.py	/^LATCH = 20$/;"	v
+LATCH	ProjectManagement/Experiments/displayBitShiftAnim.py	/^LATCH = 20$/;"	v
+LATCH	ProjectManagement/Experiments/displayDecimalCounter.py	/^LATCH = 20$/;"	v
+LATCH	ProjectManagement/Experiments/displayDecimalCounter3.py	/^LATCH = 20$/;"	v
+LATCH	ProjectManagement/Experiments/displayExplanation.py	/^LATCH = 20$/;"	v
+LATCH	ProjectManagement/Experiments/displayInput.py	/^LATCH = 20$/;"	v
+LATCH	ProjectManagement/Experiments/displayJasperCounter.py	/^LATCH = 20$/;"	v
+LATCH	ProjectManagement/Experiments/displayRandom.py	/^LATCH = 20$/;"	v
+LATCH	ProjectManagement/Experiments/displayTwinkle.py	/^LATCH = 20$/;"	v
+LATCH	ProjectManagement/Experiments/prototype_1.py	/^LATCH = 20$/;"	v
+Midi	Modules/Sequencer.py	/^			from . import Midi$/;"	i
+Midi	__main__.py	/^import Modules.Midi as Midi$/;"	i
+MidiInterface	Modules/Midi.py	/^class MidiInterface:$/;"	c
+Modules	__main__.py	/^  import Modules.HardwareInterface as HWi$/;"	i
+Modules	__main__.py	/^import Modules.Midi as Midi$/;"	i
+Modules	__main__.py	/^import Modules.UserInterface as ui$/;"	i
+NoteLayer	Modules/NoteLayer.py	/^class NoteLayer:$/;"	c
+NoteLayer	Modules/Step.py	/^from . import NoteLayer$/;"	i
+Pattern	Modules/Pattern.py	/^class Pattern:$/;"	c
+Pattern	Modules/Sequencer.py	/^from . import Pattern, SaveLoad, Set$/;"	i
+Pattern	Modules/Set.py	/^from . import Pattern$/;"	i
+RPi	Modules/HardwareInterface.py	/^import RPi.GPIO as GPIO$/;"	i
+RPi	Modules/ShiftInput.py	/^import RPi.GPIO as GPIO$/;"	i
+RPi	ProjectManagement/Experiments/displayAnimBackForth fixed.py	/^import RPi.GPIO as GPIO$/;"	i
+RPi	ProjectManagement/Experiments/displayAnimBackForth.py	/^import RPi.GPIO as GPIO$/;"	i
+RPi	ProjectManagement/Experiments/displayAnimInit.py	/^import RPi.GPIO as GPIO$/;"	i
+RPi	ProjectManagement/Experiments/displayAnimNoteModuleInit.py	/^import RPi.GPIO as GPIO$/;"	i
+RPi	ProjectManagement/Experiments/displayBPM.py	/^import RPi.GPIO as GPIO$/;"	i
+RPi	ProjectManagement/Experiments/displayBitShiftAnim.py	/^import RPi.GPIO as GPIO$/;"	i
+RPi	ProjectManagement/Experiments/displayDecimalCounter.py	/^import RPi.GPIO as GPIO$/;"	i
+RPi	ProjectManagement/Experiments/displayDecimalCounter3.py	/^import RPi.GPIO as GPIO$/;"	i
+RPi	ProjectManagement/Experiments/displayExplanation.py	/^import RPi.GPIO as GPIO$/;"	i
+RPi	ProjectManagement/Experiments/displayInput.py	/^import RPi.GPIO as GPIO$/;"	i
+RPi	ProjectManagement/Experiments/displayJasperCounter.py	/^import RPi.GPIO as GPIO$/;"	i
+RPi	ProjectManagement/Experiments/displayRandom.py	/^import RPi.GPIO as GPIO$/;"	i
+RPi	ProjectManagement/Experiments/displayTwinkle.py	/^import RPi.GPIO as GPIO$/;"	i
+RPi	ProjectManagement/Experiments/prototype_1.py	/^import RPi.GPIO as GPIO$/;"	i
+RPi	ProjectManagement/Experiments/shiftInput.py	/^import RPi.GPIO as GPIO$/;"	i
+SaveLoad	Modules/SaveLoad.py	/^class SaveLoad:$/;"	c
+SaveLoad	Modules/Sequencer.py	/^from . import Pattern, SaveLoad, Set$/;"	i
+Sequencer	Modules/Sequencer.py	/^class Sequencer:$/;"	c
+Sequencer	Modules/UserInterface.py	/^from . import Sequencer$/;"	i
+Set	Modules/Sequencer.py	/^from . import Pattern, SaveLoad, Set$/;"	i
+Set	Modules/Set.py	/^class Set:$/;"	c
+ShiftInput	Modules/Input.py	/^  from . import ShiftInput$/;"	i
+ShiftInput	Modules/ShiftInput.py	/^class ShiftInput:$/;"	c
+ShiftInput	ProjectManagement/Experiments/shiftInput.py	/^class ShiftInput:$/;"	c
+ShiftRegister	Modules/HardwareInterface.py	/^class ShiftRegister:$/;"	c
+Step	Modules/Pattern.py	/^from . import Step$/;"	i
+Step	Modules/Step.py	/^class Step():$/;"	c
+Textbox	Modules/UserInterface.py	/^from curses.textpad import Textbox, rectangle$/;"	i
+Ui	Modules/UserInterface.py	/^class Ui:$/;"	c
+__init__	Modules/Blink.py	/^  def __init__(self, blinkTime):$/;"	m	class:Blink
+__init__	Modules/Debounce.py	/^	def __init__(self):$/;"	m	class:Debounce
+__init__	Modules/HardwareInterface.py	/^  def __init__(self, data, latch, clock):$/;"	m	class:ShiftRegister
+__init__	Modules/Midi.py	/^	def __init__(self):$/;"	m	class:MidiInterface
+__init__	Modules/NoteLayer.py	/^  def __init__(self):$/;"	m	class:NoteLayer
+__init__	Modules/Pattern.py	/^  def __init__(self, sequencerSteps):$/;"	m	class:Pattern
+__init__	Modules/SaveLoad.py	/^	def __init__(self):$/;"	m	class:SaveLoad
+__init__	Modules/Sequencer.py	/^	def __init__(self, patternAmount: int, sequencerSteps: int, bpm: int, seqstepsize: int, midiEnabled: bool, previewNoteDuration: int):$/;"	m	class:Sequencer
+__init__	Modules/Set.py	/^	def __init__(self, seqStepAmount, patternAmount):$/;"	m	class:Set
+__init__	Modules/ShiftInput.py	/^  def __init__(self):$/;"	m	class:ShiftInput
+__init__	Modules/Step.py	/^  def __init__(self):$/;"	m	class:Step
+__init__	ProjectManagement/Experiments/Debounce.py	/^	def __init__(self):$/;"	m	class:Debounce
+__init__	ProjectManagement/Experiments/shiftInput.py	/^  def __init__(self):$/;"	m	class:ShiftInput
+a	ProjectManagement/Experiments/timecalc.py	/^a = float(input("a: "))$/;"	v
+allNotesOff	Modules/Midi.py	/^	def allNotesOff(self):$/;"	m	class:MidiInterface
+app_version	Modules/UserInterface.py	/^	app_version = config.general['app_version']$/;"	v	class:Ui
+armDb	Modules/Input.py	/^  armDb = Debounce.Debounce()$/;"	v
+b	ProjectManagement/Experiments/timecalc.py	/^b = int(input("b: "))$/;"	v
+binarySaveCounter	Modules/UserInterface.py	/^def binarySaveCounter(index: int) -> str:$/;"	f
+blink	Modules/Blink.py	/^  def blink(self, byteString: str, inverted: bool) -> str:$/;"	m	class:Blink
+blink	Modules/UserInterface.py	/^	blink = Blink.Blink(config.general['blinkTime'])$/;"	v	class:Ui
+bpmDown	ProjectManagement/Experiments/displayBPM.py	/^def bpmDown():$/;"	f
+bpmDownDb	Modules/Input.py	/^  bpmDownDb = Debounce.Debounce()$/;"	v
+bpmMinDb	ProjectManagement/Experiments/displayBPM.py	/^bpmMinDb = Debounce()$/;"	v
+bpmPlusDb	ProjectManagement/Experiments/displayBPM.py	/^bpmPlusDb = Debounce()$/;"	v
+bpmUp	ProjectManagement/Experiments/displayBPM.py	/^def bpmUp():$/;"	f
+bpmUpDb	Modules/Input.py	/^  bpmUpDb = Debounce.Debounce()$/;"	v
+btMin	ProjectManagement/Experiments/displayBPM.py	/^  btMin = not GPIO.input(BT_BPM_MIN)            # Gets GPIO button input state$/;"	v
+btPlus	ProjectManagement/Experiments/displayBPM.py	/^  btPlus = not GPIO.input(BT_BPM_PLUS)$/;"	v
+byte	ProjectManagement/Experiments/prototype_1.py	/^      byte = byte<<1$/;"	v
+byte	ProjectManagement/Experiments/prototype_1.py	/^      byte = byte>>1$/;"	v
+byteArray	ProjectManagement/Experiments/prototype_1.py	/^byteArray = [0, 0, 0, 0, 0]$/;"	v
+byteString	ProjectManagement/Experiments/displayDecimalCounter.py	/^    byteString = byteString + numericArr[i]$/;"	v
+byteString	ProjectManagement/Experiments/displayDecimalCounter.py	/^  byteString = ""$/;"	v
+bytestring	ProjectManagement/Experiments/displayBPM.py	/^bytestring = "1" * 40 + "0" * 16      # For turning off display at start$/;"	v
+bytestring	ProjectManagement/Experiments/displayBitShiftAnim.py	/^bytestring = format(value, '08b')$/;"	v
+bytestring	ProjectManagement/Experiments/displayDecimalCounter3.py	/^bytestring = format(numericArr[0], '08b')$/;"	v
+calculateNoteValue	Modules/Midi.py	/^	def calculateNoteValue(self, note, octave):$/;"	m	class:MidiInterface
+changePattern	Modules/Sequencer.py	/^	def changePattern(self, changeValue):$/;"	m	class:Sequencer
+changePendingPattern	Modules/Sequencer.py	/^	def changePendingPattern(self):$/;"	m	class:Sequencer
+changePendingSet	Modules/Sequencer.py	/^	def changePendingSet(self):$/;"	m	class:Sequencer
+changeSave	Modules/Sequencer.py	/^	def changeSave(self, oldSaveIndex: int):$/;"	m	class:Sequencer
+channelDown	Modules/NoteLayer.py	/^  def channelDown(self):$/;"	m	class:NoteLayer
+channelDownDb	Modules/Input.py	/^  channelDownDb = Debounce.Debounce()$/;"	v
+channelUp	Modules/NoteLayer.py	/^  def channelUp(self):$/;"	m	class:NoteLayer
+channelUpDb	Modules/Input.py	/^  channelUpDb = Debounce.Debounce()$/;"	v
+char	Modules/UserInterface.py	/^	char = None$/;"	v	class:Ui
+checkDebounce	Modules/Debounce.py	/^	def checkDebounce(self):$/;"	m	class:Debounce
+checkDebounce	ProjectManagement/Experiments/Debounce.py	/^	def checkDebounce(self):$/;"	m	class:Debounce
+checkOtherLayers	Modules/Step.py	/^  def checkOtherLayers(self):$/;"	m	class:Step
+choiceList	ProjectManagement/Experiments/displayRandom.py	/^choiceList = [0, 1]$/;"	v
+clamp	Modules/Clamp.py	/^def clamp(self, value, min, max):$/;"	f
+clampPatternStepping	Modules/UserInterface.py	/^def clampPatternStepping(sequencer):$/;"	f
+clampPendingSetStepping	Modules/Sequencer.py	/^	def clampPendingSetStepping(self):$/;"	m	class:Sequencer
+clampPendingStepping	Modules/UserInterface.py	/^def clampPendingStepping(sequencer):$/;"	f
+cleanUp	Modules/Midi.py	/^	def cleanUp(self):$/;"	m	class:MidiInterface
+clear	Modules/HardwareInterface.py	/^  def clear(self):$/;"	m	class:ShiftRegister
+clear	ProjectManagement/Experiments/displayAnimBackForth fixed.py	/^def clear():$/;"	f
+clear	ProjectManagement/Experiments/displayAnimBackForth.py	/^def clear():$/;"	f
+clear	ProjectManagement/Experiments/displayAnimInit.py	/^def clear():$/;"	f
+clear	ProjectManagement/Experiments/displayAnimNoteModuleInit.py	/^def clear():$/;"	f
+clear	ProjectManagement/Experiments/displayBPM.py	/^def clear():$/;"	f
+clear	ProjectManagement/Experiments/displayBitShiftAnim.py	/^def clear():$/;"	f
+clear	ProjectManagement/Experiments/displayDecimalCounter.py	/^def clear():$/;"	f
+clear	ProjectManagement/Experiments/displayDecimalCounter3.py	/^def clear():$/;"	f
+clear	ProjectManagement/Experiments/displayExplanation.py	/^def clear():$/;"	f
+clear	ProjectManagement/Experiments/displayInput.py	/^def clear():$/;"	f
+clear	ProjectManagement/Experiments/displayJasperCounter.py	/^def clear():$/;"	f
+clear	ProjectManagement/Experiments/displayRandom.py	/^def clear():$/;"	f
+clear	ProjectManagement/Experiments/displayTwinkle.py	/^def clear():$/;"	f
+clear	ProjectManagement/Experiments/prototype_1.py	/^def clear():$/;"	f
+config	Modules/Debounce.py	/^import time, config$/;"	i
+config	Modules/Input.py	/^import config$/;"	i
+config	Modules/UserInterface.py	/^import config$/;"	i
+config	__main__.py	/^import config$/;"	i
+convertDecimalToByteString	Modules/UserInterface.py	/^def convertDecimalToByteString(decimal):$/;"	f
+convertDecimalToNote	Modules/UserInterface.py	/^def convertDecimalToNote(decimal):$/;"	f
+convertDictToList	Modules/SaveLoad.py	/^	def convertDictToList(self, metadata: dict) -> list:$/;"	m	class:SaveLoad
+createNoteWindow	Modules/UserInterface.py	/^def createNoteWindow(windowSize):$/;"	f
+createOutputString	Modules/UserInterface.py	/^def createOutputString(sequencer):$/;"	f
+createPatternWindow	Modules/UserInterface.py	/^def createPatternWindow(windowSize):$/;"	f
+createSequencerWindow	Modules/UserInterface.py	/^def createSequencerWindow(windowSize):$/;"	f
+createStatusWindow	Modules/UserInterface.py	/^def createStatusWindow(windowSize):$/;"	f
+createTempoWindow	Modules/UserInterface.py	/^def createTempoWindow(windowSize):$/;"	f
+csv	Modules/SaveLoad.py	/^import csv$/;"	i
+curses	Modules/Input.py	/^import curses $/;"	i
+curses	Modules/UserInterface.py	/^import curses, traceback$/;"	i
+debounce	config.py	/^debounce = {$/;"	v
+digitAmount	ProjectManagement/Experiments/displayDecimalCounter.py	/^digitAmount = 7$/;"	v
+digitArray	ProjectManagement/Experiments/displayDecimalCounter.py	/^digitArray = [0 for i in range(digitAmount)]$/;"	v
+disableStep	Modules/Step.py	/^  def disableStep(self):$/;"	m	class:Step
+doInput	Modules/Input.py	/^def doInput(self, char):$/;"	f
+doWindowSetup	Modules/UserInterface.py	/^def doWindowSetup():$/;"	f
+drawDebugBar	Modules/UserInterface.py	/^def drawDebugBar(window, byteString):$/;"	f
+drawInfo	Modules/UserInterface.py	/^def drawInfo(seqwin, sequencer):$/;"	f
+drawKeybinds	Modules/UserInterface.py	/^def drawKeybinds(window, showKeyBinds, lastFrame, keyBinds):$/;"	f
+drawPatternWindow	Modules/UserInterface.py	/^def drawPatternWindow(patternWin, sequencer):$/;"	f
+drawSequencer	Modules/UserInterface.py	/^def drawSequencer(seqwin, sequencer):$/;"	f
+drawStatusWindow	Modules/UserInterface.py	/^def drawStatusWindow(statusWin, sequencer):$/;"	f
+drawTempoWindow	Modules/UserInterface.py	/^def drawTempoWindow(tempoWin):$/;"	f
+drawTitle	Modules/UserInterface.py	/^def drawTitle():$/;"	f
+emptyByte	ProjectManagement/Experiments/displayJasperCounter.py	/^  emptyByte = "11111111"$/;"	v
+enableStep	Modules/Step.py	/^  def enableStep(self):$/;"	m	class:Step
+fillerString	ProjectManagement/Experiments/displayBPM.py	/^  fillerString = "11111111111111110000000000000000"$/;"	v	class:BPMvars
+fillerString	ProjectManagement/Experiments/displayDecimalCounter3.py	/^fillerString = "11111111111111110000000000000000"$/;"	v
+finalStepInPattern	Modules/Sequencer.py	/^	def finalStepInPattern(self):$/;"	m	class:Sequencer
+firstBytestring	ProjectManagement/Experiments/displayDecimalCounter3.py	/^  firstBytestring = format(numericArr[firstDigit], '08b')$/;"	v
+firstDigit	ProjectManagement/Experiments/displayBPM.py	/^  firstDigit = 0          # 1$/;"	v	class:BPMvars
+firstDigit	ProjectManagement/Experiments/displayDecimalCounter3.py	/^    firstDigit = 0$/;"	v
+firstDigit	ProjectManagement/Experiments/displayDecimalCounter3.py	/^firstDigit = 0       # 1$/;"	v
+flip	ProjectManagement/Experiments/prototype_1.py	/^      flip = 0$/;"	v
+flip	ProjectManagement/Experiments/prototype_1.py	/^      flip = 1$/;"	v
+flip	ProjectManagement/Experiments/prototype_1.py	/^flip = 0$/;"	v
+fullyEmptyByte	ProjectManagement/Experiments/displayJasperCounter.py	/^  fullyEmptyByte = emptyByte + emptyByte + emptyByte + emptyByte + emptyByte $/;"	v
+fullyFullByte	ProjectManagement/Experiments/displayJasperCounter.py	/^    fullyFullByte = fullyFullByte + str(format(jasperArray[x], '08b'))$/;"	v
+fullyFullByte	ProjectManagement/Experiments/displayJasperCounter.py	/^  fullyFullByte = ""$/;"	v
+general	config.py	/^general = {$/;"	v
+getSequencer	Modules/UserInterface.py	/^def getSequencer():$/;"	f
+getState	Modules/Step.py	/^  def getState(self):$/;"	m	class:Step
+handleOutput	ProjectManagement/Experiments/displayBPM.py	/^def handleOutput():$/;"	f
+heading	ProjectManagement/Experiments/displayAnimBackForth fixed.py	/^      heading = 0$/;"	v
+heading	ProjectManagement/Experiments/displayAnimBackForth fixed.py	/^      heading = 1$/;"	v
+heading	ProjectManagement/Experiments/displayAnimBackForth fixed.py	/^heading = 0$/;"	v
+heading	ProjectManagement/Experiments/displayAnimBackForth.py	/^      heading = 0$/;"	v
+heading	ProjectManagement/Experiments/displayAnimBackForth.py	/^      heading = 1$/;"	v
+heading	ProjectManagement/Experiments/displayAnimBackForth.py	/^heading = 0$/;"	v
+i	ProjectManagement/Experiments/displayAnimBackForth fixed.py	/^  i = outputList.index('0')     # Get index$/;"	v
+i	ProjectManagement/Experiments/displayAnimBackForth.py	/^  i = outputList.index('0')     # Get index$/;"	v
+initSets	Modules/Sequencer.py	/^	def initSets(self):$/;"	m	class:Sequencer
+inputBit	Modules/HardwareInterface.py	/^  def inputBit(self, inputValue):$/;"	m	class:ShiftRegister
+inputBit	ProjectManagement/Experiments/displayAnimBackForth fixed.py	/^def inputBit(inputValue):$/;"	f
+inputBit	ProjectManagement/Experiments/displayAnimBackForth.py	/^def inputBit(inputValue):$/;"	f
+inputBit	ProjectManagement/Experiments/displayAnimInit.py	/^def inputBit(inputValue):$/;"	f
+inputBit	ProjectManagement/Experiments/displayAnimNoteModuleInit.py	/^def inputBit(inputValue):$/;"	f
+inputBit	ProjectManagement/Experiments/displayBPM.py	/^def inputBit(inputValue):$/;"	f
+inputBit	ProjectManagement/Experiments/displayBitShiftAnim.py	/^def inputBit(inputValue):$/;"	f
+inputBit	ProjectManagement/Experiments/displayDecimalCounter.py	/^def inputBit(inputValue):$/;"	f
+inputBit	ProjectManagement/Experiments/displayDecimalCounter3.py	/^def inputBit(inputValue):$/;"	f
+inputBit	ProjectManagement/Experiments/displayExplanation.py	/^def inputBit(inputValue):$/;"	f
+inputBit	ProjectManagement/Experiments/displayInput.py	/^def inputBit(inputValue):$/;"	f
+inputBit	ProjectManagement/Experiments/displayJasperCounter.py	/^def inputBit(inputValue):$/;"	f
+inputBit	ProjectManagement/Experiments/displayRandom.py	/^def inputBit(inputValue):$/;"	f
+inputBit	ProjectManagement/Experiments/displayTwinkle.py	/^def inputBit(inputValue):$/;"	f
+inputBit	ProjectManagement/Experiments/prototype_1.py	/^def inputBit(inputValue):$/;"	f
+inputByteString	ProjectManagement/Experiments/prototype_1.py	/^    inputByteString = format(byte, '08b')$/;"	v
+inputList	ProjectManagement/Experiments/displayTwinkle.py	/^inputList = list(inputString)$/;"	v
+inputString	ProjectManagement/Experiments/displayExplanation.py	/^  inputString = input("input: ")$/;"	v
+inputString	ProjectManagement/Experiments/displayInput.py	/^  inputString = input("input: ")$/;"	v
+inputString	ProjectManagement/Experiments/displayTwinkle.py	/^inputString = "01010101"$/;"	v
+interface	config.py	/^interface = {$/;"	v
+interrupted	ProjectManagement/Experiments/displayBitShiftAnim.py	/^interrupted = False$/;"	v
+iterate	ProjectManagement/Experiments/timecalc.py	/^iterate = int(input("how many times: "))$/;"	v
+jasperArray	ProjectManagement/Experiments/displayJasperCounter.py	/^jasperArray = [ $/;"	v
+keyBinds	Modules/UserInterface.py	/^	keyBinds = ($/;"	v	class:Ui
+keysLastFrame	Modules/UserInterface.py	/^	keysLastFrame = False						# Used for re-drawing things cus Curses is (curses)$/;"	v	class:Ui
+latch	Modules/HardwareInterface.py	/^  def latch(self):$/;"	m	class:ShiftRegister
+latch	ProjectManagement/Experiments/displayAnimBackForth fixed.py	/^def latch():$/;"	f
+latch	ProjectManagement/Experiments/displayAnimBackForth.py	/^def latch():$/;"	f
+latch	ProjectManagement/Experiments/displayAnimInit.py	/^def latch():$/;"	f
+latch	ProjectManagement/Experiments/displayAnimNoteModuleInit.py	/^def latch():$/;"	f
+latch	ProjectManagement/Experiments/displayBPM.py	/^def latch():$/;"	f
+latch	ProjectManagement/Experiments/displayBitShiftAnim.py	/^def latch():$/;"	f
+latch	ProjectManagement/Experiments/displayDecimalCounter.py	/^def latch():$/;"	f
+latch	ProjectManagement/Experiments/displayDecimalCounter3.py	/^def latch():$/;"	f
+latch	ProjectManagement/Experiments/displayExplanation.py	/^def latch():$/;"	f
+latch	ProjectManagement/Experiments/displayInput.py	/^def latch():$/;"	f
+latch	ProjectManagement/Experiments/displayJasperCounter.py	/^def latch():$/;"	f
+latch	ProjectManagement/Experiments/displayRandom.py	/^def latch():$/;"	f
+latch	ProjectManagement/Experiments/displayTwinkle.py	/^def latch():$/;"	f
+latch	ProjectManagement/Experiments/prototype_1.py	/^def latch():$/;"	f
+layerDown	Modules/Step.py	/^  def layerDown(self):$/;"	m	class:Step
+layerDownDb	Modules/Input.py	/^  layerDownDb = Debounce.Debounce()$/;"	v
+layerUp	Modules/Step.py	/^  def layerUp(self):$/;"	m	class:Step
+layerUpDb	Modules/Input.py	/^  layerUpDb = Debounce.Debounce()$/;"	v
+load	Modules/SaveLoad.py	/^	def load(self, index: int, sequencer: object) -> None:$/;"	m	class:SaveLoad
+load	Modules/Sequencer.py	/^	def load(self, index: int):$/;"	m	class:Sequencer
+loadData	Modules/ShiftInput.py	/^  def loadData(self):$/;"	m	class:ShiftInput
+loadData	ProjectManagement/Experiments/shiftInput.py	/^  def loadData(self):$/;"	m	class:ShiftInput
+loadDb	Modules/Input.py	/^  loadDb = Debounce.Debounce()$/;"	v
+main	Modules/UserInterface.py	/^def main():$/;"	f
+math	Modules/HardwareInterface.py	/^import math$/;"	i
+math	Modules/UserInterface.py	/^import math$/;"	i
+math	ProjectManagement/Experiments/prototype_1.py	/^import math$/;"	i
+math	ProjectManagement/Experiments/timecalc.py	/^import math$/;"	i
+midi	Modules/Midi.py	/^import pygame.midi$/;"	i
+midi	ProjectManagement/Experiments/pygamemidi.py	/^import pygame.midi$/;"	i
+misc	config.py	/^misc = {$/;"	v
+noteDown	Modules/NoteLayer.py	/^  def noteDown(self):$/;"	m	class:NoteLayer
+noteDown	Modules/Sequencer.py	/^	def noteDown(self):$/;"	m	class:Sequencer
+noteDownDb	Modules/Input.py	/^  noteDownDb = Debounce.Debounce()$/;"	v
+noteUp	Modules/NoteLayer.py	/^  def noteUp(self):$/;"	m	class:NoteLayer
+noteUp	Modules/Sequencer.py	/^	def noteUp(self):$/;"	m	class:Sequencer
+noteUpDb	Modules/Input.py	/^  noteUpDb = Debounce.Debounce()$/;"	v
+noteWindow	config.py	/^noteWindow = {$/;"	v
+numericArr	ProjectManagement/Experiments/displayAnimBackForth fixed.py	/^numericArr = [        # Stores the numeric display bytes$/;"	v
+numericArr	ProjectManagement/Experiments/displayAnimBackForth.py	/^numericArr = [        # Stores the numeric display bytes$/;"	v
+numericArr	ProjectManagement/Experiments/displayAnimInit.py	/^numericArr = [        # Stores the numeric display bytes$/;"	v
+numericArr	ProjectManagement/Experiments/displayAnimNoteModuleInit.py	/^numericArr = [        # Stores the numeric display bytes$/;"	v
+numericArr	ProjectManagement/Experiments/displayBPM.py	/^numericArr = [        # Stores the numeric display bytes$/;"	v
+numericArr	ProjectManagement/Experiments/displayDecimalCounter.py	/^numericArr = [        # Stores the numeric display bytes$/;"	v
+numericArr	ProjectManagement/Experiments/displayDecimalCounter3.py	/^numericArr = [        # Stores the numeric display bytes$/;"	v
+numericArr	ProjectManagement/Experiments/displayExplanation.py	/^numericArr = [        # Stores the numeric display bytes$/;"	v
+numericArr	ProjectManagement/Experiments/displayInput.py	/^numericArr = [        # Stores the numeric display bytes$/;"	v
+numericArr	ProjectManagement/Experiments/displayJasperCounter.py	/^numericArr = [        # Stores the numeric display bytes$/;"	v
+numericArr	ProjectManagement/Experiments/displayRandom.py	/^numericArr = [        # Stores the numeric display bytes$/;"	v
+numericArr	ProjectManagement/Experiments/displayTwinkle.py	/^numericArr = [        # Stores the numeric display bytes$/;"	v
+numericArr	ProjectManagement/Experiments/prototype_1.py	/^numericArr = [        # Stores the numeric display bytes$/;"	v
+octaveDown	Modules/NoteLayer.py	/^  def octaveDown(self):$/;"	m	class:NoteLayer
+octaveDownDb	Modules/Input.py	/^  octaveDownDb = Debounce.Debounce()$/;"	v
+octaveUp	Modules/NoteLayer.py	/^  def octaveUp(self):$/;"	m	class:NoteLayer
+octaveUpDb	Modules/Input.py	/^  octaveUpDb = Debounce.Debounce()$/;"	v
+outputBits	Modules/HardwareInterface.py	/^  def outputBits(self, inputString):$/;"	m	class:ShiftRegister
+outputBits	ProjectManagement/Experiments/displayAnimBackForth fixed.py	/^def outputBits(inputString):$/;"	f
+outputBits	ProjectManagement/Experiments/displayAnimBackForth.py	/^def outputBits(inputString):$/;"	f
+outputBits	ProjectManagement/Experiments/displayAnimInit.py	/^def outputBits(inputString):$/;"	f
+outputBits	ProjectManagement/Experiments/displayAnimNoteModuleInit.py	/^def outputBits(inputString):$/;"	f
+outputBits	ProjectManagement/Experiments/displayBPM.py	/^def outputBits(inputString):$/;"	f
+outputBits	ProjectManagement/Experiments/displayBitShiftAnim.py	/^def outputBits(inputString):$/;"	f
+outputBits	ProjectManagement/Experiments/displayDecimalCounter.py	/^def outputBits(inputString):$/;"	f
+outputBits	ProjectManagement/Experiments/displayDecimalCounter3.py	/^def outputBits(inputString):$/;"	f
+outputBits	ProjectManagement/Experiments/displayExplanation.py	/^def outputBits(inputString):$/;"	f
+outputBits	ProjectManagement/Experiments/displayInput.py	/^def outputBits(inputString):$/;"	f
+outputBits	ProjectManagement/Experiments/displayJasperCounter.py	/^def outputBits(inputString):$/;"	f
+outputBits	ProjectManagement/Experiments/displayRandom.py	/^def outputBits(inputString):$/;"	f
+outputBits	ProjectManagement/Experiments/displayTwinkle.py	/^def outputBits(inputString):$/;"	f
+outputBits	ProjectManagement/Experiments/prototype_1.py	/^def outputBits(inputString):$/;"	f
+outputByteString	Modules/UserInterface.py	/^	outputByteString = "no data"$/;"	v	class:Ui
+outputByteString	ProjectManagement/Experiments/displayJasperCounter.py	/^      outputByteString = emptyByte + emptyByte + emptyByte + emptyByte + str(format(jasperArray[4], '08b'))$/;"	v
+outputByteString	ProjectManagement/Experiments/displayJasperCounter.py	/^      outputByteString = emptyByte + emptyByte + emptyByte + str(format(jasperArray[3], '08b') + emptyByte)$/;"	v
+outputByteString	ProjectManagement/Experiments/displayJasperCounter.py	/^      outputByteString = emptyByte + emptyByte + str(format(jasperArray[2], '08b') + emptyByte + emptyByte)$/;"	v
+outputByteString	ProjectManagement/Experiments/displayJasperCounter.py	/^      outputByteString = emptyByte + str(format(jasperArray[1], '08b') + emptyByte + emptyByte + emptyByte)$/;"	v
+outputByteString	ProjectManagement/Experiments/displayJasperCounter.py	/^      outputByteString = str(format(jasperArray[0], '08b') + emptyByte + emptyByte + emptyByte + emptyByte)$/;"	v
+outputByteString	ProjectManagement/Experiments/displayJasperCounter.py	/^    outputByteString = outputByteString + "11111111"$/;"	v
+outputByteString	ProjectManagement/Experiments/displayJasperCounter.py	/^  outputByteString = ""$/;"	v
+outputByteString	ProjectManagement/Experiments/displayJasperCounter.py	/^outputByteString = ""$/;"	v
+outputByteString	ProjectManagement/Experiments/prototype_1.py	/^  outputByteString = ""$/;"	v
+outputByteString	ProjectManagement/Experiments/prototype_1.py	/^outputByteString = ""$/;"	v
+outputBytestring	ProjectManagement/Experiments/displayDecimalCounter3.py	/^  outputBytestring = firstBytestring + secondBytestring + thirdBytestring + fillerString$/;"	v
+outputList	ProjectManagement/Experiments/displayAnimBackForth fixed.py	/^outputList = list(outputString)$/;"	v
+outputList	ProjectManagement/Experiments/displayAnimBackForth.py	/^outputList = list(outputString)$/;"	v
+outputList	ProjectManagement/Experiments/displayAnimInit.py	/^outputList = list(outputString)$/;"	v
+outputList	ProjectManagement/Experiments/displayAnimNoteModuleInit.py	/^outputList = list(outputString)$/;"	v
+outputList	ProjectManagement/Experiments/displayRandom.py	/^outputList = list(outputString)$/;"	v
+outputList	ProjectManagement/Experiments/displayTwinkle.py	/^  outputList = inputList[:-1]$/;"	v
+outputList	ProjectManagement/Experiments/displayTwinkle.py	/^  outputList = outputList[:-1]$/;"	v
+outputString	ProjectManagement/Experiments/displayAnimBackForth fixed.py	/^  outputString = ""$/;"	v
+outputString	ProjectManagement/Experiments/displayAnimBackForth fixed.py	/^  outputString = outputString.join(outputList)$/;"	v
+outputString	ProjectManagement/Experiments/displayAnimBackForth fixed.py	/^outputString = "01111111" + "11111111" * 4 + "00000000" * 2$/;"	v
+outputString	ProjectManagement/Experiments/displayAnimBackForth.py	/^  outputString = ""$/;"	v
+outputString	ProjectManagement/Experiments/displayAnimBackForth.py	/^  outputString = outputString.join(outputList)$/;"	v
+outputString	ProjectManagement/Experiments/displayAnimBackForth.py	/^outputString = "011111111111111111111111111111111111111111111111"$/;"	v
+outputString	ProjectManagement/Experiments/displayAnimInit.py	/^      outputString = ""$/;"	v
+outputString	ProjectManagement/Experiments/displayAnimInit.py	/^      outputString = outputString.join(outputList)$/;"	v
+outputString	ProjectManagement/Experiments/displayAnimInit.py	/^outputString = "01111111111111111111111111111111111111110000000000000000"$/;"	v
+outputString	ProjectManagement/Experiments/displayAnimNoteModuleInit.py	/^      outputString = ""$/;"	v
+outputString	ProjectManagement/Experiments/displayAnimNoteModuleInit.py	/^      outputString = outputString.join(outputList)$/;"	v
+outputString	ProjectManagement/Experiments/displayAnimNoteModuleInit.py	/^outputString = "01111111111111111111111111111111"$/;"	v
+outputString	ProjectManagement/Experiments/displayRandom.py	/^  outputString = ""$/;"	v
+outputString	ProjectManagement/Experiments/displayRandom.py	/^  outputString = outputString.join(outputList)$/;"	v
+outputString	ProjectManagement/Experiments/displayRandom.py	/^outputString = "01111111111111111111111111111111111111110000000000000000"$/;"	v
+outputString	ProjectManagement/Experiments/displayTwinkle.py	/^  outputString = ""$/;"	v
+outputString	ProjectManagement/Experiments/displayTwinkle.py	/^  outputString = outputString.join(outputList)$/;"	v
+pattern	config.py	/^pattern = {$/;"	v
+patternAmount	Modules/UserInterface.py	/^	patternAmount = config.pattern['patternAmount']$/;"	v	class:Ui
+patternDown	Modules/Sequencer.py	/^	def patternDown(self):$/;"	m	class:Sequencer
+patternDownDb	Modules/Input.py	/^  patternDownDb = Debounce.Debounce()$/;"	v
+patternMode	Modules/UserInterface.py	/^	patternMode = config.pattern['patternMode']$/;"	v	class:Ui
+patternModeToggleDb	Modules/Input.py	/^  patternModeToggleDb = Debounce.Debounce()$/;"	v
+patternUp	Modules/Sequencer.py	/^	def patternUp(self):$/;"	m	class:Sequencer
+patternUpDb	Modules/Input.py	/^  patternUpDb = Debounce.Debounce()$/;"	v
+patternWin	Modules/UserInterface.py	/^	patternWin = None$/;"	v	class:Ui
+patternWinSize	Modules/UserInterface.py	/^	patternWinSize = (config.pattern['patternWinHeight'], config.pattern['patternWinWidth'])$/;"	v	class:Ui
+pause	Modules/Sequencer.py	/^	def pause(self):$/;"	m	class:Sequencer
+play	Modules/Sequencer.py	/^	def play(self):$/;"	m	class:Sequencer
+playDb	Modules/Input.py	/^  playDb = Debounce.Debounce()$/;"	v
+playNote	Modules/Midi.py	/^	def playNote(self, noteLayers):$/;"	m	class:MidiInterface
+player	ProjectManagement/Experiments/pygamemidi.py	/^player = pygame.midi.Output(2)$/;"	v
+pprint	__main__.py	/^from pprint import pprint$/;"	i
+processInput	Modules/UserInterface.py	/^def processInput(outputByteString, sequencer):$/;"	f
+project_opened	.vscode/.ropeproject/config.py	/^def project_opened(project):$/;"	f
+pygame	Modules/Midi.py	/^import pygame.midi$/;"	i
+pygame	ProjectManagement/Experiments/pygamemidi.py	/^import pygame.midi$/;"	i
+random	ProjectManagement/Experiments/displayRandom.py	/^import random$/;"	i
+readData	Modules/ShiftInput.py	/^  def readData(self):$/;"	m	class:ShiftInput
+readData	ProjectManagement/Experiments/shiftInput.py	/^  def readData(self):$/;"	m	class:ShiftInput
+readLastLoadedSaveIndex	Modules/SaveLoad.py	/^	def readLastLoadedSaveIndex(self) -> int:$/;"	m	class:SaveLoad
+readMetadata	Modules/SaveLoad.py	/^	def readMetadata(self) -> dict:$/;"	m	class:SaveLoad
+rectangle	Modules/UserInterface.py	/^from curses.textpad import Textbox, rectangle$/;"	i
+reset	Modules/Sequencer.py	/^	def reset(self):$/;"	m	class:Sequencer
+resetDb	Modules/Input.py	/^  resetDb = Debounce.Debounce()$/;"	v
+resetDebounce	Modules/Debounce.py	/^	def resetDebounce(self):$/;"	m	class:Debounce
+resetScreen	Modules/UserInterface.py	/^def resetScreen():$/;"	f
+restoreScreen	Modules/UserInterface.py	/^def restoreScreen():$/;"	f
+s	ProjectManagement/Experiments/displayExplanation.py	/^  s = format(numericArr[1], '08b') + "111111111111111111111111111111110000000000000000" $/;"	v
+s	ProjectManagement/Experiments/displayExplanation.py	/^  s = format(numericArr[1], '08b') + format(numericArr[2], '08b') + "1111111111111111111111110000000000000000"$/;"	v
+s	ProjectManagement/Experiments/displayExplanation.py	/^  s = format(numericArr[1], '08b') + format(numericArr[2], '08b') + format(numericArr[0], '08b') + "11111111111111110000000000000000"$/;"	v
+safeExit	Modules/UserInterface.py	/^def safeExit():$/;"	f
+save	Modules/SaveLoad.py	/^	def save(self, index: int, sequencer: object) -> None:$/;"	m	class:SaveLoad
+save	Modules/Sequencer.py	/^	def save(self, index: int):$/;"	m	class:Sequencer
+saveDb	Modules/Input.py	/^  saveDb = Debounce.Debounce()$/;"	v
+saveDown	Modules/Sequencer.py	/^	def saveDown(self):$/;"	m	class:Sequencer
+saveDownDb	Modules/Input.py	/^  saveDownDb = Debounce.Debounce()$/;"	v
+saveLastLoadedSaveIndex	Modules/SaveLoad.py	/^	def saveLastLoadedSaveIndex(self, index: int) -> None:$/;"	m	class:SaveLoad
+saveLoadAnim	__main__.py	/^def saveLoadAnim():$/;"	f
+saveUp	Modules/Sequencer.py	/^	def saveUp(self):$/;"	m	class:Sequencer
+saveUpDb	Modules/Input.py	/^  saveUpDb = Debounce.Debounce()$/;"	v
+secondBytestring	ProjectManagement/Experiments/displayDecimalCounter3.py	/^  secondBytestring = format(numericArr[secondDigit], '08b')$/;"	v
+secondDigit	ProjectManagement/Experiments/displayBPM.py	/^  secondDigit = 0         # 10s num$/;"	v	class:BPMvars
+secondDigit	ProjectManagement/Experiments/displayDecimalCounter3.py	/^    secondDigit = 0$/;"	v
+secondDigit	ProjectManagement/Experiments/displayDecimalCounter3.py	/^secondDigit = 0       # 10s num$/;"	v
+sendMidi	Modules/Sequencer.py	/^	def sendMidi(self, previewNote: bool):$/;"	m	class:Sequencer
+seqWinHeight	Modules/UserInterface.py	/^	seqWinHeight = config.sequencer['seqWinHeight']$/;"	v	class:Ui
+seqWinWidth	Modules/UserInterface.py	/^	seqWinWidth = config.sequencer['seqWinWidth']$/;"	v	class:Ui
+sequencer	Modules/UserInterface.py	/^	sequencer = None$/;"	v	class:Ui
+sequencer	Modules/UserInterface.py	/^	sequencer = Sequencer.Sequencer(config.pattern['patternAmount'], config.sequencer['seqstepmax'], config.sequencer['bpm'], config.sequencer['seqstepsize'], config.general['midiEnabled'], config.sequencer['previewNoteDuration'])$/;"	v	class:Ui
+sequencer	config.py	/^sequencer = {$/;"	v
+sequencerStep	Modules/Sequencer.py	/^	def sequencerStep(self):$/;"	m	class:Sequencer
+seqwin	Modules/UserInterface.py	/^	seqwin = None$/;"	v	class:Ui
+setDown	Modules/Sequencer.py	/^	def setDown(self):$/;"	m	class:Sequencer
+setDownDb	Modules/Input.py	/^  setDownDb = Debounce.Debounce()$/;"	v
+setLastPlayed	Modules/NoteLayer.py	/^  def setLastPlayed(self, data: tuple):$/;"	m	class:NoteLayer
+setRepeatDb	Modules/Input.py	/^  setRepeatDb = Debounce.Debounce()$/;"	v
+setState	Modules/Debounce.py	/^	def setState(self, btState, stringType):			# Sets current button state$/;"	m	class:Debounce
+setState	ProjectManagement/Experiments/Debounce.py	/^	def setState(self, btState):									# Sets current button state$/;"	m	class:Debounce
+setUp	Modules/Sequencer.py	/^	def setUp(self):$/;"	m	class:Sequencer
+setUpDb	Modules/Input.py	/^  setUpDb = Debounce.Debounce()$/;"	v
+set_bit	ProjectManagement/Experiments/prototype_1.py	/^def set_bit(position, binary):$/;"	f
+set_prefs	.vscode/.ropeproject/config.py	/^def set_prefs(prefs):$/;"	f
+shiftInput	Modules/Input.py	/^  shiftInput = ShiftInput.ShiftInput()$/;"	v
+shiftInput	ProjectManagement/Experiments/shiftInput.py	/^shiftInput = ShiftInput()$/;"	v
+showKeyBinds	Modules/UserInterface.py	/^	showKeyBinds = config.interface['drawKeybinds']$/;"	v	class:Ui
+sleepTime	ProjectManagement/Experiments/displayTwinkle.py	/^sleepTime = 0.2$/;"	v
+sleeptime	ProjectManagement/Experiments/displayDecimalCounter3.py	/^sleeptime = float(strInput)$/;"	v
+sleeptime	ProjectManagement/Experiments/displayJasperCounter.py	/^  sleeptime = 0.175$/;"	v
+sr	__main__.py	/^  sr = HWi.ShiftRegister(21, 20, 16)$/;"	v
+startUI	Modules/UserInterface.py	/^def startUI():$/;"	f
+startingValue	ProjectManagement/Experiments/displayBPM.py	/^startingValue = 120$/;"	v
+status	config.py	/^status = {$/;"	v
+statusWin	Modules/UserInterface.py	/^	statusWin = None$/;"	v	class:Ui
+statusWinSize	Modules/UserInterface.py	/^	statusWinSize = (config.status['statusWinHeight'], config.status['statusWinWidth'])$/;"	v	class:Ui
+stepDownDb	Modules/Input.py	/^  stepDownDb = Debounce.Debounce()$/;"	v
+stepUpDb	Modules/Input.py	/^  stepUpDb = Debounce.Debounce()$/;"	v
+strInput	ProjectManagement/Experiments/displayDecimalCounter3.py	/^strInput = input("Sleep time: ")$/;"	v
+sustainDb	Modules/Input.py	/^  sustainDb = Debounce.Debounce()$/;"	v
+sys	__main__.py	/^import sys$/;"	i
+tempo	config.py	/^tempo = {$/;"	v
+tempoWin	Modules/UserInterface.py	/^	tempoWin = None$/;"	v	class:Ui
+tempoWinHeight	Modules/UserInterface.py	/^	tempoWinHeight = config.tempo['tempoWinHeight'] $/;"	v	class:Ui
+tempoWinSize	Modules/UserInterface.py	/^	tempoWinSize = (config.tempo['tempoWinHeight'], config.tempo['tempoWinWidth'])$/;"	v	class:Ui
+tempoWinWidth	Modules/UserInterface.py	/^	tempoWinWidth = config.tempo['tempoWinWidth']$/;"	v	class:Ui
+thirdBytestring	ProjectManagement/Experiments/displayDecimalCounter3.py	/^  thirdBytestring = format(numericArr[thirdDigit], '08b')$/;"	v
+thirdDigit	ProjectManagement/Experiments/displayBPM.py	/^  thirdDigit = 0          # 100s num$/;"	v	class:BPMvars
+thirdDigit	ProjectManagement/Experiments/displayDecimalCounter3.py	/^    thirdDigit = 0$/;"	v
+thirdDigit	ProjectManagement/Experiments/displayDecimalCounter3.py	/^thirdDigit = 0      # 100s num$/;"	v
+tic	ProjectManagement/Experiments/displayBPM.py	/^tic = time.time()$/;"	v
+tick	Modules/HardwareInterface.py	/^  def tick(self):$/;"	m	class:ShiftRegister
+tick	Modules/ShiftInput.py	/^  def tick(self):$/;"	m	class:ShiftInput
+tick	ProjectManagement/Experiments/displayAnimBackForth fixed.py	/^def tick():$/;"	f
+tick	ProjectManagement/Experiments/displayAnimBackForth.py	/^def tick():$/;"	f
+tick	ProjectManagement/Experiments/displayAnimInit.py	/^def tick():$/;"	f
+tick	ProjectManagement/Experiments/displayAnimNoteModuleInit.py	/^def tick():$/;"	f
+tick	ProjectManagement/Experiments/displayBPM.py	/^def tick():$/;"	f
+tick	ProjectManagement/Experiments/displayBitShiftAnim.py	/^def tick():$/;"	f
+tick	ProjectManagement/Experiments/displayDecimalCounter.py	/^def tick():$/;"	f
+tick	ProjectManagement/Experiments/displayDecimalCounter3.py	/^def tick():$/;"	f
+tick	ProjectManagement/Experiments/displayExplanation.py	/^def tick():$/;"	f
+tick	ProjectManagement/Experiments/displayInput.py	/^def tick():$/;"	f
+tick	ProjectManagement/Experiments/displayJasperCounter.py	/^def tick():$/;"	f
+tick	ProjectManagement/Experiments/displayRandom.py	/^def tick():$/;"	f
+tick	ProjectManagement/Experiments/displayTwinkle.py	/^def tick():$/;"	f
+tick	ProjectManagement/Experiments/prototype_1.py	/^def tick():$/;"	f
+tick	ProjectManagement/Experiments/shiftInput.py	/^  def tick(self):$/;"	m	class:ShiftInput
+tickTimer	Modules/Sequencer.py	/^	def tickTimer(self):$/;"	m	class:Sequencer
+time	Modules/Blink.py	/^import time$/;"	i
+time	Modules/Debounce.py	/^import time, config$/;"	i
+time	Modules/HardwareInterface.py	/^import time$/;"	i
+time	Modules/Sequencer.py	/^import time$/;"	i
+time	Modules/ShiftInput.py	/^import time$/;"	i
+time	Modules/UserInterface.py	/^import time$/;"	i
+time	ProjectManagement/Experiments/Debounce.py	/^import time$/;"	i
+time	ProjectManagement/Experiments/displayAnimBackForth fixed.py	/^import time$/;"	i
+time	ProjectManagement/Experiments/displayAnimBackForth.py	/^import time$/;"	i
+time	ProjectManagement/Experiments/displayAnimInit.py	/^import time$/;"	i
+time	ProjectManagement/Experiments/displayAnimNoteModuleInit.py	/^import time$/;"	i
+time	ProjectManagement/Experiments/displayBPM.py	/^import time$/;"	i
+time	ProjectManagement/Experiments/displayBitShiftAnim.py	/^import time$/;"	i
+time	ProjectManagement/Experiments/displayDecimalCounter.py	/^import time$/;"	i
+time	ProjectManagement/Experiments/displayDecimalCounter3.py	/^import time$/;"	i
+time	ProjectManagement/Experiments/displayExplanation.py	/^import time$/;"	i
+time	ProjectManagement/Experiments/displayInput.py	/^import time$/;"	i
+time	ProjectManagement/Experiments/displayJasperCounter.py	/^import time$/;"	i
+time	ProjectManagement/Experiments/displayRandom.py	/^import time$/;"	i
+time	ProjectManagement/Experiments/displayTwinkle.py	/^import time$/;"	i
+time	ProjectManagement/Experiments/prototype_1.py	/^import time$/;"	i
+time	ProjectManagement/Experiments/pygamemidi.py	/^import time$/;"	i
+time	ProjectManagement/Experiments/shiftInput.py	/^import time$/;"	i
+time	__main__.py	/^import time$/;"	i
+timer	Modules/Blink.py	/^  def timer(self):$/;"	m	class:Blink
+timer	Modules/Sequencer.py	/^	def timer(self):$/;"	m	class:Sequencer
+toggleArm	Modules/NoteLayer.py	/^  def toggleArm(self):$/;"	m	class:NoteLayer
+toggleEditMode	Modules/Sequencer.py	/^	def toggleEditMode(self):$/;"	m	class:Sequencer
+togglePatternMode	Modules/Sequencer.py	/^	def togglePatternMode(self):$/;"	m	class:Sequencer
+togglePlay	Modules/Sequencer.py	/^	def togglePlay(self):$/;"	m	class:Sequencer
+toggleSetRepeat	Modules/Sequencer.py	/^	def toggleSetRepeat(self):$/;"	m	class:Sequencer
+toggleStep	Modules/Step.py	/^  def toggleStep(self):$/;"	m	class:Step
+toggleSustain	Modules/NoteLayer.py	/^  def toggleSustain(self):$/;"	m	class:NoteLayer
+traceback	Modules/UserInterface.py	/^import curses, traceback$/;"	i
+ui	__main__.py	/^import Modules.UserInterface as ui$/;"	i
+uiResult	__main__.py	/^  uiResult = ui.updateUi()   $/;"	v
+updateUi	Modules/UserInterface.py	/^def updateUi():$/;"	f
+val	__main__.py	/^    val = ui.safeExit()         $/;"	v
+value	ProjectManagement/Experiments/displayBitShiftAnim.py	/^value = 0b11111110$/;"	v
+window	Modules/UserInterface.py	/^	window = None$/;"	v	class:Ui
+wrapper	Modules/UserInterface.py	/^from curses import wrapper$/;"	i
+x	ProjectManagement/Experiments/displayRandom.py	/^    x = random.choice(choiceList)$/;"	v
+y	ProjectManagement/Experiments/timecalc.py	/^  y = math.pow(a, i) + b$/;"	v

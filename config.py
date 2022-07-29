@@ -1,7 +1,7 @@
 general = {
   "app_version": "v 0.2.5",     # General version nr
-  "hardware_enabled": False,    # Whether to enable or disable the hardware interface
-  "midiEnabled": False,         # Whether to enable MIDI output
+  "hardware_enabled": True,    # Whether to enable or disable the hardware interface
+  "midiEnabled": True,         # Whether to enable MIDI output
   "blinkTime": 0.25             # Blinking time duration  
 }
 
@@ -25,7 +25,7 @@ sequencer = {
   "begin_y": 6,               # Vertical top-left
   "seqWinHeight": 9,          # Sequencer window height
   "seqWinWidth": 36,          # Sequencer window width
-  "playing": True,            # Playing or paused
+  "playing": False,            # Playing or paused
   "previewNoteDuration": 0.5  # How long a previewNote should play for
 }
  
@@ -44,12 +44,12 @@ status = {
 }
 
 pattern = {
-  # Pattern Window
+  # Pattern
 
   "patternWinHeight": 6,      # Height of pattern window
   "patternWinWidth": 13,      # Width of pattern window
   "patternIndex": 1,           # Current pattern step
-  "patternAmount": 4,         # Max amount of patterns
+  "patternAmount": 16,         # Max amount of patterns
   "patternMode": "auto"       # Auto mode makes pattern follow seqstep stuff
 }
 

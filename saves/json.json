@@ -1,0 +1,23 @@
+{
+  "sets": [
+    {
+      "patterns": [
+        {
+          "steps": [
+            {
+              "enabled": 1,
+              "noteLayerAmount": 10,
+              "selectedLayer": 0,
+              "noteLayers": [
+                {
+
+                }
+              ]
+            },
+
+          ]
+        }
+      ]
+    }
+  ]
+}

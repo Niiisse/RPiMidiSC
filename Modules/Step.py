@@ -1,16 +1,15 @@
 from . import NoteLayer
 
-# Pattern Step Class
+# Step Class
 # 
 # Holds pattern's associated step data.
 # Sequencer has x patterns (up to 100)
-# Each Pattern has 16 PatternSteps
-# Each patternIndex has 9 noteLayers which
+# Each Pattern has 16 steps
+# Each step has 10 noteLayers which
 # contain the actual data
 # 
 # By Niisse (2021-07-14)
 #
-# TODO: Rename to Step?
 
 class Step():
 
@@ -18,7 +17,7 @@ class Step():
     self.enabled = True
     self.noteLayerAmount = 10
     self.noteLayers = [NoteLayer.NoteLayer() for i in range(self.noteLayerAmount)]
-    self.selectedLayer = [0, 1, 2, 3]
+    self.selectedLayer = [0, 1, 2, 3] # FIXME: move to sequencer, remove list
 
   def disableStep(self):
     # Disables step

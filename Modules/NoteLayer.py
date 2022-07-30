@@ -2,7 +2,7 @@ class NoteLayer:
   """Note Layer, holds all necessary note information. 
   
   Allows each step to play multiple notes. There are 10 noteLayers for each step. 
-  Sequencer > Pattern > Step > NoteLayer"""
+  Sequencer > Set > Pattern > Step > NoteLayer"""
 
   def __init__(self):
     self.note = 0

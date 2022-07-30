@@ -1,13 +1,14 @@
 # Sometimes... You just gotta save the load, man.
+# FIXME: JSON > CSV
+# FIXME: notelayer array can yeet off
 import csv
+import json
 
 class SaveLoad:
 	""" Handles saving / loading songs
 	
 	Dumps the sequencer into a CSV file, or loads the sequencer with values from one.
 	TODO: backup file before writing """
-
-	# FIXME: set integration
 
 	def __init__(self):
 		self.folderName = "saves/"				# Name of folder containing saves
@@ -30,7 +31,7 @@ class SaveLoad:
 		"""
 		
 		# METADATA #
-
+		# FIXME: change to constant in class
 		metaHeader = [
 			'id',
 			'set',
@@ -87,6 +88,7 @@ class SaveLoad:
 
 
 		# ACTUAL SAVE DATA #
+		# TODO: change to constant?
 		header = [              
 			'set',
 			'pattern',
@@ -108,7 +110,7 @@ class SaveLoad:
 	
 		sequencerData = []            # Will hold sequencer data
 
-		# Loop over all patterns, then all steps, then all note layers. Copy all the relevant data
+		# Loop over all sets, then patterns, then all steps, then all note layers. Copy all the relevant data
 		# for each step into a list (rowData), then put this row in sequencerData. 
 		# Then, write each row to the csv file.
 
@@ -139,6 +141,42 @@ class SaveLoad:
 						] 
 
 						sequencerData.append(rowData)
+
+		sequencerDataDict = []            # Will hold sequencer data
+
+		# Loop over all sets, then patterns, then all steps, then all note layers. Copy all the relevant data
+		# for each step into a list (rowData), then put this row in sequencerData.
+		# Then, write each row to the csv file.
+
+		# Loop de loop
+		for s in range(sequencer.setsAmount+1):
+			for i in range(1, sequencer.patternAmount+1):
+				for o in range(sequencer.sequencerSteps):
+					for u in range(sequencer.noteLayerAmount):
+						step = sequencer.sets[s].patterns[i].steps[o]
+						layer = sequencer.sets[s].patterns[i].steps[o].noteLayers[u]
+						rowData = {
+							"set": s,
+							"pattern": i,
+							"step": o,
+							"noteLayer": u,
+							"note": layer.note,
+							"octave": layer.octave,
+							"channel":layer.midiChannel,
+							"sustain":1 if layer.sustain else 0,
+							"arm":1 if layer.arm else 0, # FIXME: obsolete
+							"lastNote":layer.lastPlayed[0],
+							"lastChannel":layer.lastPlayed[1],
+							"selectedLayer":step.selectedLayer[0],
+							"enabled": 1 if step.enabled else 0
+						}
+
+						sequencerDataDict.append(rowData)
+
+		# json
+		jsonString = json.dumps(sequencerDataDict)
+		file = open("jsontest.json", mode='w')
+		print(jsonString, file=file)
 
 		# Get path string, open file and write our data
 		path = self.folderName + str(index) + ".csv"
@@ -192,7 +230,7 @@ class SaveLoad:
 				layer.octave = int(row['octave'])
 				layer.sustain = bool(int(row['sustain']))
 				step.selectedLayer=[int(row['selectedLayer0']), int(row['selectedLayer1']), int(row['selectedLayer2']), int(row['selectedLayer3'])]
-				step.enabled = bool(int(row['enabled']))		
+				step.enabled = bool(int(row['enabled']))
 
 		self.saveLastLoadedSaveIndex(index)
 

@@ -16,8 +16,6 @@ if config.general['hardware_enabled']:
 
 print("RPiMidiSC")
 
-ui.startUI()
-
 def saveLoadAnim():
   outputString = config.misc['hw_off_string']
 

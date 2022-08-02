@@ -27,12 +27,12 @@ def saveLoadAnim():
         outputList[bit] = '1'
       else:
         outputList[bit] = '0'
-      
+
       outputString = ""
       outputString = outputString.join(outputList)
-      sr.outputBits(outputString)  
+      sr.outputBits(outputString)
 
-    time.sleep(0.05) 
+    time.sleep(0.05)
 
 while (True):
   # Main program loop
@@ -42,17 +42,17 @@ while (True):
   # UI can also return 1 for reset; this resets Curses, but not the program state
   # If none of that happens, it returns the bytestring which can be sent to the hardware interfaces
 
-  uiResult = ui.updateUi()   
+  uiResult = ui.updateUi()
 
   if uiResult == "saveAnim":
     saveLoadAnim()
 
-  elif uiResult == "quit":  
-    val = ui.safeExit()         
+  elif uiResult == "quit":
+    val = ui.safeExit()
     if config.general['hardware_enabled']:
       sr.outputBits(val)
-    sys.exit(0)     
-  
+    sys.exit(0)
+ 
   elif uiResult == "reset":
     ui.resetScreen()
     ui.startUI()

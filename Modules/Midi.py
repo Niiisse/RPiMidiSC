@@ -8,12 +8,12 @@ class MidiInterface:
 		pygame.midi.init()                    # Init pygame midi library
 		self.toRemove = []
 
-		self.velocity = 100 
+		self.velocity = 100
 
 		# TODO: Figure out way to select midi device
-		
+
 		self.interface = pygame.midi.Output(2)
-		self.interface.set_instrument(0, 0)      
+		self.interface.set_instrument(0, 0)
 
 		# For keeping track of wehat notes are currently on
 		self.noteOnList = []
@@ -50,41 +50,41 @@ class MidiInterface:
 
 	def playNote(self, noteLayers):
 		# midiData holds 10 noteLayers
-		
+
 		# TODO: figure out how to decide if currently playing notes should be stopped
 		#       output.write for multiple
-		
+
 		## DISABLING OLD NOTES ##
 		# pastNotes is a list of notes that are still playing. If there's a new note that matches
 		# an entry (criteria: no new note on channel but sustain is enabled), don't delete it and check next time
 
-		## DELETE OLD NOTES? 
+		## DELETE OLD NOTES?
 		for idx, playedNote in enumerate(self.noteOnList):   # playedNote[0] = note; [1] = channel, [2] = noteLayer
-			
-			try: 		# FIXME: figure out why this occasionally crashes
+
+			try:		# FIXME: figure out why this occasionally crashes
 				if noteLayers[playedNote[2]].sustain == False:
-				
+
 					self.interface.note_off(playedNote[0], 0, playedNote[1])    # Stop playing note
-					self.toRemove.append(playedNote)                                   # Add idx to removelist      
-			
+					self.toRemove.append(playedNote)                                   # Add idx to removelist
+
 			except: pass
 
 		for item in self.toRemove:                                    # Loop over to-be-removed items
 			idx = self.noteOnList.index(item)
 			del self.noteOnList[idx]                               # YEEEET
-					
+
 		self.toRemove.clear()
-		
+
 		# Loop over received midiData
 		for idx, noteLayer in enumerate(noteLayers):
 			if noteLayer.note != 0 and noteLayer.arm == True:
-				
+
 				outputNote = self.calculateNoteValue(noteLayer.note, noteLayer.octave)    # Calculate note value; store it
 				self.interface.note_on(outputNote, self.velocity, noteLayer.midiChannel)  # Play it
-				
+
 				playedNote = [outputNote, noteLayer.midiChannel, idx]                       # Save as playedNote
 				self.noteOnList.append(playedNote)                                         # Add to list of played notes
-	
+
 	def allNotesOff(self):
 		""" MIDI Panic. Turns off all notes, empties noteOnList """
 

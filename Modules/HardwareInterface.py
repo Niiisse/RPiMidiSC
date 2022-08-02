@@ -35,8 +35,8 @@ class ShiftRegister:
 
     for x in range(0, 8):
       GPIO.output(self.CLOCK, 0)
-      GPIO.output(self.CLOCK, 1)  
-      GPIO.output(self.CLOCK, 0)  
+      GPIO.output(self.CLOCK, 1)
+      GPIO.output(self.CLOCK, 0)
 
     self.latch()
 
@@ -50,14 +50,14 @@ class ShiftRegister:
   #   bytestring = format(numericArr[0], '08b')
   #   outputBits(bytestring)
   #  Then, splits input values into individual values
-  
+
   def outputBits(self, inputString):
     bitList = list(inputString)
     bitList = bitList[::-1]
 
     for bit in bitList:
       bit = int(bit)
-      
+
       self.inputBit(bit)
-    
+
     self.latch()

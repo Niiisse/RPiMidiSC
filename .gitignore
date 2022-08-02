@@ -1,5 +1,6 @@
 */__pycache__/
 .vscode/
+pyrightconfig.json
 */.idea/
 
 *.pyc

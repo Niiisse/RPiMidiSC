@@ -1,6 +1,3 @@
-import curses, traceback
-from curses import wrapper
-from curses.textpad import Textbox, rectangle
 import time
 import math
 import config
@@ -21,29 +18,14 @@ class Ui:
     patternMode = config.pattern['patternMode']
     patternAmount = config.pattern['patternAmount']
 
-    sequencer = None
+    # sequencer = None
 
     blink = Blink.Blink(config.general['blinkTime'])
     sequencer = Sequencer.Sequencer(config.pattern['patternAmount'], config.sequencer['seqstepmax'],
-                                    config.sequencer['bpm'], config.sequencer['seqstepsize'],
-                                    config.general['midiEnabled'], config.sequencer['previewNoteDuration'])
-
-
-# def main():
-    # Sets up main window
-
-    # doWindowSetup()  # Initial curses setup
-
-    # drawTitle()
-
-    # Get window size, use it to set up subwindows
-    # windowSize = Ui.window.getmaxyx()
-
-    # createSequencerWindow(windowSize)
-    # createTempoWindow(windowSize)
-    # createStatusWindow(windowSize)
-    # createPatternWindow(windowSize)
-
+                                    config.sequencer['bpm'],
+                                    config.sequencer['seqstepsize'],
+                                    config.general['midiEnabled'],
+                                    config.sequencer['previewNoteDuration'])
 
 def updateUi():
     # Main UI loop. Handles inputs, then updates windows
@@ -51,7 +33,7 @@ def updateUi():
     clampPatternStepping(Ui.sequencer)
     clampPendingStepping(Ui.sequencer)
 
-    Ui.sequencer.checkPreviewNotesOff()
+    # Ui.sequencer.checkPreviewNotesOff()
 
     Ui.sequencer.timer()  # Manages sequencer timer
 
@@ -79,7 +61,7 @@ def processInput(outputByteString, sequencer):
     if action != "prepareReset" and sequencer.prepareReset == True:
         sequencer.prepareReset = False
 
-    # Quit
+        # Quit
     if action == "quit":
         return "quit"
 
@@ -154,10 +136,6 @@ def processInput(outputByteString, sequencer):
     elif action == "playPause":
         if sequencer.patternEditing == False:
             sequencer.togglePlay()
-
-    # Show keybinds
-    elif action == "showKeys":
-        Ui.showKeyBinds = False if Ui.showKeyBinds else True
 
     # note up/down
     elif action == "noteUp":
@@ -350,12 +328,12 @@ def createOutputString(sequencer):
             # ledState sets what the potential state is going to be if this is the selected step.
             #
             # If editing:
-            #		BLINK current step LED; else
-            #		all LEDs ON; disabled steps: LED OFF
+            #       BLINK current step LED; else
+            #       all LEDs ON; disabled steps: LED OFF
             #
             # If playing:
-            #		all LEDs OFF, current step: LED ON
-            #		pausing: BLINK current LED
+            #       all LEDs OFF, current step: LED ON
+            #       pausing: BLINK current LED
 
             # editing mode
             if sequencer.patternEditing:

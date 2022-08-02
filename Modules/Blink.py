@@ -1,13 +1,12 @@
 import time
-
-  # By Niisse (2021-07-13)
+# By Niisse (2021-07-13)
 
 class Blink:
   """Handles blinking output for hardware elements.
-  
-  Returned string is original string or empty string (thus causing output to blink), 
-  depending on timer. Second argument is used to invert result, for use with the 
-  7 segment displays. 
+
+  Returned string is original string or empty string (thus causing output to blink),
+  depending on timer. Second argument is used to invert result, for use with the
+  7 segment displays.
   Example usage: blink(byteString, True)"""
 
   def __init__(self, blinkTime):
@@ -30,7 +29,7 @@ class Blink:
 
   def blink(self, byteString: str, inverted: bool) -> str:
     """Takes input, returns output"""
-    
+
     self.timer()
 
     stringLength = len(byteString)

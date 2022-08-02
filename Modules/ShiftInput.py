@@ -13,7 +13,7 @@ class ShiftInput:
 
     self.SERIAL = 13            # Input serial
     #self.SERIALGCM = 5         # Input for General Control Module
-    self.CLOCK = 19            # 
+    self.CLOCK = 19            #
     self.PLOAD = 26            # Equivalent to LATCH
     self.GCMCLOCK = 9
     self.GCMPLOAD = 11
@@ -23,7 +23,7 @@ class ShiftInput:
     #GPIO.setup(self.SERIALGCM, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.setup(self.OCTAVEUP, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.setup(self.OCTAVEDOWN, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-    
+
     GPIO.setup(self.PLOAD, GPIO.OUT)
     GPIO.setup(self.GCMPLOAD, GPIO.OUT)
     GPIO.setup(self.CLOCK, GPIO.OUT)
@@ -31,7 +31,7 @@ class ShiftInput:
 
     GPIO.output(self.PLOAD, 1)
     GPIO.output(self.GCMPLOAD, 1)
-    
+
     GPIO.output(self.CLOCK, 0)
     GPIO.output(self.GCMCLOCK, 0)
 
@@ -41,7 +41,7 @@ class ShiftInput:
     GPIO.output(self.GCMPLOAD, 0)
 
     time.sleep(0.0001)
-    
+
     GPIO.output(self.PLOAD, 1)
     GPIO.output(self.GCMPLOAD, 1)
 
@@ -60,14 +60,14 @@ class ShiftInput:
 
   def readData(self):
     """ Reads data from input shift registers
-    
+
     Two seperate for loops: 8 ticks for NCM (8 ticks * NCM count)
     16 ticks for input of GCM """
 
     receivedByte = ''
 
     self.loadData()
-    
+
     #GPIO.output(self.CLOCKENABLE, 0)
 
     ocUp = GPIO.input(self.OCTAVEUP)
@@ -79,6 +79,6 @@ class ShiftInput:
 
       self.tick()
 
-    output = str(ocUp) + str(ocDown) + receivedByte 
+    output = str(ocUp) + str(ocDown) + receivedByte
 
     return output

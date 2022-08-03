@@ -1,6 +1,7 @@
-import time
-import math
+# import time
+# import math
 import config
+from rich.panel import Panel
 
 from . import Input
 from . import Blink
@@ -44,6 +45,9 @@ def updateUi():
     Ui.outputByteString = createOutputString(Ui.sequencer)
     return processInput(Ui.outputByteString, Ui.sequencer)
 
+    
+def generateUi():
+  return Panel("Test!")
 
 ##
 ## UI Creation and Drawing / Updating

@@ -1,10 +1,11 @@
+from rich.layout import Layout
+from rich.live import Live
 import Modules.UserInterface as ui
-import Modules.Midi as Midi
+# import Modules.Midi as Midi
 
 import config
 import time
 import sys
-from pprint import pprint
 
 # Check whether the hardware interface is enabled or disabled in config
 
@@ -34,28 +35,28 @@ def saveLoadAnim():
 
     time.sleep(0.05)
 
-while (True):
-  # Main program loop
+layout = Layout(name="root")
 
-  # Runs UI (which, admittedly, runs most of the program)
-  # UI can return 0 for graceful exit - necessary because Curses will fuck up the console otherwise
-  # UI can also return 1 for reset; this resets Curses, but not the program state
-  # If none of that happens, it returns the bytestring which can be sent to the hardware interfaces
+with Live(layout, screen=True, refresh_per_second=30) as live:
+  while (True):
+    # Main program loop
 
-  uiResult = ui.updateUi()
+    # UI can return 0 for graceful exit - necessary because Curses will fuck up the console otherwise
+    # UI can also return 1 for reset; this resets Curses, but not the program state
+    # If none of that happens, it returns the bytestring which can be sent to the hardware interfaces
 
-  if uiResult == "saveAnim":
-    saveLoadAnim()
+    layout["root"].update(ui.generateUi())
 
-  elif uiResult == "quit":
-    val = ui.safeExit()
-    if config.general['hardware_enabled']:
-      sr.outputBits(val)
-    sys.exit(0)
- 
-  elif uiResult == "reset":
-    ui.resetScreen()
-    ui.startUI()
+    uiResult = ui.updateUi()
 
-  elif config.general['hardware_enabled']:
-    sr.outputBits(uiResult)       # Sequencer info; Note control modules
+    if uiResult == "saveAnim":
+      saveLoadAnim()
+
+    elif uiResult == "quit":
+      val = ui.safeExit()
+      if config.general['hardware_enabled']:
+        sr.outputBits(val)
+      sys.exit(0)
+
+    elif config.general['hardware_enabled']:
+      sr.outputBits(uiResult)       # Sequencer info; Note control modules

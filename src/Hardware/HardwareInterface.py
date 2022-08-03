@@ -1,6 +1,4 @@
 import RPi.GPIO as GPIO
-import math
-import time
 
 class ShiftRegister:
 

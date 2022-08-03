@@ -3,6 +3,7 @@
 # FIXME: notelayer array can yeet off
 import csv
 import json
+from Sequencing import Sequencer
 
 class SaveLoad:
 	""" Handles saving / loading songs
@@ -13,7 +14,7 @@ class SaveLoad:
 	def __init__(self):
 		self.folderName = "saves/"				# Name of folder containing saves
 
-	def save(self, index: int, sequencer: object) -> None:
+	def save(self, index: int, sequencer: Sequencer.Sequencer) -> None:
 		""" Saves sequencer state to CSV
 
 		Metadata	- set header
@@ -188,7 +189,7 @@ class SaveLoad:
 			writer.writerow(header)
 			writer.writerows(sequencerData)
 
-	def load(self, index: int, sequencer: object) -> None:
+	def load(self, index: int, sequencer: Sequencer.Sequencer) -> None:
 		""" Loads a CSV file, applies contents to Sequencer.
 
 		Load metadata and a big ol' CSV file containing the song's data, then loop over relevant sequencer sections

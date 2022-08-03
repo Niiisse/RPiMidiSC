@@ -10,7 +10,7 @@ import sys
 # Check whether the hardware interface is enabled or disabled in config
 
 if config.general['hardware_enabled']:
-  import Modules.HardwareInterface as HWi
+  import Hardware.HardwareInterface as HWi
   sr = HWi.ShiftRegister(21, 20, 16)
 
 # Program start

@@ -1,14 +1,14 @@
 general = {
   "app_version": "v 0.2.5",     # General version nr
-  "hardware_enabled": False,    # Whether to enable or disable the hardware interface
+  "hardware_enabled": True,    # Whether to enable or disable the hardware interface
   "midiEnabled": False,         # Whether to enable MIDI output
-  "blinkTime": 0.25             # Blinking time duration  
+  "blinkTime": 0.25             # Blinking time duration
 }
 
 debounce = {
   # For debouncing hardware buttons
 
-  "initialWait": 0.15, 
+  "initialWait": 0.15,
   "secondWait": 1,
   "thirdWait": 0.1,
   "resetWait": 3
@@ -28,7 +28,7 @@ sequencer = {
   "playing": False,            # Playing or paused
   "previewNoteDuration": 0.5  # How long a previewNote should play for
 }
- 
+
 tempo = {
   # Tempo window
 
@@ -54,7 +54,7 @@ pattern = {
 }
 
 noteWindow = {
-  # Note Window config 
+  # Note Window config
 
   "noteWinHeight": 5,
   "noteWinWidth": 13,
@@ -62,7 +62,7 @@ noteWindow = {
 
 interface = {
   # Interface options  FIXME: change to userInterface for clarity
-  
+
   "drawKeybinds": False,      # Whether the UI should show keybinds
 }
 

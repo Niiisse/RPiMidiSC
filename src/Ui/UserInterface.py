@@ -5,7 +5,7 @@ from rich.panel import Panel
 
 from Hardware import Input
 from Hardware import Blink
-from Sequencer import Sequencer
+from Sequencing import Sequencer
 
 
 # User Interface class
@@ -59,7 +59,7 @@ def getSequencer():
 
 def processInput(outputByteString, sequencer):
     # Process input events sent by Input
-    action = Input.doInput(Input, 0)
+    action = Input.doInput(Input)
 
     # Reset prepareReset if button has been let go
     if action != "prepareReset" and sequencer.prepareReset == True:

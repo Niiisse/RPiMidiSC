@@ -12,7 +12,7 @@ class SaveLoad:
 	TODO: backup file before writing """
 
 	def __init__(self):
-		self.folderName = "saves/"				# Name of folder containing saves
+		self.folderName = "Saves/"				# Name of folder containing saves
 
 	def save(self, index: int, sequencer: Sequencer.Sequencer) -> None:
 		""" Saves sequencer state to CSV

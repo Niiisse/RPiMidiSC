@@ -1,4 +1,3 @@
-import curses 
 import config
 from . import Debounce
 
@@ -40,92 +39,92 @@ if config.general['hardware_enabled']:
   loadDb = Debounce.Debounce()
   resetDb = Debounce.Debounce()
 
-def doInput(self, char):
+def doInput():
   # Handles inputs, returns action to be executed
   # TODO: change to dynamic keyboard bindings thru config
   # TODO: hook up GPIO inputs
 
   # KEYBOARD INPUT
   # Quit
-  if char == ord('q'):
-    return "quit"
+  # if char == ord('q'):
+  #   return "quit"
   
-  # Reset
-  elif char == ord('r') or char == curses.KEY_RESIZE:
-    return "reset"
+  # # Reset
+  # elif char == ord('r') or char == curses.KEY_RESIZE:
+  #   return "reset"
 
-  # BPM up & down
-  elif char == ord('l'):
-    return "bpmUp"
+  # # BPM up & down
+  # elif char == ord('l'):
+  #   return "bpmUp"
 
-  elif char == ord('k'):
-    return "bpmDown"
+  # elif char == ord('k'):
+  #   return "bpmDown"
 
-  # Sequencer stepping
-  elif char == ord('p'):
-    return "seqStepUp"
+  # # Sequencer stepping
+  # elif char == ord('p'):
+  #   return "seqStepUp"
 
-  elif char == ord('o'):
-    return "seqStepDown"
+  # elif char == ord('o'):
+  #   return "seqStepDown"
 
-  # Pattern stepping
-  elif char == ord('m'):
-    return "patternStepUp"
+  # # Pattern stepping
+  # elif char == ord('m'):
+  #   return "patternStepUp"
   
-  elif char == ord('n'):
-    return "patternStepDown"
+  # elif char == ord('n'):
+  #   return "patternStepDown"
 
-  # Play / pausing (toggle)
-  elif char == ord(' '):
-    return "playPause"
+  # # Play / pausing (toggle)
+  # elif char == ord(' '):
+  #   return "playPause"
 
-  # Pattern Editing
-  elif char == ord('e'):
-    return "patternEdit"
+  # # Pattern Editing
+  # elif char == ord('e'):
+  #   return "patternEdit"
 
-  # Enable / Disable step
-  elif char == ord('d'):
-    return "toggleStep"
+  # # Enable / Disable step
+  # elif char == ord('d'):
+  #   return "toggleStep"
 
-  # Show/hide keybinds
-  elif char == ord('z'):
-    return "showKeys"
+  # # Show/hide keybinds
+  # elif char == ord('z'):
+  #   return "showKeys"
 
-  # Note up/down
-  elif char == ord('v'):
-    return "noteUp"
+  # # Note up/down
+  # elif char == ord('v'):
+  #   return "noteUp"
 
-  elif char == ord('b'):
-    return "noteDown"
+  # elif char == ord('b'):
+  #   return "noteDown"
 
-  # Layer up/down
-  elif char == ord('f'):
-    return "layerUp"
+  # # Layer up/down
+  # elif char == ord('f'):
+  #   return "layerUp"
 
-  elif char == ord('g'):
-    return "layerDown"
+  # elif char == ord('g'):
+  #   return "layerDown"
 
-  # octave up/down
-  elif char == ord('x'):
-    return "octaveUp"
+  # # octave up/down
+  # elif char == ord('x'):
+  #   return "octaveUp"
 
-  elif char == ord('c'):
-    return "octaveDown"
+  # elif char == ord('c'):
+  #   return "octaveDown"
 
-  # pattern switch
-  elif char == ord('s'):
-    return "togglePatternMode"
+  # # pattern switch
+  # elif char == ord('s'):
+  #   return "togglePatternMode"
 
-  # sustain
-  elif char == ord('w'):
-    return "toggleSustain"
+  # # sustain
+  # elif char == ord('w'):
+  #   return "toggleSustain"
 
-  # Save / load
-  elif char == ord('1'):
-    return "save"     # TODO: multiple saves
+  # # Save / load
+  # elif char == ord('1'):
+  #   return "save"     # TODO: multiple saves
     
-  elif char == ord('2'):
-    return "load"
+  # elif char == ord('2'):
+  #   return "load"
 
   # GPIO INPUT
   if config.general['hardware_enabled']: 

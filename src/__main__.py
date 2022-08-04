@@ -1,6 +1,6 @@
 from rich.layout import Layout
 from rich.live import Live
-import Modules.UserInterface as ui
+import Ui.UserInterface as ui
 # import Modules.Midi as Midi
 
 import config

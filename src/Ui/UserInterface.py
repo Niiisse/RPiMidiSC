@@ -22,8 +22,8 @@ class Ui:
     # sequencer = None
 
     blink = Blink.Blink(config.general['blinkTime'])
-    sequencer = Sequencer.Sequencer(config.pattern['patternAmount'], config.sequencer['seqstepmax'],
-                                    config.sequencer['bpm'],
+    sequencer = Sequencer.Sequencer(config.pattern['patternAmount'], 
+                                    config.sequencer['seqstepmax'],
                                     config.sequencer['seqstepsize'],
                                     config.general['midiEnabled'],
                                     config.sequencer['previewNoteDuration'])
@@ -59,7 +59,7 @@ def getSequencer():
 
 def processInput(outputByteString, sequencer):
     # Process input events sent by Input
-    action = Input.doInput(Input)
+    action = Input.doInput()
 
     # Reset prepareReset if button has been let go
     if action != "prepareReset" and sequencer.prepareReset == True:

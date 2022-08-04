@@ -1,12 +1,11 @@
 import time
-from . import Pattern, SaveLoad, Set
+from . import SaveLoad, Set
 
 
 class Sequencer:
     """ Handles all sequencer-related functions & midi output """
 
-    def __init__(self, patternAmount: int, sequencerSteps: int, bpm: int, seqstepsize: int, midiEnabled: bool,
-                 previewNoteDuration: int):
+    def __init__(self, patternAmount: int, sequencerSteps: int, seqstepsize: int, midiEnabled: bool, previewNoteDuration: int):
 
         # Sequencer Variables
         self.playing = False                            # Whether the sequencer is currently playing or paused
@@ -78,16 +77,6 @@ class Sequencer:
 
         if self.playing: self.playing = False
         self.midiInterface.allNotesOff()
-
-    def save(self, index: int):
-        """ Saves Sequencer state into saveslot """
-
-        self.saveLoad.save(index, self)
-
-    def load(self, index: int):
-        """ Loads Sequencer state from slot """
-
-        self.saveLoad.load(index, self)
 
     def initSets(self):
         """ Re-initializes pattern list to deal with differing saves """
@@ -210,29 +199,6 @@ class Sequencer:
             self.patternIndex -= 1
 
         self.seqstep = 0
-
-    def saveUp(self):
-        """ Handles saveIndex logic """
-        oldSaveIndex = self.saveIndex
-
-        if self.saveIndex == self.savesTotal:
-            self.saveIndex = 0
-        else:
-            self.saveIndex += 1
-
-        self.changeSave(oldSaveIndex)
-
-    def saveDown(self):
-        """ Handles saveIndex logic """
-
-        oldSaveIndex = self.saveIndex
-
-        if self.saveIndex == 0:
-            self.saveIndex = self.savesTotal
-        else:
-            self.saveIndex -= 1
-
-        self.changeSave(oldSaveIndex)
 
     def setUp(self):
         """ Go up 1 set """
@@ -360,3 +326,50 @@ class Sequencer:
                         noteLayer.lastPlayed = (noteLayer.note, noteLayer.midiChannel)
 
             self.midiInterface.playNote(midiData)
+
+    # Saving / Loading
+    def save(self, index: int):
+        """ Saves Sequencer state into saveslot """
+
+        self.saveLoad.save(index, 
+                           self.setsAmount+1,
+                           self.sets,
+                           self.setRepeat,
+                           self.patternMode,
+                           self.patternAmount,
+                           self.noteLayerAmount,
+                           self.sequencerSteps,
+                           )
+
+    def load(self, index: int):
+        """ Loads Sequencer state from slot """
+
+        self.saveLoad.load(index, self)
+
+    def saveUp(self):
+        """ Handles saveIndex logic """
+        oldSaveIndex = self.saveIndex
+
+        if self.saveIndex == self.savesTotal:
+            self.saveIndex = 0
+        else:
+            self.saveIndex += 1
+
+        self.changeSave(oldSaveIndex)
+
+    def saveDown(self):
+        """ Handles saveIndex logic """
+
+        oldSaveIndex = self.saveIndex
+
+        if self.saveIndex == 0:
+            self.saveIndex = self.savesTotal
+        else:
+            self.saveIndex -= 1
+
+        self.changeSave(oldSaveIndex)
+
+    def getMetaRows(self):
+        """ Returns data necessary for populating metadata rows """
+
+

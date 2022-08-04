@@ -3,7 +3,6 @@
 # FIXME: notelayer array can yeet off
 import csv
 import json
-from Sequencing import Sequencer
 
 class SaveLoad:
 	""" Handles saving / loading songs
@@ -14,17 +13,29 @@ class SaveLoad:
 	def __init__(self):
 		self.folderName = "Saves/"				# Name of folder containing saves
 
-	def save(self, index: int, sequencer: Sequencer.Sequencer) -> None:
+
+	def save(self, 
+			index: int, 
+			setsAmount: int,
+			sets: list, 
+		    setRepeat: int,
+		    patternMode: str, 
+		    patternAmount: int,
+			noteLayerAmount: int,	
+			stepsAmount: int,	
+		  ) -> None:
 		""" Saves sequencer state to CSV
 
+		Parameter 'setRepeat' already should have gotten +1 to prevent loops from overflowing
+
 		Metadata	- set header
-							- convert to list
-							- convert index from str to int for comparing
-							- remove all old items with current index
-							- loop over all sets; add data to list
-							- add this list of lists to metadata list
-							- sort the metadata list
-							- save it
+					- convert to list
+					- convert index from str to int for comparing
+					- remove all old items with current index
+					- loop over all sets; add data to list
+					- add this list of lists to metadata list
+					- sort the metadata list
+					- save it
 
 		Then, save sequencer's data into a big ol' list. Save this list to correct file.
 		TODO: Make backup of old file before writing to it.
@@ -59,14 +70,14 @@ class SaveLoad:
 		newMetaRows = []
 
 		# Loop over list; create rows
-		for i in range(sequencer.setsAmount+1):
+		for i in range(setsAmount):
 			setRow = [
 				index,
 				i,
-				sequencer.sets[i].bpm,
-				sequencer.sets[i].patternAmount,
-				sequencer.patternMode,
-				1 if sequencer.setRepeat else 0
+				sets[i].bpm,
+				sets[i].patternAmount,
+				patternMode,
+				1 if setRepeat else 0
 			]
 
 			newMetaRows.append(setRow)
@@ -116,12 +127,12 @@ class SaveLoad:
 		# Then, write each row to the csv file.
 
 		# Loop de loop
-		for s in range(sequencer.setsAmount+1):
-			for i in range(1, sequencer.patternAmount+1):
-				for o in range(sequencer.sequencerSteps):
-					for u in range(sequencer.noteLayerAmount):
-						step = sequencer.sets[s].patterns[i].steps[o]
-						layer = sequencer.sets[s].patterns[i].steps[o].noteLayers[u]
+		for s in range(setsAmount):
+			for i in range(1, patternAmount):
+				for o in range(stepsAmount):
+					for u in range(noteLayerAmount):
+						step = sets[s].patterns[i].steps[o]
+						layer = sets[s].patterns[i].steps[o].noteLayers[u]
 						rowData = [
 							s,
 							i,
@@ -150,12 +161,12 @@ class SaveLoad:
 		# Then, write each row to the csv file.
 
 		# Loop de loop
-		for s in range(sequencer.setsAmount+1):
-			for i in range(1, sequencer.patternAmount+1):
-				for o in range(sequencer.sequencerSteps):
-					for u in range(sequencer.noteLayerAmount):
-						step = sequencer.sets[s].patterns[i].steps[o]
-						layer = sequencer.sets[s].patterns[i].steps[o].noteLayers[u]
+		for s in range(setsAmount):
+			for i in range(1, patternAmount+1):
+				for o in range(stepsAmount):
+					for u in range(noteLayerAmount):
+						step = sets[s].patterns[i].steps[o]
+						layer = sets[s].patterns[i].steps[o].noteLayers[u]
 						rowData = {
 							"set": s,
 							"pattern": i,
@@ -189,7 +200,7 @@ class SaveLoad:
 			writer.writerow(header)
 			writer.writerows(sequencerData)
 
-	def load(self, index: int, sequencer: Sequencer.Sequencer) -> None:
+	def load(self, index: int, sequencer: object) -> None:
 		""" Loads a CSV file, applies contents to Sequencer.
 
 		Load metadata and a big ol' CSV file containing the song's data, then loop over relevant sequencer sections

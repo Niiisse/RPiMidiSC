@@ -261,7 +261,7 @@ class SaveLoad:
 			writer.writerow(header)
 			writer.writerow(rowList)
 
-	def readMetadata(self) -> dict:
+	def readMetadata(self) -> list[dict]:
 		""" Gets metadata from file, returns dict
 
 		Used for loading data """
@@ -273,7 +273,7 @@ class SaveLoad:
 			metaReader = csv.DictReader(metaCsvFile)
 			return list(metaReader)
 
-	def convertDictToList(self, metadata: dict) -> list:
+	def convertDictToList(self, metadata: list[dict]) -> list:
 		""" Takes CSV list of dicts and converts it to lists
 
 		Used for re-saving metadata file """

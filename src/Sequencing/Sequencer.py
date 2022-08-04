@@ -47,7 +47,7 @@ class Sequencer:
         self.canReset = True
 
         if midiEnabled:
-            from . import Midi
+            from Hardware import Midi
             self.midiInterface = Midi.MidiInterface()
 
         # Saving / Loading

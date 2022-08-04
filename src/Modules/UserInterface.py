@@ -3,9 +3,9 @@
 import config
 from rich.panel import Panel
 
-from . import Input
-from . import Blink
-from . import Sequencer
+from Hardware import Input
+from Hardware import Blink
+from Sequencer import Sequencer
 
 
 # User Interface class

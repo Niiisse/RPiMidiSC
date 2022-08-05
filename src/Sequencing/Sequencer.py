@@ -54,9 +54,9 @@ class Sequencer:
 
         # When initialised, check what save was last loaded, and reopen it
         self.saveIndex = self.saveLoad.readLastLoadedSaveIndex()  # set index of loaded savefile
-        self.saveLoad.load(self.saveIndex, self)
+        self.load(self.saveIndex)
 
-    def reset(self):
+    def clearSequencer(self):
         """ Resets sequencer """
 
         self.prepareReset = False
@@ -228,10 +228,11 @@ class Sequencer:
         self.setRepeat = False if self.setRepeat == True else True
 
     def changeSave(self, oldSaveIndex: int):
-        """ Changes save slot. /* Saves current save, then */ loads new save """
+        """ Changes save slot. Saves current save, then loads new save """
 
         # self.saveLoad.save(oldSaveIndex, self)
-        self.saveLoad.load(self.saveIndex, self)
+        # self.saveLoad.load(self.saveIndex, self)
+        self.load(self.saveIndex)
 
     def changePattern(self, changeValue):
         # Instantly changes pattern. Useful in editing mode. changeValue needs an int
@@ -327,11 +328,23 @@ class Sequencer:
 
             self.midiInterface.playNote(midiData)
 
+    def reset(self, metaRows: list[dict], index: int) -> None:
+        """ Resets sequencer with data from loaded savefile """
+
+        self.playing = False
+        self.seqstep = 0
+        self.setInde = 0
+        self.patternIndex = 1
+        self.patternAmount = int(metaRows[index]['patternAmount'])
+        self.initSets()
+        self.patternMode = metaRows[index]['patternMode']
+        self.setRepeat = bool(int((metaRows[index]['setRepeat'])))
+
     # Saving / Loading
     def save(self, index: int):
         """ Saves Sequencer state into saveslot """
 
-        self.saveLoad.save(index, 
+        self.saveLoad.save(index,
                            self.setsAmount+1,
                            self.sets,
                            self.setRepeat,
@@ -342,9 +355,36 @@ class Sequencer:
                            )
 
     def load(self, index: int):
-        """ Loads Sequencer state from slot """
+        """ Loads a CSV file, applies contents to Sequencer.
+        Load metadata and a big ol' CSV file containing the song's data, then loop over relevant sequencer sections
+        and fill it with the CSV's data. Lastly, save currently loaded save index to lastLoadedSave in data.csv"""
 
-        self.saveLoad.load(index, self)
+        metaRows = self.saveLoad.readMetadata()
+        self.reset(metaRows, index)
+
+        rows = self.saveLoad.readRowData(index)
+
+        # set bpm
+        for i in range(self.setsAmount + 1):
+            self.sets[i].bpm = int(metaRows[i]['bpm'])
+
+        # Loop over all rows, copy data to sequencer, check prevents index out of bounds
+        for idx, row in enumerate(rows):
+            if idx < self.setsAmount * self.patternAmount * self.noteLayerAmount * self.sequencerSteps:
+                step = self.sets[int(row['set'])].patterns[int(row['pattern'])].steps[int(row['step'])]
+                layer = self.sets[int(row['set'])].patterns[int(row['pattern'])].steps[int(row['step'])].noteLayers[int(row['layer'])]
+
+                layer.arm = bool(int(row['arm']))
+                layer.midiChannel = int(row['channel'])
+                layer.lastPlayed = (int(row['lastPlayedNote']), int(row['lastPlayedChannel']))
+                layer.note = int(row['note'])
+                layer.octave = int(row['octave'])
+                layer.sustain = bool(int(row['sustain']))
+                step.selectedLayer=[int(row['selectedLayer0']), int(row['selectedLayer1']), int(row['selectedLayer2']), int(row['selectedLayer3'])]
+                step.enabled = bool(int(row['enabled']))
+
+        # save lastloadedindex in load
+        self.saveLoad.saveLastLoadedSaveIndex(index)
 
     def saveUp(self):
         """ Handles saveIndex logic """

@@ -1,5 +1,3 @@
-# import time
-# import math
 import config
 from rich.panel import Panel
 

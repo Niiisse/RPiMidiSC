@@ -200,13 +200,11 @@ class SaveLoad:
 			writer.writerow(header)
 			writer.writerows(sequencerData)
 
-	def load(self, index: int, sequencer: object) -> None:
+	def load(self, metaRowDict: list[dict], index: int, sequencer: object) -> None:
 		""" Loads a CSV file, applies contents to Sequencer.
 
 		Load metadata and a big ol' CSV file containing the song's data, then loop over relevant sequencer sections
 		and fill it with the CSV's data. Lastly, save currently loaded save index to lastLoadedSave in data.csv"""
-
-		metaRowDict = (self.readMetadata())
 
 		# Get savedata
 		path = self.folderName + str(index) + ".csv"
@@ -214,16 +212,6 @@ class SaveLoad:
 		with open(path, mode='r') as csvFile:
 			reader = csv.DictReader(csvFile)
 			rowList = list(reader)
-
-		# Re-setup sequencer
-		sequencer.playing = False
-		sequencer.seqstep = 0
-		sequencer.setIndex = 0
-		sequencer.patternIndex = 1
-		sequencer.patternAmount = int(metaRowDict[index]['patternAmount'])
-		sequencer.initSets()
-		sequencer.patternMode = metaRowDict[0]['patternMode']		# TODO: change 0 to index
-		sequencer.setRepeat = bool(int((metaRowDict[0]['setRepeat'])))
 
 		# set bpm
 		for i in range(sequencer.setsAmount + 1):
@@ -245,6 +233,17 @@ class SaveLoad:
 				step.enabled = bool(int(row['enabled']))
 
 		self.saveLastLoadedSaveIndex(index)
+
+	def readRowData(self, index: int) -> list:
+		""" Returns row data of selected save index """
+
+		path = self.folderName + str(index) + ".csv"
+
+		with open(path, mode='r') as csvFile:
+			reader = csv.DictReader(csvFile)
+			rowList = list(reader)
+
+		return rowList
 
 	def readLastLoadedSaveIndex(self) -> int:
 		""" Gets last used save-index for startup """

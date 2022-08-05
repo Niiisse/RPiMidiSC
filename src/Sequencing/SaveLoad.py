@@ -1,28 +1,53 @@
-# Sometimes... You just gotta save the load, man.
 # FIXME: JSON > CSV
 # FIXME: notelayer array can yeet off
+
 import csv
-import json
 
 class SaveLoad:
 	""" Handles saving / loading songs
 
-	Dumps the sequencer into a CSV file, or loads the sequencer with values from one.
-	TODO: backup file before writing """
+	Dumps the sequencer into a CSV file, or loads the sequencer with values from one. """
+
+	metaHeader = [
+		'id',
+		'set',
+		'bpm',
+		'patternAmount',
+		'patternMode',
+		'setRepeat'
+	]
+
+	header = [
+		'set',
+		'pattern',
+		'step',
+		'layer',
+		'note',
+		'octave',
+		'channel',
+		'sustain',
+		'arm',
+		'lastPlayedNote',
+		'lastPlayedChannel',
+		'selectedLayer0',
+		'selectedLayer1',
+		'selectedLayer2',
+		'selectedLayer3',
+		'enabled'
+	]
 
 	def __init__(self):
 		self.folderName = "Saves/"				# Name of folder containing saves
 
-
-	def save(self, 
-			index: int, 
-			setsAmount: int,
-			sets: list, 
-		    setRepeat: int,
-		    patternMode: str, 
-		    patternAmount: int,
-			noteLayerAmount: int,	
-			stepsAmount: int,	
+	def save(self,
+		  index: int,
+		  setsAmount: int,
+		  sets: list,
+		  setRepeat: int,
+		  patternMode: str,
+		  patternAmount: int,
+		  noteLayerAmount: int,
+		  stepsAmount: int,
 		  ) -> None:
 		""" Saves sequencer state to CSV
 
@@ -39,19 +64,10 @@ class SaveLoad:
 
 		Then, save sequencer's data into a big ol' list. Save this list to correct file.
 		TODO: Make backup of old file before writing to it.
-
 		"""
 
 		# METADATA #
 		# FIXME: change to constant in class
-		metaHeader = [
-			'id',
-			'set',
-			'bpm',
-			'patternAmount',
-			'patternMode',
-			'setRepeat'
-		]
 
 		# Get old data, update relevant rows, then save
 		# Normally a list of dicts is returned. We need to convert this  to a list of lists,
@@ -95,30 +111,11 @@ class SaveLoad:
 
 			# Init CSV Writer, write header data then row data
 			writer = csv.writer(metaFile)
-			writer.writerow(metaHeader)
+			writer.writerow(self.metaHeader)
 			writer.writerows(metaRowList)
 
 
 		# ACTUAL SAVE DATA #
-		# TODO: change to constant?
-		header = [
-			'set',
-			'pattern',
-			'step',
-			'layer',
-			'note',
-			'octave',
-			'channel',
-			'sustain',
-			'arm',
-			'lastPlayedNote',
-			'lastPlayedChannel',
-			'selectedLayer0',
-			'selectedLayer1',
-			'selectedLayer2',
-			'selectedLayer3',
-			'enabled'
-		]
 
 		sequencerData = []            # Will hold sequencer data
 
@@ -185,11 +182,6 @@ class SaveLoad:
 
 						sequencerDataDict.append(rowData)
 
-		# json
-		jsonString = json.dumps(sequencerDataDict)
-		file = open("jsontest.json", mode='w')
-		print(jsonString, file=file)
-
 		# Get path string, open file and write our data
 		path = self.folderName + str(index) + ".csv"
 
@@ -197,42 +189,8 @@ class SaveLoad:
 
 			# Init CSV Writer, write header data then row data
 			writer = csv.writer(csvFile)
-			writer.writerow(header)
+			writer.writerow(self.header)
 			writer.writerows(sequencerData)
-
-	def load(self, metaRowDict: list[dict], index: int, sequencer: object) -> None:
-		""" Loads a CSV file, applies contents to Sequencer.
-
-		Load metadata and a big ol' CSV file containing the song's data, then loop over relevant sequencer sections
-		and fill it with the CSV's data. Lastly, save currently loaded save index to lastLoadedSave in data.csv"""
-
-		# Get savedata
-		path = self.folderName + str(index) + ".csv"
-
-		with open(path, mode='r') as csvFile:
-			reader = csv.DictReader(csvFile)
-			rowList = list(reader)
-
-		# set bpm
-		for i in range(sequencer.setsAmount + 1):
-			sequencer.sets[i].bpm = int(metaRowDict[i]['bpm'])
-
-		# Loop over all rows, copy data to sequencer, check prevents index out of bounds
-		for idx, row in enumerate(rowList):
-			if idx < sequencer.setsAmount * sequencer.patternAmount * sequencer.noteLayerAmount * sequencer.sequencerSteps:
-				step = sequencer.sets[int(row['set'])].patterns[int(row['pattern'])].steps[int(row['step'])]
-				layer = sequencer.sets[int(row['set'])].patterns[int(row['pattern'])].steps[int(row['step'])].noteLayers[int(row['layer'])]
-
-				layer.arm = bool(int(row['arm']))
-				layer.midiChannel = int(row['channel'])
-				layer.lastNote = (int(row['lastPlayedNote']), int(row['lastPlayedChannel']))
-				layer.note = int(row['note'])
-				layer.octave = int(row['octave'])
-				layer.sustain = bool(int(row['sustain']))
-				step.selectedLayer=[int(row['selectedLayer0']), int(row['selectedLayer1']), int(row['selectedLayer2']), int(row['selectedLayer3'])]
-				step.enabled = bool(int(row['enabled']))
-
-		self.saveLastLoadedSaveIndex(index)
 
 	def readRowData(self, index: int) -> list:
 		""" Returns row data of selected save index """

@@ -1,4 +1,4 @@
-import time
+import time, config
 from . import SaveLoad, Set
 
 
@@ -27,7 +27,6 @@ class Sequencer:
         self.patternIndex = 1                           # Current pattern
         self.patternChange = 0                          # Signals pattern change for next measure
         self.pendingPattern = 0                         # Used in changing pattern
-        self.patternEditing = False                     # Currently in editing mode?
         self.patternMode = "auto"                       # Auto loops patterns, single loops 1
 
         # Sets
@@ -40,14 +39,23 @@ class Sequencer:
 
         # Misc
         self.noteLayerAmount = 10       # Added this for not having to hardcode noteLayer amount when saving/loading, i think
-        self.midiEnabled = midiEnabled  # Whether or not to enable MIDI output
         self.savesTotal = 15            # Total number of saves
         self.prepareReset = False       # Reset flag
         self.canReset = True
 
+        self.hardwareEnabled = False
+        self.midiEnabled = False
+
         if midiEnabled:
             from Hardware import Midi
             self.midiInterface = Midi.MidiInterface()
+            self.midiEnabled = True
+
+        # Check whether the hardware interface is enabled or disabled in config
+        if config.general['hardware_enabled']:
+            import Hardware.HardwareInterface as HWi
+            self.sr = HWi.ShiftRegister(21, 20, 16)
+            self.hardwareEnabled = True
 
         # Saving / Loading
         self.saveLoad = SaveLoad.SaveLoad()
@@ -111,7 +119,7 @@ class Sequencer:
         # First check makes sure we're playing and not editing a pattern
         # Second makes sure we don't infinitely tick the timer
 
-        if self.playing and not self.patternEditing:
+        if self.playing:
             if self.timerShouldTick:
                 self.timerShouldTick = False
                 self.tickTimer()
@@ -157,11 +165,6 @@ class Sequencer:
         currentStep.noteLayers[currentStep.selectedLayer[0]].noteUp()
 
         self.sendMidi(True)
-
-    def toggleEditMode(self):
-        # Toggles Pattern Editing on or off. So glad I write these descriptive comments
-
-        self.patternEditing = False if self.patternEditing else True
 
     def changePendingPattern(self):
         # Changes pattern to pending pattern
@@ -340,7 +343,27 @@ class Sequencer:
         self.patternMode = metaRows[index]['patternMode']
         self.setRepeat = bool(int((metaRows[index]['setRepeat'])))
 
-    # Saving / Loading
+    def saveLoadAnim(self):
+        outputString = config.misc['hw_off_string']
+        outputList = list()
+
+        for i in range(4):
+            outputList = list(outputString)
+
+        for bit in range(len(outputList)):
+            if outputList[bit] == '0':
+                outputList[bit] = '1'
+            else:
+                outputList[bit] = '0'
+
+            outputString = ""
+            outputString = outputString.join(outputList)
+            self.sr.outputBits(outputString)
+
+        time.sleep(0.05)
+
+    # Saving / Loading #
+
     def save(self, index: int):
         """ Saves Sequencer state into saveslot """
 
@@ -409,7 +432,6 @@ class Sequencer:
 
         self.changeSave(oldSaveIndex)
 
-    def getMetaRows(self):
-        """ Returns data necessary for populating metadata rows """
-
-
+    def doHardwareOutput(self, outputString: str) -> None:
+        if self.hardwareEnabled:
+            self.sr.outputBits(outputString)

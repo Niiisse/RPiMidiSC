@@ -19,8 +19,8 @@ class Ui:
 
     # sequencer = None
 
-    blink = Blink.Blink(config.general['blinkTime'])
-    sequencer = Sequencer.Sequencer(config.pattern['patternAmount'], 
+    blink = Blink.Blink(config.general['blinkTime']) 
+    sequencer = Sequencer.Sequencer(config.pattern['patternAmount'],
                                     config.sequencer['seqstepmax'],
                                     config.sequencer['seqstepsize'],
                                     config.general['midiEnabled'],
@@ -43,9 +43,9 @@ def updateUi():
     Ui.outputByteString = createOutputString(Ui.sequencer)
     return processInput(Ui.outputByteString, Ui.sequencer)
 
-    
+
 def generateUi():
-  return Panel("Test!")
+    return Panel("Test!")
 
 ##
 ## UI Creation and Drawing / Updating
@@ -136,8 +136,7 @@ def processInput(outputByteString, sequencer):
 
     # Play / Pause toggle
     elif action == "playPause":
-        if sequencer.patternEditing == False:
-            sequencer.togglePlay()
+        sequencer.togglePlay()
 
     # note up/down
     elif action == "noteUp":
@@ -329,33 +328,20 @@ def createOutputString(sequencer):
             # Loop over all steps in current Pattern
             # ledState sets what the potential state is going to be if this is the selected step.
             #
-            # If editing:
-            #       BLINK current step LED; else
-            #       all LEDs ON; disabled steps: LED OFF
-            #
             # If playing:
             #       all LEDs OFF, current step: LED ON
             #       pausing: BLINK current LED
 
             # editing mode
-            if sequencer.patternEditing:
-                if i == ledStep:
-                    ledState = Ui.blink.blink("1", False)
+            if i == ledStep:
+                if sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[i].getState():
+                    ledState = "1" if sequencer.playing == True else Ui.blink.blink("1", False)
                 else:
-                    ledState = "1" if sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[
-                        i].getState() else "0"
-
-            # playing mode
+                    ledState = Ui.blink.blink("1", False) if sequencer.playing == False else "0"
             else:
-                if i == ledStep:
-                    if sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[i].getState():
-                        ledState = "1" if sequencer.playing == True else Ui.blink.blink("1", False)
-                    else:
-                        ledState = Ui.blink.blink("1", False) if sequencer.playing == False else "0"
-                else:
-                    ledState = "0"
+                ledState = "0"
 
-            ledString += ledState
+        ledString += ledState
 
         # NOTEMODULE #
 
@@ -366,8 +352,7 @@ def createOutputString(sequencer):
 
         currentStep = sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
 
-        noteString = convertDecimalToNote(currentStep.noteLayers[currentStep.selectedLayer[
-            0]].note)  # TODO: this 0 would be replaced with i for note control modules
+        noteString = convertDecimalToNote(currentStep.noteLayers[currentStep.selectedLayer[0]].note)  # TODO: this 0 would be replaced with i for note control modules
         layerString = convertDecimalToByteString(currentStep.selectedLayer[0])
         channelString = convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].midiChannel)
 

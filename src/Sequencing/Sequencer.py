@@ -5,7 +5,12 @@ from . import SaveLoad, Set
 class Sequencer:
     """ Handles all sequencer-related functions & midi output """
 
-    def __init__(self, patternAmount: int, sequencerSteps: int, seqstepsize: int, midiEnabled: bool, previewNoteDuration: int):
+    def __init__(self,
+                 patternAmount: int,
+                 sequencerSteps: int,
+                 seqstepsize: int,
+                 midiEnabled: bool,
+                 previewNoteDuration: int):
 
         # Sequencer Variables
         self.playing = False                            # Whether the sequencer is currently playing or paused

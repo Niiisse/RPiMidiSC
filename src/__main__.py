@@ -1,26 +1,44 @@
 import config
-import time
 import sys
+from rich.live import Live
 
 import Sequencing.Sequencer as Sequencer
-import Ui.UserInterface as ui
+import Ui.NewUserInterface as NewUi
+import Hardware.OutputInterface as OutputInterface
 
-print(f"RPiMidiSC version {config.general['version']}")
+sequencer = Sequencer.Sequencer (
+  config.pattern['patternAmount'],
+  config.sequencer['seqstepmax'],
+  config.sequencer['seqstepsize'],
+  config.general['midiEnabled'],
+  config.sequencer['previewNoteDuration'] )
 
-sequencer = Sequencer.Sequencer(config.pattern['patternAmount'],
-                                config.sequencer['seqstepmax'],
-                                config.sequencer['seqstepsize'],
-                                config.general['midiEnabled'],
-                                config.sequencer['previewNoteDuration'])
+outputInterface = OutputInterface.OutputInterface (
+  config.general['hardware_enabled'],
+  config.misc['hw_off_string'] )
+ui = NewUi.NewUi()
+
+sequencer.togglePlay() # FIXME: FOR TESTING
 
 running = True
 
-while running:
-  sequencer.timer()  
+with Live(screen=True, refresh_per_second=30) as live:
+  while running:
+    sequencer.update()
+    outputInterface.outputData(outputInterface.generateByteString(sequencer))
+    live.update(ui.updateUi(sequencer))
 
-  # TODO: Ui. Give all relevant sequencer data in function call
-
+outputInterface.outputShutdown()
 sys.exit(0)
+
+
+
+
+
+
+
+# TODO: add Ui's safeExit function
+# TODO: Ui. Give all relevant sequencer data in function call
 
 # Check whether the hardware interface is enabled or disabled in config
 # if config.general['hardware_enabled']:

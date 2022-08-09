@@ -1,17 +1,18 @@
 import config
+
 from rich.panel import Panel
+from rich.live import Live
 
 from Hardware import Input
 from Hardware import Blink
 from Sequencing import Sequencer
-
 
 # User Interface class
 #
 # Handles, well, user interface. Reports program state back to main with a return.
 
 class Ui:
-    app_version = config.general['app_version']
+    app_version = config.general['version']
     outputByteString = "no data"
 
     patternMode = config.pattern['patternMode']
@@ -19,29 +20,29 @@ class Ui:
 
     # sequencer = None
 
-    blink = Blink.Blink(config.general['blinkTime']) 
-    sequencer = Sequencer.Sequencer(config.pattern['patternAmount'],
-                                    config.sequencer['seqstepmax'],
-                                    config.sequencer['seqstepsize'],
-                                    config.general['midiEnabled'],
-                                    config.sequencer['previewNoteDuration'])
+    blink = Blink.Blink(config.general['blinkTime'])
+    # sequencer = Sequencer.Sequencer(config.pattern['patternAmount'],
+                                    # config.sequencer['seqstepmax'],
+                                    # config.sequencer['seqstepsize'],
+                                    # config.general['midiEnabled'],
+                                    # config.sequencer['previewNoteDuration'])
 
-def updateUi():
+def updateUi(sequencer: Sequencer.Sequencer):
     # Main UI loop. Handles inputs, then updates windows
 
-    clampPatternStepping(Ui.sequencer)
-    clampPendingStepping(Ui.sequencer)
+    clampPatternStepping(sequencer)
+    clampPendingStepping(sequencer)
 
     # Ui.sequencer.checkPreviewNotesOff()
-
-    Ui.sequencer.timer()  # Manages sequencer timer
 
     # Generate output bytestring, process inputs for next frame
     # pass outputByteString to processInput to return the bytestring to main.py, assuming no other
     # events have priority.
 
-    Ui.outputByteString = createOutputString(Ui.sequencer)
-    return processInput(Ui.outputByteString, Ui.sequencer)
+    # uiPanel
+
+    Ui.outputByteString = createOutputString(sequencer)
+    return processInput(Ui.outputByteString, sequencer)
 
 
 def generateUi():
@@ -50,10 +51,6 @@ def generateUi():
 ##
 ## UI Creation and Drawing / Updating
 ##
-
-def getSequencer():
-    return Ui.sequencer
-
 
 def processInput(outputByteString, sequencer):
     # Process input events sent by Input
@@ -227,7 +224,7 @@ def processInput(outputByteString, sequencer):
     elif action == "setUp":
         if sequencer.playing:
             sequencer.setChange += 1
-            Ui.sequencer.clampPendingSetStepping()
+            sequencer.clampPendingSetStepping()
 
         else:
             sequencer.setUp()
@@ -235,7 +232,7 @@ def processInput(outputByteString, sequencer):
     elif action == "setDown":
         if sequencer.playing:
             sequencer.setChange -= 1
-            Ui.sequencer.clampPendingSetStepping()
+            sequencer.clampPendingSetStepping()
 
         else:
             sequencer.setDown()
@@ -496,10 +493,10 @@ def binarySaveCounter(index: int) -> str:
 
     return format(saveArr[index], '04b')
 
-def safeExit():
-    """ program is asked to exit, do so properly """
+# def safeExit():
+#     """ program is asked to exit, do so properly """
 
-    # restoreScreen()
-    Ui.sequencer.midiInterface.cleanUp()
+#     # restoreScreen()
+#     sequencer.midiInterface.cleanUp()
 
-    return config.misc['hw_off_string']
+#     return config.misc['hw_off_string']

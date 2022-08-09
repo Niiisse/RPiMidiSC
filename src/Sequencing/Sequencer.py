@@ -48,19 +48,12 @@ class Sequencer:
         self.prepareReset = False       # Reset flag
         self.canReset = True
 
-        self.hardwareEnabled = False
         self.midiEnabled = False
 
         if midiEnabled:
             from Hardware import Midi
             self.midiInterface = Midi.MidiInterface()
             self.midiEnabled = True
-
-        # Check whether the hardware interface is enabled or disabled in config
-        if config.general['hardware_enabled']:
-            import Hardware.HardwareInterface as HWi
-            self.sr = HWi.ShiftRegister(21, 20, 16)
-            self.hardwareEnabled = True
 
         # Saving / Loading
         self.saveLoad = SaveLoad.SaveLoad()
@@ -119,10 +112,10 @@ class Sequencer:
 
         self.tic = time.perf_counter()
 
-    def timer(self):
-        # Handles sequencer's timer, responsible for stepping
-        # First check makes sure we're playing and not editing a pattern
-        # Second makes sure we don't infinitely tick the timer
+    def update(self):
+        """ Handles sequencer's timer, responsible for stepping
+         First check makes sure we're playing and not editing a pattern
+         Second makes sure we don't infinitely tick the timer """
 
         if self.playing:
             if self.timerShouldTick:
@@ -436,7 +429,3 @@ class Sequencer:
             self.saveIndex -= 1
 
         self.changeSave(oldSaveIndex)
-
-    def doHardwareOutput(self, outputString: str) -> None:
-        if self.hardwareEnabled:
-            self.sr.outputBits(outputString)

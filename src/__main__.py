@@ -1,19 +1,13 @@
 import config
 import sys
-
 from rich.live import Live
 
-from Hardware import Input
+from Hardware import InputInterface
 from Sequencing.Sequencer import Sequencer
 from Hardware.OutputInterface import OutputInterface
 from Ui.NewUserInterface import NewUi
 
-sequencer = Sequencer (
-  config.pattern['patternAmount'],
-  config.sequencer['seqstepmax'],
-  config.sequencer['seqstepsize'],
-  config.general['midiEnabled'],
-  config.sequencer['previewNoteDuration'] )
+sequencer = Sequencer()
 
 outputInterface = OutputInterface()
 
@@ -26,21 +20,20 @@ running = True
 with Live(screen=True, refresh_per_second=30) as display:
   while running:
     try:
-      if sequencer.update():  # Output
+      if sequencer.update():
         outputString = outputInterface.generateOutputString(sequencer)
         outputInterface.outputData(outputString)
 
         display.update(ui.updateUi(sequencer, outputString))
 
-      input = Input.doInput() # Input
-      # input = ui.Input
+      input = InputInterface.readInputData()
+      sequencer.processInput(input)
 
     except KeyboardInterrupt:
       running = False
 
     except:
       # TODO: try to backup save
-
       outputInterface.outputCrash()
       sys.exit(1)
 
@@ -51,8 +44,9 @@ sys.exit(0)
 
 
 
-# TODO: add Ui's safeExit function
-# TODO: Ui. Give all relevant sequencer data in function call
+
+
+
 
 # Check whether the hardware interface is enabled or disabled in config
 # if config.general['hardware_enabled']:

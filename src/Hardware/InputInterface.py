@@ -39,16 +39,14 @@ if config.general['hardware_enabled']:
   loadDb = Debounce.Debounce()
   resetDb = Debounce.Debounce()
 
-def doInput():
-  # Handles inputs, returns action to be executed
-  # TODO: change to dynamic keyboard bindings thru config
-  # TODO: hook up GPIO inputs
+def readInputData() -> str:
+  """ Handles inputs, returns action to be executed """
 
   # KEYBOARD INPUT
   # Quit
   # if char == ord('q'):
   #   return "quit"
-  
+
   # # Reset
   # elif char == ord('r') or char == curses.KEY_RESIZE:
   #   return "reset"
@@ -70,7 +68,7 @@ def doInput():
   # # Pattern stepping
   # elif char == ord('m'):
   #   return "patternStepUp"
-  
+
   # elif char == ord('n'):
   #   return "patternStepDown"
 
@@ -122,12 +120,12 @@ def doInput():
   # # Save / load
   # elif char == ord('1'):
   #   return "save"     # TODO: multiple saves
-    
+
   # elif char == ord('2'):
   #   return "load"
 
   # GPIO INPUT
-  if config.general['hardware_enabled']: 
+  if config.general['hardware_enabled']:
     # GPIO Input String Layout:
     # 0: currentNoteUp
     # 1: currentNoteDown
@@ -158,15 +156,15 @@ def doInput():
     # 24: set repeat
     # 25: set up
 
-    # Read inputs; set debouncing state    
+    # Read inputs; set debouncing state
     hwInput = shiftInput.readData()
-    
+
     btnCurrentNoteUp = hwInput[0]
     noteUpDb.setState(btnCurrentNoteUp, True)
-    
+
     btnCurrentNoteDown = hwInput[1]
     noteDownDb.setState(btnCurrentNoteDown, True)
-    
+
     btnNoteLayerDown = hwInput[2]
     layerDownDb.setState(btnNoteLayerDown, True)
 
@@ -175,19 +173,19 @@ def doInput():
 
     btnMidiChannelDown = hwInput[4]
     channelDownDb.setState(btnMidiChannelDown, True)
-    
+
     btnSustain = hwInput[5]
     sustainDb.setState(btnSustain, True)
 
     btnArm = hwInput[6]
     armDb.setState(btnArm, True)
-    
+
     btnMidiChannelUp = hwInput[7]
     channelUpDb.setState(btnMidiChannelUp, True)
-    
+
     btnOctaveUp = hwInput[8]
     octaveUpDb.setState(btnOctaveUp, True)
-    
+
     btnNoteLayerUp = hwInput[9]
     layerUpDb.setState(btnNoteLayerUp, True)
 
@@ -217,10 +215,10 @@ def doInput():
 
     btnSetDown = hwInput[18]
     setDownDb.setState(btnSetDown, True)
-    
+
     btnReset = hwInput[19]
     resetDb.setState(btnReset, True)
-    
+
     btnBpmDown = hwInput[20]
     bpmDownDb.setState(btnBpmDown, True)
 
@@ -320,3 +318,5 @@ def doInput():
 
     elif btnReset == '1' and not resetDb.resetDebounce():
       return "prepareReset"
+
+  return ""

@@ -5,20 +5,15 @@ from . import SaveLoad, Set
 class Sequencer:
     """ Handles all sequencer-related functions & midi output """
 
-    def __init__(self,
-                 patternAmount: int,
-                 sequencerSteps: int,
-                 seqstepsize: int,
-                 midiEnabled: bool,
-                 previewNoteDuration: int):
+    def __init__(self):
 
         # Sequencer Variables
         self.playing = False                            # Whether the sequencer is currently playing or paused
         self.seqstep = 0                                # Current step within pattern
-        self.stepSize = seqstepsize                     # Amount to increment with per step. TODO: see if this can go
-        self.sequencerSteps = sequencerSteps            # Total amout of steps per pattern
+        self.stepSize = config.sequencer['seqstepsize']   # Amount to increment with per step. TODO: see if this can go
+        self.sequencerSteps = config.sequencer['seqstepmax']            # Total amout of steps per pattern
         self.previewNotesOff = []                       # List that holds notes that are to be turned off
-        self.previewNoteDuration = previewNoteDuration  # How long preview notes should play
+        self.previewNoteDuration = config.sequencer['previewNoteDuration'] # How long preview notes should play
         self.lastUsedMidiChannel = 0                    # Last-entered MIDI channel
         self.lastUsedLayer = 0                          # Last-entered layer
         self.lastUsedOctave = 3                         # Last-entered octave
@@ -28,7 +23,7 @@ class Sequencer:
         self.tic = time.perf_counter()                  # Sets timestamp to compare against
 
         # Pattern Variables
-        self.patternAmount = patternAmount              # Amount of patterns
+        self.patternAmount = config.pattern['patternAmount']              # Amount of patterns
         self.patternIndex = 1                           # Current pattern
         self.patternChange = 0                          # Signals pattern change for next measure
         self.pendingPattern = 0                         # Used in changing pattern
@@ -50,7 +45,7 @@ class Sequencer:
 
         self.midiEnabled = False
 
-        if midiEnabled:
+        if config.general['midiEnabled']:
             from Hardware import Midi
             self.midiInterface = Midi.MidiInterface()
             self.midiEnabled = True
@@ -113,8 +108,8 @@ class Sequencer:
         self.tic = time.perf_counter()
 
     def update(self) -> bool:
-        """ Handles sequencer's timer, responsible for stepping
-        makes sure we don't infinitely tick the timer """
+        """ Handles sequencer's timer, returns true on 'tick'
+        Responsible for stepping, makes sure we don't infinitely tick the timer """
 
         if self.playing:
             if self.timerShouldTick:
@@ -136,8 +131,7 @@ class Sequencer:
     def noteDown(self):
         """ Change note down event
 
-        If note == 0 (off), set selectedLayer, octave and midiChannel to last-used values
-        TODO: multiple NCM support """
+        If note == 0 (off), set selectedLayer, octave and midiChannel to last-used values """
 
         currentStep = self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep]
 
@@ -168,7 +162,7 @@ class Sequencer:
         self.sendMidi(True)
 
     def changePendingPattern(self):
-        # Changes pattern to pending pattern
+        """ Changes pattern to pending pattern """
 
         self.patternIndex = self.pendingPattern
         self.patternChange = 0
@@ -432,3 +426,185 @@ class Sequencer:
             self.saveIndex -= 1
 
         self.changeSave(oldSaveIndex)
+
+    def processInput(self, action: str) -> None:
+        """ Handles input """
+
+            # Reset prepareReset if button has been let go
+        if action != "prepareReset" and self.prepareReset == True:
+            self.prepareReset = False
+
+        # BPM up & down; clamping
+        elif action == "bpmUp":
+            if self.sets[self.setIndex].bpm < 999:
+                self.sets[self.setIndex].bpm += 1
+            else:
+                self.sets[self.setIndex].bpm = 1
+
+        elif action == "bpmDown":
+            if self.sets[self.setIndex].bpm > 1:
+                self.sets[self.setIndex].bpm -= 1
+            else:
+                self.sets[self.setIndex].bpm = 999
+
+
+        # self.stepping next & previous; clamping
+        # FIXME: Move to Sequencer
+        # TODO: NCM
+        elif action == "seqStepUp":
+            self.seqstep += self.stepSize
+
+            if self.seqstep > self.sequencerSteps - self.stepSize:
+                self.seqstep = 0
+
+            self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep].selectedLayer[
+                0] = self.lastUsedLayer
+
+        elif action == "seqStepDown":
+            # FIXME: move to sequencer
+            # TODO: NCM
+            self.seqstep -= self.stepSize
+
+            if self.seqstep < 0:
+                self.seqstep = self.sequencerSteps - self.stepSize
+
+            # Set last used layer as active layer
+            self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep].selectedLayer[
+                0] = self.lastUsedLayer
+
+
+        # Pattern Stepping
+        elif action == "patternStepUp":
+            if self.playing:
+                self.patternChange += 1
+            else:
+                self.patternUp()
+
+        elif action == "patternStepDown":
+            if self.playing:
+                self.patternChange -= 1
+            else:
+                self.patternDown()
+
+        # Pattern mode switch
+        elif action == "togglePatternMode":
+            self.togglePatternMode()
+
+        elif action == "toggleStep":
+            self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep].toggleStep()
+
+        # Play / Pause toggle
+        elif action == "playPause":
+            self.togglePlay()
+
+        # note up/down
+        elif action == "noteUp":
+            self.noteUp()
+
+        elif action == "noteDown":
+            self.noteDown()
+
+        # Note layer
+        elif action == "layerUp":
+            currentStep = self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep]
+            currentStep.layerUp()  # TODO: when multiple NCMs are connected, add second variable to layerUpDown for selecting specific layer
+            # (that's why selectedLayer[] is a list; first item = first NCM)
+
+            self.sendMidi(True)
+            self.lastUsedLayer = currentStep.selectedLayer[0]
+
+        elif action == "layerDown":
+            currentStep = self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep]
+            currentStep.layerDown()
+
+            self.sendMidi(True)
+            self.lastUsedLayer = currentStep.selectedLayer[0]
+
+        # Note Octave
+        elif action == "octaveUp":
+            currentStep = self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep]
+            currentStep.noteLayers[currentStep.selectedLayer[0]].octaveUp()
+            self.lastUsedOctave = currentStep.noteLayers[currentStep.selectedLayer[0]].octave
+
+            self.sendMidi(True)
+
+        elif action == "octaveDown":
+            currentStep = self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep]
+            currentStep.noteLayers[currentStep.selectedLayer[0]].octaveDown()
+            self.lastUsedOctave = currentStep.noteLayers[currentStep.selectedLayer[0]].octave
+
+            self.sendMidi(True)
+
+        # MIDI channel
+        elif action == "midiChannelUp":
+            currentStep = self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep]
+            currentStep.noteLayers[currentStep.selectedLayer[0]].channelUp()
+
+            self.sendMidi(True)
+            self.lastUsedMidiChannel = currentStep.noteLayers[
+                currentStep.selectedLayer[0]].midiChannel  # TODO: multi NCM support
+
+        elif action == "midiChannelDown":
+            currentStep = self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep]
+            currentStep.noteLayers[currentStep.selectedLayer[0]].channelDown()
+
+            self.sendMidi(True)
+            self.lastUsedMidiChannel = currentStep.noteLayers[
+                currentStep.selectedLayer[0]].midiChannel  # TODO: multi NCM support
+
+        # Sustain
+        elif action == "toggleSustain":
+            currentStep = self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep]
+            currentStep.noteLayers[currentStep.selectedLayer[0]].toggleSustain()
+
+        # Arm
+        elif action == "toggleArm":
+            currentStep = self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep]
+            currentStep.noteLayers[currentStep.selectedLayer[0]].toggleArm()
+
+        # Save
+        elif action == "save":
+            self.save(self.saveIndex)
+
+        elif action == "load":
+            self.load(self.saveIndex)
+
+        # Sustain
+        elif action == "toggleSustain":
+            currentStep = self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep]
+            currentStep.noteLayers[currentStep.selectedLayer[0]].toggleSustain()
+
+        # save up/down
+        elif action == "saveUp":
+            self.saveUp()
+        # return "saveAnim"
+
+        elif action == "saveDown":
+            self.saveDown()
+        # return "saveAnim"
+
+        elif action == "setUp":
+            if self.playing:
+                self.setChange += 1
+                self.clampPendingSetStepping()
+
+            else:
+                self.setUp()
+
+        elif action == "setDown":
+            if self.playing:
+                self.setChange -= 1
+                self.clampPendingSetStepping()
+
+            else:
+                self.setDown()
+
+        elif action == "setRepeat":
+            self.toggleSetRepeat()
+
+        elif action == "prepareReset":
+            if self.canReset:
+                self.prepareReset = True
+
+        elif action == "doReset":
+            self.clearSequencer()

@@ -34,17 +34,18 @@ class OutputInterface:
     outputString = ""
 
     outputString = self.generateTempoData(sequencer.sets[sequencer.setIndex].bpm)
-    outputString += self.generatePatternData(sequencer)
-    outputString += self.generateSeqstepData(sequencer)
-    outputString += self.generateNoteControlModuleData(sequencer)
-    outputString += self.generatePlayStatusData(sequencer)
-    outputString += self.generateSetData(sequencer)
+    outputString += self.generatePatternData(sequencer.patternIndex, sequencer.patternChange, sequencer.pendingPattern)
+    outputString += self.generateSeqstepData(sequencer.seqstep, sequencer.sets, sequencer.playing, sequencer.setIndex, sequencer.patternIndex, sequencer.sequencerSteps ) 
+    outputString += self.generateNoteControlModuleData(sequencer.sets, sequencer.setIndex, sequencer.patternIndex, sequencer.seqstep)
+    outputString += self.generatePlayStatusData(sequencer.playing, sequencer.patternMode, sequencer.saveIndex)
+    outputString += self.generateSetData(sequencer.setIndex, sequencer.setChange, sequencer.setPending, sequencer.setRepeat)
+
 
     return outputString
 
-  def generateTempoData(self, sequencerBpm: int) -> str:
+  def generateTempoData(self, bpm: int) -> str:
     """ Creates BPM string """
-    bpmString = format(sequencer.sets[sequencer.setIndex].bpm)
+    bpmString = format(bpm)
     bpmOutput = ""
 
     while len(bpmString) < 3:  # Because format is '090', not '90'
@@ -57,13 +58,13 @@ class OutputInterface:
 
     return bpmOutput
 
-  def generatePatternData(self, sequencer: Sequencer) -> str:
+  def generatePatternData(self,patternIndex: int, patternChange: int, pendingPattern: int) -> str:
     """ Creates pattern string
 
         Checks whether current or pending pattern should be shown """
 
-    patternStepString = format(sequencer.patternIndex) if sequencer.patternChange == 0 else format(
-      sequencer.pendingPattern)
+    patternStepString = format(patternIndex) if patternChange == 0 else format(
+      pendingPattern)
 
     patternStepOutput = ""
 
@@ -75,12 +76,12 @@ class OutputInterface:
         patternStepOutput = patternStepOutput + tempString
 
         # Should we blink?
-        if sequencer.patternChange != 0:
+        if patternChange != 0:
           patternStepOutput = self.blink.blink(patternStepOutput, True)
 
     return patternStepOutput
 
-  def generateSeqstepData(self, sequencer: Sequencer) -> str:
+  def generateSeqstepData(self, seqstep: int, sets: list, playing: bool, setIndex: int, patternIndex: int, steps: int ) -> str:
     """ Create seqstep string
 
         - Loop over all steps in pattern
@@ -89,16 +90,16 @@ class OutputInterface:
         If playing: all LEDs 0, LED for current step 1
         If pausing: blink current LED"""
 
-    ledStep = sequencer.seqstep
+    ledStep = seqstep
     ledString = ""
     ledState = ""
 
-    for i in range(sequencer.sequencerSteps):
+    for i in range(steps):
       if i == ledStep:
-        if sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[i].getState():
-          ledState = "1" if sequencer.playing == True else self.blink.blink("1", False)
+        if sets[setIndex].patterns[patternIndex].steps[i].getState():
+          ledState = "1" if playing == True else self.blink.blink("1", False)
         else:
-          ledState = self.blink.blink("1", False) if sequencer.playing == False else "0"
+          ledState = self.blink.blink("1", False) if playing == False else "0"
       else:
         ledState = "0"
 
@@ -106,7 +107,7 @@ class OutputInterface:
 
     return ledString
 
-  def generateNoteControlModuleData(self, sequencer: Sequencer) -> str:
+  def generateNoteControlModuleData(self, sets: list, setIndex: int, patternIndex: int, seqstep: int) -> str:
     """ Creates Note Control Module output """
 
     noteString = "11111110"
@@ -114,7 +115,7 @@ class OutputInterface:
     octaveString = "11111110"
     channelString = "11111111"
 
-    currentStep = sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
+    currentStep = sets[setIndex].patterns[patternIndex].steps[seqstep]
 
     noteString = self.convertDecimalToNote(currentStep.noteLayers[currentStep.selectedLayer[0]].note)
     layerString = self.convertDecimalToByteString(currentStep.selectedLayer[0])
@@ -147,13 +148,13 @@ class OutputInterface:
 
     return noteString + layerString + octaveString + channelString
 
-  def generatePlayStatusData(self, sequencer: Sequencer) -> str:
+  def generatePlayStatusData(self, playing: bool, patternMode: str, saveIndex: int) -> str:
     """ Create Play Status output - playing/pausing + pattern loop LEDs, and save counter """
     gcOutputString = ""
     gcOutput = list("0000")
 
     # Green LED ON, red OFF if playing, inverted otherwise
-    if sequencer.playing:
+    if playing:
       gcOutput[1] = '1'
       gcOutput[2] = '0'
     else:
@@ -161,25 +162,26 @@ class OutputInterface:
       gcOutput[2] = '1'
 
       # Yellow LED on if patternMode == single
-      if sequencer.patternMode == 'single':
+      if patternMode == 'single':
         gcOutput[3] = '1'
 
         # Add 4 bits for SaveIndex
-        gcOutputString = "".join(gcOutput) + self.binarySaveCounter(sequencer.saveIndex)
+        gcOutputString = "".join(gcOutput) + self.binarySaveCounter(saveIndex)
 
     return gcOutputString
 
-  def generateSetData(self, sequencer: Sequencer) -> str:
+  def generateSetData(self, setIndex: int, setChange: int, setPending: int, setRepeat: bool ) -> str:
     """ Create Set output - set counter and loop status LED """
-    setString = sequencer.setIndex if sequencer.setChange == 0 else sequencer.setPending
+
+    setString = setIndex if setChange == 0 else setPending
 
     setString = self.convertDecimalToByteString(setString)
 
     # Should we blink?
-    if sequencer.setChange != 0:
+    if setChange != 0:
       setString = self.blink.blink(setString, True)
 
-      setString = '1' + setString[:-1] if sequencer.setRepeat else '0' + setString[:-1]
+      setString = '1' + setString[:-1] if setRepeat else '0' + setString[:-1]
 
     return setString
 

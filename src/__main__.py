@@ -30,9 +30,9 @@ with Live(screen=True, refresh_per_second=30) as display:
         outputString = outputInterface.generateOutputString(sequencer)
         outputInterface.outputData(outputString)
 
-        display.update(ui.updateUi(sequencer))
+        display.update(ui.updateUi(sequencer, outputString))
 
-      # Input
+      input = Input.doInput() # Input
       # input = ui.Input
 
     except KeyboardInterrupt:

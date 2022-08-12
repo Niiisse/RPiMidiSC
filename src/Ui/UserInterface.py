@@ -1,7 +1,6 @@
 import config
 
 from rich.panel import Panel
-from rich.live import Live
 
 from Hardware import Input
 from Hardware import Blink

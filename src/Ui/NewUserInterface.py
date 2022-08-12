@@ -1,6 +1,7 @@
 from rich.panel import Panel
 from rich.layout import Layout
 from rich.align import Align
+from rich.table import Table
 import config
 
 from Sequencing.Sequencer import Sequencer
@@ -13,14 +14,16 @@ class NewUi:
         self.version = config.general['version']
 
         self.playStatus = Layout()
-        self.playStatus.split_column(
+        self.noteStatus = Layout()
+
+        self.innerLayout = Layout()
+        self.innerLayout.split_column(
             Layout(name="top"),
             Layout(name="bottom")
         )
-        self.playStatus["bottom"].size = 3
+        self.innerLayout["bottom"].size = 3
 
-        self.innerLayout = Layout()
-        self.innerLayout.split_row(
+        self.innerLayout["top"].split_row(
             Layout(name="left"),
             Layout(name="right")
         )
@@ -35,18 +38,12 @@ class NewUi:
 
     def updateUi(self, sequencer: Sequencer, outputStr: str) -> Layout:
         """ Update UI layout """
-        self.playStatus["top"].update(self.genPlayStatus(sequencer))
-        self.playStatus["bottom"].update(Panel(Align.center(self.genOutputString(outputStr)), title="Hardware Output"))
+        self.playStatus.update(self.genPlayStatus(sequencer))
+        self.noteStatus.update(self.genNoteStatus(sequencer))
+
+        self.innerLayout["bottom"].update(Align.center(Panel(Align.center(self.genOutputString(outputStr)), title="Hardware Output", expand=False)))
         self.innerLayout["left"].update(self.playStatus)
-
-
-        # uiLayout = Layout(
-        #     Panel(
-        #         Panel(
-        #             f"{sequencer.seqstep},{sequencer.patternIndex}")
-        #         title=f"RPiMidiSC {self.version}"
-        #     )
-        # )
+        self.innerLayout["right"].update(self.noteStatus)
 
         return self.outerLayout
 
@@ -63,6 +60,35 @@ class NewUi:
         playState = "[bright_green]playing" if sequencer.playing else "[white]paused"
         ply = f"[bright_white]   state: {playState}\n\n"
         return brk + stp + pat + set + sav + brk + ply
+
+    def genNoteStatus(self, sequencer: Sequencer) -> Table:
+        # TODO: famitracker like view, figure it out
+
+        brk = "\n"
+        currentStep = sequencer.sets[sequencer.setIndex].patterns[sequencer.patternIndex].steps[sequencer.seqstep]
+
+        # layerTable = Table(title="Layer")
+        # layerTable.add_column("note")
+        # layerTable.add_column("layer")
+        # layerTable.add_column("octave")
+        # layerTable.add_column("channel")
+
+        # for i in range(sequencer.noteLayerAmount):
+        #     layerTable.add_row(str(currentStep.noteLayers[i].note),
+        #                        str(i),
+        #                        str(currentStep.noteLayers[i].octave),
+        #                        str(currentStep.noteLayers[i].midiChannel))
+
+        noteTable = Table(title="Note Data")
+
+        noteTable.add_column()
+
+        for i in range(10):
+            noteTable.add_column(str(i))
+
+        # note = f"[bright_white] note: [bright_magenta]{currentStep.noteLayers[0].note}"
+
+        return noteTable
 
     def genOutputString(self, outputStr: str) -> str:
         """ Generate coloring for outputString """

@@ -1,4 +1,3 @@
-import config
 import sys
 from rich.live import Live
 
@@ -8,9 +7,7 @@ from Hardware.OutputInterface import OutputInterface
 from Ui.NewUserInterface import NewUi
 
 sequencer = Sequencer()
-
 outputInterface = OutputInterface()
-
 ui = NewUi()
 
 sequencer.togglePlay() # FIXME: FOR TESTING
@@ -23,11 +20,9 @@ with Live(screen=True, refresh_per_second=30) as display:
       if sequencer.update():
         outputString = outputInterface.generateOutputString(sequencer)
         outputInterface.outputData(outputString)
-
         display.update(ui.updateUi(sequencer, outputString))
 
-      input = InputInterface.readInputData()
-      sequencer.processInput(input)
+      sequencer.processInput(InputInterface.readInputData())
 
     except KeyboardInterrupt:
       running = False

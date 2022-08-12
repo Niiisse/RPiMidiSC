@@ -44,6 +44,7 @@ class Sequencer:
         self.canReset = True
 
         self.midiEnabled = False
+        self.hardwareEnabled = config.general['hardware_enabled']
 
         if config.general['midiEnabled']:
             from Hardware import Midi
@@ -107,7 +108,7 @@ class Sequencer:
 
         self.tic = time.perf_counter()
 
-    def update(self) -> bool:
+    def update(self) -> None:
         """ Handles sequencer's timer, returns true on 'tick'
         Responsible for stepping, makes sure we don't infinitely tick the timer """
 
@@ -123,10 +124,6 @@ class Sequencer:
             if time.perf_counter() - self.tic > (60 / self.sets[self.setIndex].bpm / 4):
                 self.sequencerStep()
                 self.timerShouldTick = True
-
-                return True
-
-        return False
 
     def noteDown(self):
         """ Change note down event

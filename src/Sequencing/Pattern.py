@@ -1,8 +1,8 @@
 from . import Step
 
-  # Pattern Class
-  # 
-  # Holds an array of PatternSteps associated with this pattern 
+# Pattern Class
+#
+# Holds an array of PatternSteps associated with this pattern
 
 class Pattern:
   def __init__(self, sequencerSteps):

@@ -15,8 +15,10 @@ sequencer = Sequencer.Sequencer (
 
 outputInterface = OutputInterface.OutputInterface (
   config.general['hardware_enabled'],
-  config.misc['hw_off_string'] )
-ui = NewUi.NewUi()
+  config.misc['hw_off_string'],
+  config.general['blinkTime'])
+
+ui = NewUi.NewUi(config.general['version'])
 
 sequencer.togglePlay() # FIXME: FOR TESTING
 
@@ -25,7 +27,7 @@ running = True
 with Live(screen=True, refresh_per_second=30) as live:
   while running:
     sequencer.update()
-    outputInterface.outputData(outputInterface.generateByteString(sequencer))
+    outputInterface.outputData(outputInterface.generateOutputString(sequencer))
     live.update(ui.updateUi(sequencer))
 
 outputInterface.outputShutdown()

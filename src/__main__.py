@@ -1,39 +1,51 @@
 import config
 import sys
+
 from rich.live import Live
 
-import Sequencing.Sequencer as Sequencer
-import Ui.NewUserInterface as NewUi
-import Hardware.OutputInterface as OutputInterface
+from Hardware import Input
+from Sequencing.Sequencer import Sequencer
+from Hardware.OutputInterface import OutputInterface
+from Ui.NewUserInterface import NewUi
 
-sequencer = Sequencer.Sequencer (
+sequencer = Sequencer (
   config.pattern['patternAmount'],
   config.sequencer['seqstepmax'],
   config.sequencer['seqstepsize'],
   config.general['midiEnabled'],
   config.sequencer['previewNoteDuration'] )
 
-outputInterface = OutputInterface.OutputInterface (
-  config.general['hardware_enabled'],
-  config.misc['hw_off_string'],
-  config.general['blinkTime'])
+outputInterface = OutputInterface()
 
-ui = NewUi.NewUi(config.general['version'])
+ui = NewUi()
 
 sequencer.togglePlay() # FIXME: FOR TESTING
 
 running = True
 
-with Live(screen=True, refresh_per_second=30) as live:
+with Live(screen=True, refresh_per_second=30) as display:
   while running:
-    sequencer.update()
-    outputInterface.outputData(outputInterface.generateOutputString(sequencer))
-    live.update(ui.updateUi(sequencer))
+    try:
+      if sequencer.update():  # Output
+        outputString = outputInterface.generateOutputString(sequencer)
+        outputInterface.outputData(outputString)
+
+        display.update(ui.updateUi(sequencer))
+
+      # Input
+      # input = ui.Input
+
+    except KeyboardInterrupt:
+      running = False
+
+    except:
+      # TODO: try to backup save
+
+      outputInterface.outputCrash()
+      sys.exit(1)
 
 outputInterface.outputShutdown()
 sys.exit(0)
-
-
 
 
 

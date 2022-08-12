@@ -112,10 +112,9 @@ class Sequencer:
 
         self.tic = time.perf_counter()
 
-    def update(self):
+    def update(self) -> bool:
         """ Handles sequencer's timer, responsible for stepping
-         First check makes sure we're playing and not editing a pattern
-         Second makes sure we don't infinitely tick the timer """
+        makes sure we don't infinitely tick the timer """
 
         if self.playing:
             if self.timerShouldTick:
@@ -129,6 +128,10 @@ class Sequencer:
             if time.perf_counter() - self.tic > (60 / self.sets[self.setIndex].bpm / 4):
                 self.sequencerStep()
                 self.timerShouldTick = True
+
+                return True
+
+        return False
 
     def noteDown(self):
         """ Change note down event
@@ -356,7 +359,7 @@ class Sequencer:
 
             outputString = ""
             outputString = outputString.join(outputList)
-            self.sr.outputBits(outputString)
+            # self.sr.outputBits(outputString)
 
         time.sleep(0.05)
 

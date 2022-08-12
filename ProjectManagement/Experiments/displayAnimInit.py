@@ -32,8 +32,8 @@ def clear():
 
   for x in range(0, 8):
     GPIO.output(CLOCK, 0)
-    GPIO.output(CLOCK, 1)  
-    GPIO.output(CLOCK, 0)  
+    GPIO.output(CLOCK, 1)
+    GPIO.output(CLOCK, 0)
 
   latch()
 
@@ -51,7 +51,7 @@ def outputBits(inputString):
   for bit in bitList:
     bit = int(bit)
     inputBit(bit)
-  
+
   latch()
 
 clear() # Makes sure we're clear before main loop
@@ -73,18 +73,18 @@ numericArr = [        # Stores the numeric display bytes
 outputString = "01111111111111111111111111111111111111110000000000000000"
 outputList = list(outputString)
 
-while True: 
+while True:
   for i in range(len(outputList)):
     if i < 40:
       outputList[i] = '0'
-      
+
       outputString = ""
       outputString = outputString.join(outputList)
 
       print(outputString)
-      outputBits(outputString)  
+      outputBits(outputString)
 
-      time.sleep(0.02)  
+      time.sleep(0.02)
 
     else:
       outputList[i] = '1'
@@ -93,9 +93,9 @@ while True:
       outputString = outputString.join(outputList)
 
       print(outputString)
-      outputBits(outputString)  
+      outputBits(outputString)
 
-      time.sleep(0.05)  
+      time.sleep(0.05)
 
   for i in range(len(outputList)):
     if i < 40:
@@ -105,18 +105,18 @@ while True:
       outputString = outputString.join(outputList)
 
       print(outputString)
-      outputBits(outputString)  
+      outputBits(outputString)
 
       time.sleep(0.02)
 
-    else:  
+    else:
       outputList[i] = '0'
 
       outputString = ""
       outputString = outputString.join(outputList)
 
       print(outputString)
-      outputBits(outputString)  
+      outputBits(outputString)
 
       time.sleep(0.05)
 
@@ -124,15 +124,15 @@ while True:
 #bytestring = format(value, '08b')
 #outputBits(bytestring)
 
-  # NUMBERS
-  # 0 = on (pulled to ground), 1 = off
-  # 0 0b10000001
-  # 1 0b11101101
-  # 2 0b01000011
-  # 3 0b01001001
-  # 4 0b00101101
-  # 5 0b00011001
-  # 6 0b00010001
-  # 7 0b11001101
-  # 8 0b00000001
-  # 9 0b00001001
+# NUMBERS
+# 0 = on (pulled to ground), 1 = off
+# 0 0b10000001
+# 1 0b11101101
+# 2 0b01000011
+# 3 0b01001001
+# 4 0b00101101
+# 5 0b00011001
+# 6 0b00010001
+# 7 0b11001101
+# 8 0b00000001
+# 9 0b00001001

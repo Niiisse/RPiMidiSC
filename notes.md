@@ -3,6 +3,8 @@
 - [ ] Harware config should happen in Sequencer 
 - [ ] SaveLoadAnim should happen in Sequencer 
 - [ ] Reset anim fix
+- [ ] Pass through specific values in generateOutputString 
+- [ ] Create Input class
 
 ## Removing selectedLayer array
 It'll probably do to just remove it in notelayer, and check all LSP errors.

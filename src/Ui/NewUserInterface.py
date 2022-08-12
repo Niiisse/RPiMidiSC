@@ -1,14 +1,15 @@
 from rich.panel import Panel
 from rich.layout import Layout
+import config
 
 from Sequencing.Sequencer import Sequencer
 
 class NewUi:
     """ User Interface terminal handler """
 
-    def __init__(self, version: str):
+    def __init__(self):
         self.uiLayout = self.generateUi()
-        self.version = version
+        self.version = config.general['version']
 
         self.playStatus = Layout()
         self.playStatus.split_row(
@@ -22,7 +23,7 @@ class NewUi:
             Layout(name="right")
         )
 
-        self.outerPanel = Panel(self.innerLayout, title=f"RPiMidiSC {version}")
+        self.outerPanel = Panel(self.innerLayout, title=f"RPiMidiSC {self.version}")
         self.outerLayout = Layout(self.outerPanel)
 
     def generateUi(self) -> Layout:
@@ -30,7 +31,7 @@ class NewUi:
 
         return Layout(Panel("init"))
 
-    def updateUi(self, sequencer) -> Layout:
+    def updateUi(self, sequencer: Sequencer) -> Layout:
         """ Update UI layout """
         self.playStatus["left"].update(self.genPlayStatus(sequencer))
         self.innerLayout["left"].update(self.playStatus)
@@ -56,6 +57,6 @@ class NewUi:
         sav = f"[bright_white]    save: [bright_cyan]{sequencer.saveIndex} [bright_white]/[bright_cyan] {sequencer.savesTotal}\n"
 
         playState = "[bright_green]playing" if sequencer.playing else "[white]paused"
-        ply = f"[bright_white]   state: {playState}"
+        ply = f"[bright_white]   state: {playState}\n\n"
         return brk + stp + pat + set + sav + brk + ply
 

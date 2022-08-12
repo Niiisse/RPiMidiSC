@@ -1,38 +1,48 @@
 import Hardware.Blink as Blink
-import Sequencing.Sequencer as Seq
+from Sequencing.Sequencer import Sequencer
+import config
 
 class OutputInterface:
-  def __init__(self, hardwareEnabled: bool, shutdownString: str, blinkTime: int):
+
+  def __init__(self):
     self.hardwareEnabled = False
 
-    if hardwareEnabled:
+    if config.general['hardware_enabled']:
       import Hardware.HardwareInterface as HWi
       self.sr = HWi.ShiftRegister(21, 20, 16)
       self.hardwareEnabled = True
 
-    self.blink = Blink.Blink(blinkTime)
-    self.shutdownString = shutdownString
+    self.blink = Blink.Blink(config.general['blinkTime'])
+    self.shutdownString = config.misc['hw_off_string']
+    self.crashString = config.misc['hw_crash_string']
 
   def outputData(self, outputData: str) -> None:
     if self.hardwareEnabled:
       self.sr.outputBits(outputData)
 
+  def outputCrash(self) -> None:
+    if self.hardwareEnabled:
+      self.sr.outputBits(self.crashString)
+
   def outputShutdown(self) -> None:
     if self.hardwareEnabled:
       self.sr.outputBits(self.shutdownString)
 
-  def generateOutputString(self, sequencer: Seq.Sequencer) -> str:
+  def generateOutputString(self, sequencer: Sequencer) -> str:
     """ Glues all individual outputs together and returns it """
 
     outputString = ""
 
-    outputString = self.generateTempoData(sequencer)
+    outputString = self.generateTempoData(sequencer.sets[sequencer.setIndex].bpm)
     outputString += self.generatePatternData(sequencer)
     outputString += self.generateSeqstepData(sequencer)
+    outputString += self.generateNoteControlModuleData(sequencer)
+    outputString += self.generatePlayStatusData(sequencer)
+    outputString += self.generateSetData(sequencer)
 
     return outputString
 
-  def generateTempoData(self, sequencer: Seq.Sequencer) -> str:
+  def generateTempoData(self, sequencerBpm: int) -> str:
     """ Creates BPM string """
     bpmString = format(sequencer.sets[sequencer.setIndex].bpm)
     bpmOutput = ""
@@ -47,7 +57,7 @@ class OutputInterface:
 
     return bpmOutput
 
-  def generatePatternData(self, sequencer: Seq.Sequencer) -> str:
+  def generatePatternData(self, sequencer: Sequencer) -> str:
     """ Creates pattern string
 
         Checks whether current or pending pattern should be shown """
@@ -70,7 +80,7 @@ class OutputInterface:
 
     return patternStepOutput
 
-  def generateSeqstepData(self, sequencer: Seq.Sequencer) -> str:
+  def generateSeqstepData(self, sequencer: Sequencer) -> str:
     """ Create seqstep string
 
         - Loop over all steps in pattern
@@ -92,11 +102,11 @@ class OutputInterface:
       else:
         ledState = "0"
 
-        ledString += ledState
+      ledString += ledState
 
     return ledString
 
-  def generateNoteControlModuleData(self, sequencer: Seq.Sequencer) -> str:
+  def generateNoteControlModuleData(self, sequencer: Sequencer) -> str:
     """ Creates Note Control Module output """
 
     noteString = "11111110"
@@ -137,7 +147,7 @@ class OutputInterface:
 
     return noteString + layerString + octaveString + channelString
 
-  def generatePlayStatusData(self, sequencer: Seq.Sequencer) -> str:
+  def generatePlayStatusData(self, sequencer: Sequencer) -> str:
     """ Create Play Status output - playing/pausing + pattern loop LEDs, and save counter """
     gcOutputString = ""
     gcOutput = list("0000")
@@ -159,7 +169,7 @@ class OutputInterface:
 
     return gcOutputString
 
-  def generateSetData(self, sequencer: Seq.Sequencer) -> str:
+  def generateSetData(self, sequencer: Sequencer) -> str:
     """ Create Set output - set counter and loop status LED """
     setString = sequencer.setIndex if sequencer.setChange == 0 else sequencer.setPending
 

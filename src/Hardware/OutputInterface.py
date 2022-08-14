@@ -46,14 +46,15 @@ class OutputInterface:
     """ Creates BPM string """
     bpmString = format(bpm)
     bpmOutput = ""
+    tempString = ""
 
     while len(bpmString) < 3:  # Because format is '090', not '90'
       bpmString = "0" + bpmString
 
-      for i in range(3):  # Sends individual number off to get the bytestring
-        tempString = self.convertDecimalToByteString(int(bpmString[i]))
+    for i in range(3):  # Sends individual number off to get the bytestring
+      tempString = self.convertDecimalToByteString(int(bpmString[i]))
 
-        bpmOutput = bpmOutput + tempString
+      bpmOutput = bpmOutput + tempString
 
     return bpmOutput
 
@@ -160,12 +161,12 @@ class OutputInterface:
       gcOutput[1] = '0'
       gcOutput[2] = '1'
 
-      # Yellow LED on if patternMode == single
-      if patternMode == 'single':
-        gcOutput[3] = '1'
+    # Yellow LED on if patternMode == single
+    if patternMode == 'single':
+      gcOutput[3] = '1'
 
-        # Add 4 bits for SaveIndex
-        gcOutputString = "".join(gcOutput) + self.binarySaveCounter(saveIndex)
+    # Add 4 bits for SaveIndex
+    gcOutputString = "".join(gcOutput) + self.binarySaveCounter(saveIndex)
 
     return gcOutputString
 
@@ -180,7 +181,7 @@ class OutputInterface:
     if setChange != 0:
       setString = self.blink.blink(setString, True)
 
-      setString = '1' + setString[:-1] if setRepeat else '0' + setString[:-1]
+    setString = '1' + setString[:-1] if setRepeat else '0' + setString[:-1]
 
     return setString
 

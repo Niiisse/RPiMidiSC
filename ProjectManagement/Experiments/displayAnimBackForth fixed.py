@@ -74,7 +74,7 @@ outputString = "01111111" + "11111111" * 4 + "00000000" * 2
 outputList = list(outputString)
 heading = 0
 
-while True: 
+while True:
   i = outputList.index('0')     # Get index
   if heading == 0:
     if i+1 == len(outputList):    # Make sure we don't go out of bounds

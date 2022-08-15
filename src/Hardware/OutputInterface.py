@@ -1,6 +1,6 @@
 import Hardware.Blink as Blink
 from Sequencing.Sequencer import Sequencer
-import config
+import config, time
 
 class OutputInterface:
 
@@ -21,26 +21,38 @@ class OutputInterface:
       self.sr.outputBits(outputData)
 
   def outputCrash(self) -> None:
+    """ Output crash string to sequencer, if hw enabled """
     if self.hardwareEnabled:
       self.sr.outputBits(self.crashString)
 
   def outputShutdown(self) -> None:
+    """ Output shutdown data to sequencer, if hw enabled """
+
     if self.hardwareEnabled:
       self.sr.outputBits(self.shutdownString)
 
   def generateOutputString(self, sequencer: Sequencer) -> str:
     """ Glues all individual outputs together and returns it """
 
-    outputString = ""
+    if sequencer.prepareReset:
+      return self.doResetAnim()
+    else:
+      outputString = ""
 
-    outputString = self.generateTempoData(sequencer.sets[sequencer.setIndex].bpm)
-    outputString += self.generatePatternData(sequencer.patternIndex, sequencer.patternChange, sequencer.pendingPattern)
-    outputString += self.generateSeqstepData(sequencer.seqstep, sequencer.sets, sequencer.playing, sequencer.setIndex, sequencer.patternIndex, sequencer.sequencerSteps ) 
-    outputString += self.generateNoteControlModuleData(sequencer.sets, sequencer.setIndex, sequencer.patternIndex, sequencer.seqstep)
-    outputString += self.generatePlayStatusData(sequencer.playing, sequencer.patternMode, sequencer.saveIndex)
-    outputString += self.generateSetData(sequencer.setIndex, sequencer.setChange, sequencer.setPending, sequencer.setRepeat)
+      outputString = self.generateTempoData(sequencer.sets[sequencer.setIndex].bpm)
+      outputString += self.generatePatternData(sequencer.patternIndex, sequencer.patternChange, sequencer.pendingPattern)
+      outputString += self.generateSeqstepData(sequencer.seqstep, sequencer.sets, sequencer.playing, sequencer.setIndex, sequencer.patternIndex, sequencer.sequencerSteps )
+      outputString += self.generateNoteControlModuleData(sequencer.sets, sequencer.setIndex, sequencer.patternIndex, sequencer.seqstep)
+      outputString += self.generatePlayStatusData(sequencer.playing, sequencer.patternMode, sequencer.saveIndex)
+      outputString += self.generateSetData(sequencer.setIndex, sequencer.setChange, sequencer.setPending, sequencer.setRepeat)
 
-    return outputString
+      return outputString
+
+  def doResetAnim(self) -> str:
+    """ Reset animation """
+
+    outputString = config.misc['resetString']
+    return self.blink.blink(outputString, True)
 
   def generateTempoData(self, bpm: int) -> str:
     """ Creates BPM string """

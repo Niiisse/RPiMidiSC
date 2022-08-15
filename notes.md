@@ -1,11 +1,17 @@
 # Refactoring
 
-- [ ] SaveLoadAnim should happen in Sequencer 
-- [ ] Reset anim fix
-- [ ] Create Input class
+## Animations 
+- [ ] Animations
+    Happens in outputInterface
 
-## Removing selectedLayer array
+    - [ ] Powerup Animation 
+    - [ ] Shutdown Animation 
+    - [x] Crash String (crash spelled out, all red LEDs on) 
+    - [x] Reset Animation
+
+## selectedLayer array
 It'll probably do to just remove it in notelayer, and check all LSP errors.
+- [ ] Remove array 
 
 # Finished
 - [x] Layout creation should happen in Ui 

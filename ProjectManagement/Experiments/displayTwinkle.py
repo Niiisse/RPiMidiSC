@@ -32,8 +32,8 @@ def clear():
 
   for x in range(0, 8):
     GPIO.output(CLOCK, 0)
-    GPIO.output(CLOCK, 1)  
-    GPIO.output(CLOCK, 0)  
+    GPIO.output(CLOCK, 1)
+    GPIO.output(CLOCK, 0)
 
   latch()
 
@@ -51,7 +51,7 @@ def outputBits(inputString):
   for bit in bitList:
     bit = int(bit)
     inputBit(bit)
-  
+
   latch()
 
 clear() # Makes sure we're clear before main loop
@@ -74,7 +74,7 @@ inputString = "01010101"
 inputList = list(inputString)
 sleepTime = 0.2
 
-while True: 
+while True:
   outputList = inputList[:-1]
   outputString = ""
 
@@ -83,9 +83,9 @@ while True:
   outputString = outputString.join(outputList)
 
   print(outputString)
-  outputBits(outputString)  
+  outputBits(outputString)
 
-  time.sleep(sleepTime)  
+  time.sleep(sleepTime)
 
   ##
 
@@ -97,6 +97,6 @@ while True:
   outputString = outputString.join(outputList)
 
   print(outputString)
-  outputBits(outputString)  
+  outputBits(outputString)
 
-  time.sleep(sleepTime)  
+  time.sleep(sleepTime)

@@ -1,5 +1,7 @@
 # Refactoring
 
+Interface > "Business Logic" > Datalaag
+
 ## Animations 
 - [ ] Animations
     Happens in outputInterface

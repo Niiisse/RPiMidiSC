@@ -1,6 +1,6 @@
 import Hardware.Blink as Blink
 from Sequencing.Sequencer import Sequencer
-import config, time
+import config
 
 class OutputInterface:
 

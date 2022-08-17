@@ -109,7 +109,7 @@ class Sequencer:
         self.tic = time.perf_counter()
 
     def update(self) -> None:
-        """ Handles sequencer's timer, returns true on 'tick'
+        """ Handles sequencer's timer
         Responsible for stepping, makes sure we don't infinitely tick the timer """
 
         if self.playing:
@@ -256,7 +256,8 @@ class Sequencer:
     def sequencerStep(self):
         # Executes each step
 
-        self.sendMidi(False)  # Midi Output
+        if self.midiEnabled:
+            self.sendMidi(False)  # Midi Output
 
         # Checks if we should increase seqstep or roll back
         if self.seqstep < self.sequencerSteps - 1:
@@ -303,25 +304,24 @@ class Sequencer:
         previewNote = only changed note (for previewing inputs)
         previewNote off sends all notes in current layer (normal behaviour) """
 
-        if self.midiEnabled:
 
-            midiData = []  # List of noteLayer objects
+        midiData = []  # List of noteLayer objects
 
-            # If preview, send only current activelayer
-            if previewNote:
-                x = self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep]
-                midiData.append(x.noteLayers[x.selectedLayer[0]])
-            # self.addPreviewNoteOff(x.noteLayers[x.selectedLayer[0]])
+        # If preview, send only current activelayer
+        if previewNote:
+            x = self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep]
+            midiData.append(x.noteLayers[x.selectedLayer[0]])
+        # self.addPreviewNoteOff(x.noteLayers[x.selectedLayer[0]])
 
-            else:
-                # Check all noteLayers in current step, if that step is enabled; send their data, if relevant, to midi processing
-                if self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep].enabled:
-                    for noteLayer in self.sets[self.setIndex].patterns[self.patternIndex].steps[
-                            self.seqstep].noteLayers:
-                        midiData.append(noteLayer)
-                        noteLayer.lastPlayed = (noteLayer.note, noteLayer.midiChannel)
+        else:
+            # Check all noteLayers in current step, if that step is enabled; send their data, if relevant, to midi processing
+            if self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep].enabled:
+                for noteLayer in self.sets[self.setIndex].patterns[self.patternIndex].steps[
+                        self.seqstep].noteLayers:
+                    midiData.append(noteLayer)
+                    noteLayer.lastPlayed = (noteLayer.note, noteLayer.midiChannel)
 
-            self.midiInterface.playNote(midiData)
+        self.midiInterface.playNote(midiData)
 
     def reset(self, metaRows: list[dict], index: int) -> None:
         """ Resets sequencer with data from loaded savefile """
@@ -427,7 +427,7 @@ class Sequencer:
     def processInput(self, action: str) -> None:
         """ Handles input """
 
-            # Reset prepareReset if button has been let go
+        # Reset prepareReset if button has been let go
         if action != "prepareReset" and self.prepareReset == True:
             self.prepareReset = False
 
@@ -468,7 +468,6 @@ class Sequencer:
             # Set last used layer as active layer
             self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep].selectedLayer[
                 0] = self.lastUsedLayer
-
 
         # Pattern Stepping
         elif action == "patternStepUp":

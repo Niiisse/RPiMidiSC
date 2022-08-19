@@ -2,6 +2,7 @@ from rich.panel import Panel
 from rich.layout import Layout
 from rich.align import Align
 from rich.table import Table
+
 import config
 
 from Sequencing.Sequencer import Sequencer
@@ -43,7 +44,8 @@ class NewUi:
 
         self.innerLayout["bottom"].update(Align.center(Panel(Align.center(self.genOutputString(outputStr)), title="Hardware Output", expand=False)))
         self.innerLayout["left"].update(self.playStatus)
-        self.innerLayout["right"].update(self.noteStatus)
+        # self.innerLayout["right"].update(self.noteStatus)
+
 
         return self.outerLayout
 
@@ -72,7 +74,10 @@ class NewUi:
 
         midiOutput = "[bright_green]enabled" if sequencer.midiEnabled else "[bright_red]disabled"
         mdo = f"[bright_white] midi output:     {midiOutput}\n"
-        return stp + pat + set  + sav + brk + ply + bpm + brk + ptl + stl + brk + hwo + mdo
+
+        prepareReset = f"[bright_white] prepareReset: {sequencer.prepareReset} \n"
+        canReset = f"[bright_white] canReset: {sequencer.canReset}"
+        return stp + pat + set  + sav + brk + ply + bpm + brk + ptl + stl + brk + hwo + mdo + brk + prepareReset + canReset
 
     def genNoteStatus(self, sequencer: Sequencer) -> Table:
         # TODO: famitracker like view, figure it out

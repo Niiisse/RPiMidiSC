@@ -5,13 +5,13 @@ import time, config
 #
 #			btPlus = not GPIO.input(BT_BPM_PLUS)
 #
-#  		if btPlus:
-#   		bpmPlusDb.setState(btPlus)
-#    		if bpmPlusDb.checkDebounce():
-#      		bpmUp()
+#		if btPlus:
+#			bpmPlusDb.setState(btPlus)
+#			if bpmPlusDb.checkDebounce():
+#			bpmUp()
 #
-#  		elif not btPlus and bpmPlusDb.btDown: << unnecessary?
-#    		bpmPlusDb.setState(btPlus)
+#		elif not btPlus and bpmPlusDb.btDown: << unnecessary?
+#			bpmPlusDb.setState(btPlus)
 #
 #		By Niisse (2021-04-16)
 
@@ -30,8 +30,8 @@ class Debounce:
 
 
 	def checkDebounce(self):
-		self.toc = time.time()       					# Set current time
-		canGo = False                     				# Makes sure there's an output
+		self.toc = time.time()							# Set current time
+		canGo = False									# Makes sure there's an output
 
 		if not self.btPreviouslyPressed:				# New press?
 			self.btPreviouslyPressed = True				# For keeping track of button events
@@ -45,19 +45,19 @@ class Debounce:
 				self.tic = time.time()					# Set new time to compare against
 				self.continuousPress = True				# For keeping track of holding down
 				canGo = True																		# Signals return
-		
+
 		else:																							# Continuing continuous press
 			if self.toc - self.tic > self.thirdWait:	# Compare time
 				self.tic = time.time()					# Set new time to compare against
 				canGo = True							# Signals return
 
-		return canGo  									# Signals return
+		return canGo									# Signals return
 
 	def resetDebounce(self):
 		# mostly same as checkdebounce, but specialized for reset button
 
-		self.toc = time.time()       					# Set current time
-		canGo = False                     				# Makes sure there's an output
+		self.toc = time.time()							# Set current time
+		canGo = False									# Makes sure there's an output
 
 		if not self.btPreviouslyPressed:				# New press?
 			self.btPreviouslyPressed = True				# For keeping track of button events
@@ -77,7 +77,7 @@ class Debounce:
 				self.tic = time.time()					# Set new time to compare against
 				canGo = True							# Signals return
 
-		return canGo  									# Signals return
+		return canGo									# Signals return
 
 	def setState(self, btState, stringType):			# Sets current button state
 

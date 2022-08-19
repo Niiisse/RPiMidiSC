@@ -34,7 +34,7 @@ class OutputInterface:
   def generateOutputString(self, sequencer: Sequencer) -> str:
     """ Glues all individual outputs together and returns it """
 
-    if sequencer.prepareReset:
+    if sequencer.prepareReset and sequencer.canReset:
       return self.doResetAnim()
     else:
       outputString = ""

@@ -305,6 +305,7 @@ def readInputData() -> str:
       return "bpmDown"
 
     elif btnBpmUp == '1' and bpmUpDb.checkDebounce():
+      print("bpmUp")
       return "bpmUp"
 
     elif btnSave == '1' and saveDb.checkDebounce():
@@ -314,6 +315,7 @@ def readInputData() -> str:
       return "load"
 
     elif btnReset == '1' and resetDb.resetDebounce():
+      print("doReset")
       return "doReset"
 
     elif btnReset == '1' and not resetDb.resetDebounce():

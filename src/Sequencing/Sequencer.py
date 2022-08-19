@@ -60,13 +60,14 @@ class Sequencer:
 
     def clearSequencer(self):
         """ Resets sequencer """
+        print("clearing")
 
+        self.canReset = False
         self.prepareReset = False
         self.playing = False
         self.seqstep = 0
         self.setIndex = 0
         self.patternIndex = 1
-        self.canReset = False
         self.initSets()
 
     def play(self):
@@ -78,7 +79,9 @@ class Sequencer:
         # You won't believe it. Pauses sequencer.
 
         if self.playing: self.playing = False
-        self.midiInterface.allNotesOff()
+
+        if self.midiEnabled:
+            self.midiInterface.allNotesOff()
 
     def initSets(self):
         """ Re-initializes pattern list to deal with differing saves """
@@ -321,7 +324,8 @@ class Sequencer:
                     midiData.append(noteLayer)
                     noteLayer.lastPlayed = (noteLayer.note, noteLayer.midiChannel)
 
-        self.midiInterface.playNote(midiData)
+        if self.midiEnabled:
+            self.midiInterface.playNote(midiData)
 
     def reset(self, metaRows: list[dict], index: int) -> None:
         """ Resets sequencer with data from loaded savefile """
@@ -431,8 +435,13 @@ class Sequencer:
         if action != "prepareReset" and self.prepareReset == True:
             self.prepareReset = False
 
+        if action == "doReset":
+            print("didReset")
+            self.clearSequencer()
+
         # BPM up & down; clamping
         elif action == "bpmUp":
+            print("btnUp!")
             if self.sets[self.setIndex].bpm < 999:
                 self.sets[self.setIndex].bpm += 1
             else:
@@ -602,5 +611,3 @@ class Sequencer:
             if self.canReset:
                 self.prepareReset = True
 
-        elif action == "doReset":
-            self.clearSequencer()

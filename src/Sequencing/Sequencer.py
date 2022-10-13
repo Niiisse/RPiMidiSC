@@ -8,39 +8,40 @@ class Sequencer:
     def __init__(self):
 
         # Sequencer Variables
-        self.playing = False                            # Whether the sequencer is currently playing or paused
-        self.seqstep = 0                                # Current step within pattern
-        self.stepSize = config.sequencer['seqstepsize']   # Amount to increment with per step. TODO: see if this can go
-        self.sequencerSteps = config.sequencer['seqstepmax']            # Total amout of steps per pattern
-        self.previewNotesOff = []                       # List that holds notes that are to be turned off
-        self.previewNoteDuration = config.sequencer['previewNoteDuration'] # How long preview notes should play
-        self.lastUsedMidiChannel = 0                    # Last-entered MIDI channel
-        self.lastUsedLayer = 0                          # Last-entered layer
-        self.lastUsedOctave = 3                         # Last-entered octave
+        self.playing = False  # Whether the sequencer is currently playing or paused
+        self.seqstep = 0  # Current step within pattern
+        self.stepSize = config.sequencer['seqstepsize']  # Amount to increment with per step.
+        self.sequencerSteps = config.sequencer['seqstepmax']  # Total amount of steps per pattern
+        self.previewNotesOff = []  # List that holds notes that are to be turned off
+        self.previewNoteDuration = config.sequencer['previewNoteDuration']  # How long preview notes should play
+        self.lastUsedMidiChannel = 0  # Last-entered MIDI channel
+        self.lastUsedLayer = 0  # Last-entered layer
+        self.lastUsedOctave = 3  # Last-entered octave
 
         # Timer Variables
-        self.timerShouldTick = True                     # Make sequencer go brrr
-        self.tic = time.perf_counter()                  # Sets timestamp to compare against
+        self.timerShouldTick = True  # Make sequencer go brrr
+        self.tic = time.perf_counter()  # Sets timestamp to compare against
 
         # Pattern Variables
-        self.patternAmount = config.pattern['patternAmount']              # Amount of patterns
-        self.patternIndex = 1                           # Current pattern
-        self.patternChange = 0                          # Signals pattern change for next measure
-        self.pendingPattern = 0                         # Used in changing pattern
-        self.patternMode = "auto"                       # Auto loops patterns, single loops 1
+        self.patternAmount = config.pattern['patternAmount']  # Amount of patterns
+        self.patternIndex = 1  # Current pattern
+        self.patternChange = 0  # Signals pattern change for next measure
+        self.pendingPattern = 0  # Used in changing pattern
+        self.patternMode = "auto"  # Auto loops patterns, single loops 1
 
         # Sets
         self.setsAmount = 15
-        self.setIndex = 0                               # Currently active set
+        self.setIndex = 0  # Currently active set
         self.sets = [Set.Set(self.sequencerSteps, self.patternAmount) for i in range(self.setsAmount + 1)]
-        self.setRepeat = False                          # Whether sets loop or not
-        self.setChange = 0                              # For changing
+        self.setRepeat = False  # Whether sets loop or not
+        self.setChange = 0  # For changing
         self.setPending = 0
 
         # Misc
-        self.noteLayerAmount = 10       # Added this for not having to hardcode noteLayer amount when saving/loading, i think
-        self.savesTotal = 15            # Total number of saves
-        self.prepareReset = False       # Reset flag
+        # Added this for not having to hardcode noteLayer amount when saving/loading, i think
+        self.noteLayerAmount = 10
+        self.savesTotal = 15  # Total number of saves
+        self.prepareReset = False  # Reset flag
         self.canReset = True
 
         self.midiEnabled = False
@@ -103,7 +104,7 @@ class Sequencer:
         # self.sendMidi()       # Call this so the first step starts playing when unpausing
 
         # Disables canReset lockout if applicable
-        if self.canReset == False:
+        if not self.canReset:
             self.canReset = True
 
     def tickTimer(self):
@@ -307,7 +308,6 @@ class Sequencer:
         previewNote = only changed note (for previewing inputs)
         previewNote off sends all notes in current layer (normal behaviour) """
 
-
         midiData = []  # List of noteLayer objects
 
         # If preview, send only current activelayer
@@ -320,7 +320,7 @@ class Sequencer:
             # Check all noteLayers in current step, if that step is enabled; send their data, if relevant, to midi processing
             if self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep].enabled:
                 for noteLayer in self.sets[self.setIndex].patterns[self.patternIndex].steps[
-                        self.seqstep].noteLayers:
+                    self.seqstep].noteLayers:
                     midiData.append(noteLayer)
                     noteLayer.lastPlayed = (noteLayer.note, noteLayer.midiChannel)
 
@@ -364,7 +364,7 @@ class Sequencer:
         """ Saves Sequencer state into saveslot """
 
         self.saveLoad.save(index,
-                           self.setsAmount+1,
+                           self.setsAmount + 1,
                            self.sets,
                            self.setRepeat,
                            self.patternMode,
@@ -391,7 +391,8 @@ class Sequencer:
         for idx, row in enumerate(rows):
             if idx < self.setsAmount * self.patternAmount * self.noteLayerAmount * self.sequencerSteps:
                 step = self.sets[int(row['set'])].patterns[int(row['pattern'])].steps[int(row['step'])]
-                layer = self.sets[int(row['set'])].patterns[int(row['pattern'])].steps[int(row['step'])].noteLayers[int(row['layer'])]
+                layer = self.sets[int(row['set'])].patterns[int(row['pattern'])].steps[int(row['step'])].noteLayers[
+                    int(row['layer'])]
 
                 layer.arm = bool(int(row['arm']))
                 layer.midiChannel = int(row['channel'])
@@ -399,7 +400,8 @@ class Sequencer:
                 layer.note = int(row['note'])
                 layer.octave = int(row['octave'])
                 layer.sustain = bool(int(row['sustain']))
-                step.selectedLayer=[int(row['selectedLayer0']), int(row['selectedLayer1']), int(row['selectedLayer2']), int(row['selectedLayer3'])]
+                step.selectedLayer = [int(row['selectedLayer0']), int(row['selectedLayer1']),
+                                      int(row['selectedLayer2']), int(row['selectedLayer3'])]
                 step.enabled = bool(int(row['enabled']))
 
         # save lastloadedindex in load
@@ -610,4 +612,3 @@ class Sequencer:
         elif action == "prepareReset":
             if self.canReset:
                 self.prepareReset = True
-

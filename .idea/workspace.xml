@@ -1,14 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="89dd4c0b-f0e8-4caf-ab4d-a71581305da8" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Session.vim" beforeDir="false" afterPath="$PROJECT_DIR$/Session.vim" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Hardware/Midi.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hardware/Midi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Sequencing/SaveLoad.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sequencing/SaveLoad.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Sequencing/Sequencer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sequencing/Sequencer.py" afterDir="false" />
+    <list default="true" id="89dd4c0b-f0e8-4caf-ab4d-a71581305da8" name="Changes" comment="moved timing to main for now; whole update step happens on tick">
       <change beforePath="$PROJECT_DIR$/src/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/__main__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pyrightconfig.json" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +21,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
@@ -60,8 +59,16 @@
       <workItem from="1664463558050" duration="60000" />
       <workItem from="1664463631290" duration="173000" />
       <workItem from="1665661029208" duration="1488000" />
-      <workItem from="1665683324409" duration="990000" />
+      <workItem from="1665683324409" duration="1176000" />
     </task>
+    <task id="LOCAL-00001" summary="moved timing to main for now; whole update step happens on tick">
+      <created>1665684363068</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1665684363068</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -77,5 +84,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="moved timing to main for now; whole update step happens on tick" />
+    <option name="LAST_COMMIT_MESSAGE" value="moved timing to main for now; whole update step happens on tick" />
   </component>
 </project>

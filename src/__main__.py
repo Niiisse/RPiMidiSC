@@ -27,7 +27,7 @@ def update() -> None:
     if sequencer.playing:
         if sequencer.timerShouldTick:
             sequencer.timerShouldTick = False
-            sequencer.tickTimer()
+            tickTimer()
 
         # Has enough time gone by for us to tick?
         # " if current time - last tic time > bpm time" ...
@@ -40,6 +40,8 @@ def update() -> None:
 
             sequencer.processInput(InputInterface.readInputData())
             sequencer.timerShouldTick = True
+
+
 
 while running:
     try:

@@ -60,12 +60,12 @@ class MidiInterface:
         # an entry (criteria: no new note on channel but sustain is enabled), don't delete it and check next time
 
         ## DELETE OLD NOTES?
-        for idx, playedNote in enumerate(self.noteOnList):  # playedNote[0] = note; [1] = channel, [2] = noteLayer
+        for idx, note in enumerate(self.noteOnList):  # note[0] = note; [1] = channel, [2] = noteLayer
 
             try:  # FIXME: figure out why this occasionally crashes
-                if noteLayers[playedNote[2]].sustain == False:
-                    self.interface.note_off(playedNote[0], 0, playedNote[1])  # Stop playing note
-                    self.toRemove.append(playedNote)  # Add idx to removelist
+                if not noteLayers[note[2]].sustain:
+                    self.interface.note_off(note[0], note, note[1])  # Stop playing note
+                    self.toRemove.append(note)  # Add idx to removelist
 
             except:
                 pass
@@ -78,9 +78,9 @@ class MidiInterface:
 
         # Loop over received midiData
         for idx, noteLayer in enumerate(noteLayers):
-            if noteLayer.note != 0 and noteLayer.arm == True:
+            if noteLayer.note != 0 and noteLayer.arm:
                 outputNote = self.calculateNoteValue(noteLayer.note, noteLayer.octave)  # Calculate note value; store it
-                self.interface.note_on(outputNote, self.velocity, noteLayer.midiChannel)  # Play it
+                self.interface.note_on(outputNote, noteLayer.velocity, noteLayer.midiChannel)  # Play it
 
                 playedNote = [outputNote, noteLayer.midiChannel, idx]  # Save as playedNote
                 self.noteOnList.append(playedNote)  # Add to list of played notes

@@ -1,76 +1,110 @@
 class NoteLayer:
-  """Note Layer, holds all necessary note information.
+    """Note Layer, holds all necessary note information.
 
-  Allows each step to play multiple notes. There are 10 noteLayers for each step.
-  Sequencer > Set > Pattern > Step > NoteLayer"""
+    Allows each step to play multiple notes. There are 10 noteLayers for each step.
+    Sequencer > Set > Pattern > Step > NoteLayer"""
 
-  def __init__(self):
-    self.note = 0
-    self.octave = 3
-    self.midiChannel = 0
-    self.sustain = False
-    self.arm = True
-    self.lastPlayed = (0, 0)      # Used for sustain logic [0] note, [1] channel.
+    def __init__(self):
+        self.note = 0
+        self.octave = 3
+        self.midiChannel = 0
+        self.modulation = 0
+        self.velocity = 0
+        self.sustain = False
+        self.arm = True
+        self.lastPlayed = (0, 0)  # Used for sustain logic [0] note, [1] channel.
 
-  def setLastPlayed(self, data: tuple):
-    """Set last played note"""
+    def setLastPlayed(self, data: tuple):
+        """Set last played note"""
 
-    self.lastPlayed = data
+        self.lastPlayed = data
 
-  def noteUp(self):
-    """Increments current note"""
+    def noteUp(self):
+        """Increments current note"""
 
-    if self.note < 12:
-      self.note += 1
-    else:
-      self.note = 0
+        if self.note < 12:
+            self.note += 1
+        else:
+            self.note = 0
 
-  def noteDown(self):
-    """ Decrements current note"""
+    def noteDown(self):
+        """ Decrements current note"""
 
-    if self.note > 0:
-      self.note -= 1
-    else:
-      self.note = 12
+        if self.note > 0:
+            self.note -= 1
+        else:
+            self.note = 12
 
-  def octaveUp(self):
-    """Increase current octave"""
+    def octaveUp(self):
+        """Increase current octave"""
 
-    if self.octave < 9:
-      self.octave += 1
-    else:
-      self.octave = 0
+        if self.octave < 9:
+            self.octave += 1
+        else:
+            self.octave = 0
 
-  def octaveDown(self):
-    """Decrease current octave"""
+    def octaveDown(self):
+        """Decrease current octave"""
 
-    if self.octave > 0:
-      self.octave -= 1
-    else:
-      self.octave = 9
+        if self.octave > 0:
+            self.octave -= 1
+        else:
+            self.octave = 9
 
-  def channelUp(self):
-    """ Increment current midi channel. Sets last used channel if midiChannel == 0"""
+    def channelUp(self):
+        """ Increment current midi channel. Sets last used channel if midiChannel == 0"""
 
-    if self.midiChannel < 15:
-      self.midiChannel += 1
-    else:
-      self.midiChannel = 0
+        if self.midiChannel < 15:
+            self.midiChannel += 1
+        else:
+            self.midiChannel = 0
 
-  def channelDown(self):
-    """Increment current midi channel"""
+    def channelDown(self):
+        """Increment current midi channel"""
 
-    if self.midiChannel > 0:
-      self.midiChannel -= 1
-    else:
-      self.midiChannel = 15
+        if self.midiChannel > 0:
+            self.midiChannel -= 1
+        else:
+            self.midiChannel = 15
 
-  def toggleSustain(self):
-    """ Toggles sustain on/off"""
+    def velocityUp(self):
+        """ Increment current velocity. """
 
-    self.sustain = False if self.sustain else True
+        if self.velocity < 254:
+            self.velocity += 2
+        # else:
+        #   self.velocity = 0
 
-  def toggleArm(self):
-    """ Toggles arm on/off; disabled arm will show notes but not play them"""
+    def velocityDown(self):
+        """Increment current velocity"""
 
-    self.arm = False if self.arm else True
+        if self.velocity > 0:
+            self.velocity -= 2
+        # else:
+        #   self.velocity = 255
+
+    def modulationUp(self):
+        """ Increment current modulation. """
+
+        if self.modulation < 254:
+            self.modulation += 2
+        # else:
+        #   self.modulation = 0
+
+    def modulationDown(self):
+        """Increment current modulation"""
+
+        if self.modulation > 0:
+            self.modulation -= 2
+        # else:
+        #   self.modulation = 255
+
+    def toggleSustain(self):
+        """ Toggles sustain on/off """
+
+        self.sustain = False if self.sustain else True
+
+    def toggleArm(self):
+        """ Toggles arm on/off; disabled arm will show notes but not play them"""
+
+        self.arm = False if self.arm else True

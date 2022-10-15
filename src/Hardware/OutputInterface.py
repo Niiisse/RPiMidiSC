@@ -8,7 +8,7 @@ class OutputInterface:
     self.hardwareEnabled = False
 
     if config.general['hardware_enabled']:
-      import Hardware.HardwareInterface as HWi
+      import Hardware.HardwarenoteInterface as HWi
       self.sr = HWi.ShiftRegister(21, 20, 16)
       self.hardwareEnabled = True
 

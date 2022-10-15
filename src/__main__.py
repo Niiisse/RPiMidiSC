@@ -14,6 +14,7 @@ ui = NewUi()
 
 running = True
 
+
 def tickTimer():
     # 'Ticks' timer; sets new timestamp for comparison
 
@@ -42,7 +43,6 @@ def update() -> None:
             sequencer.timerShouldTick = True
 
 
-
 while running:
     try:
         update()
@@ -59,5 +59,3 @@ while running:
 
 outputInterface.outputShutdown()  # midi disable
 sys.exit(0)
-
-

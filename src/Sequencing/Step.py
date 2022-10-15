@@ -1,5 +1,6 @@
 from . import NoteLayer
 
+
 # Step Class
 #
 # Holds pattern's associated step data.
@@ -13,60 +14,61 @@ from . import NoteLayer
 
 class Step():
 
-  def __init__(self):
-    self.enabled = True
-    self.noteLayerAmount = 10
-    self.noteLayers = [NoteLayer.NoteLayer() for i in range(self.noteLayerAmount)]
-    self.selectedLayer = [0, 1, 2, 3] # FIXME: move to sequencer, remove list
+    def __init__(self):
+        self.enabled = True
+        self.noteLayerAmount = 10
+        self.noteLayers = [NoteLayer.NoteLayer() for i in range(self.noteLayerAmount)]
+        self.selectedLayer = [0, 1, 2, 3]  # FIXME: move to sequencer, remove list
 
-  def disableStep(self):
-    # Disables step
+    def disableStep(self):
+        # Disables step
 
-    if self.enabled:
-      self.enabled = False
+        if self.enabled:
+            self.enabled = False
 
-  def enableStep(self):
-    # Enable step
+    def enableStep(self):
+        # Enable step
 
-    if not self.enabled:
-      self.enabled = True
+        if not self.enabled:
+            self.enabled = True
 
-  def toggleStep(self):
-    # Toggles enable/disable
+    def toggleStep(self):
+        # Toggles enable/disable
 
-    if self.enabled:
-      self.enabled = False
-    else:
-      self.enabled = True
+        if self.enabled:
+            self.enabled = False
+        else:
+            self.enabled = True
 
-  def getState(self):
-    # Gets state of enabled
+    def getState(self):
+        # Gets state of enabled
 
-    return self.enabled
+        return self.enabled
 
-  def layerUp(self):
-    # Changes note layer. TODO: multiple NCM support goes here, eventually
+    def layerUp(self):
+        # Changes note layer.
 
-    if self.selectedLayer[0] < 9:
-      self.selectedLayer[0] += 1
-    else:
-      self.selectedLayer[0] = 0
+        if self.selectedLayer[0] < 9:
+            self.selectedLayer[0] += 1
+        else:
+            self.selectedLayer[0] = 0
 
-  def layerDown(self):
-    # Changes note layer. TODO: multiple NCM support goes here, eventually
+    def layerDown(self):
+        # Changes note layer.
 
-    if self.selectedLayer[0] > 0:
-      self.selectedLayer[0] -= 1
-    else:
-      self.selectedLayer[0] = 9
+        if self.selectedLayer[0] > 0:
+            self.selectedLayer[0] -= 1
+        else:
+            self.selectedLayer[0] = 9
 
-  def checkOtherLayers(self):
-    # Looks thru other layers and sees if a note is active, if so, show LED
-    output = False
+    def checkOtherLayers(self):
+        # Looks thru other layers and sees if a note is active, if so, show LED
 
-    for x in range(10):                                                                     # Loop over all layers
-      if x != self.selectedLayer[0]:                                                        # Exclude self
-        if self.noteLayers[x].note != 0 or self.noteLayers[x].sustain:            # No other notes and sustain is off?
-          output = True
+        output = False
 
-    return output
+        for x in range(10):  # Loop over all layers
+            if x != self.selectedLayer[0]:  # Exclude self
+                if self.noteLayers[x].note != 0 or self.noteLayers[x].sustain:  # No other notes and sustain is off?
+                    output = True
+
+        return output

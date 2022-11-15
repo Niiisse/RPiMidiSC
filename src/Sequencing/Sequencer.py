@@ -144,6 +144,7 @@ class Sequencer:
 
         self.sendMidi(True)
 
+
     def noteUp(self):
         """ Change note up event
 

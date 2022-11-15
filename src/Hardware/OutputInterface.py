@@ -197,6 +197,15 @@ class OutputInterface:
 
     return setString
 
+  def generateNmmData(self, velocity: int, modulation: int, led1: bool, led2: bool, led3: bool, led4: bool) -> str:
+    """ Creates output for note modulation module. Needs to shuffle things around due to wiring """
+
+    # First, create data
+
+
+    # Shuffle data around to match output
+
+
   def convertDecimalToByteString(self, decimal: int) -> str:
     """ Convert decimal to 7-segment display output data """
 

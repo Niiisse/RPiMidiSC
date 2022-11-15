@@ -1,7 +1,7 @@
 general = {
   "version": "v0.3.0",     # General version nr
   "hardware_enabled": True,    # Whether to enable or disable the hardware interface
-  "midiEnabled": True,         # Whether to enable MIDI output
+  "midiEnabled": False,         # Whether to enable MIDI output
   "blinkTime": 0.25             # Blinking time duration
 }
 

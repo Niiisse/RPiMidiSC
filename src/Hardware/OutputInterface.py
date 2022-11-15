@@ -51,6 +51,8 @@ class OutputInterface:
             outputString += self.generatePlayStatusData(sequencer.playing, sequencer.patternMode, sequencer.saveIndex)
             outputString += self.generateSetData(sequencer.setIndex, sequencer.setChange, sequencer.setPending,
                                                  sequencer.setRepeat)
+            outputString += self.generateNmmData()
+
 
             return outputString
 
@@ -205,7 +207,7 @@ class OutputInterface:
 
         return setString
 
-    def generateNmmData(self, velocity: int, modulation: int, led1: bool, led2: bool, led3: bool, led4: bool) -> str:
+    def generateNmmData(self) -> str:
         """ Creates output for note modulation module. Needs to shuffle things around due to wiring """
 
         # TODO: currently only generating test output data. Write, like, actual code here at some point
@@ -219,6 +221,8 @@ class OutputInterface:
         # Shuffle data around to match output
         outputString = velocityString[0:4] + velocityString2[0:4] + velocityString[3:7] + velocityString2[3:7]
         outputString += modulationString[0:4] + modulationString2[0:4] + modulationString[3:7] + modulationString2[3:7]
+
+        return outputString
 
 
     def convertDecimalToByteString(self, decimal: int) -> str:

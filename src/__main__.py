@@ -13,7 +13,7 @@ sequencer = Sequencer()
 outputInterface = OutputInterface()
 ui = NewUi()
 
-# sequencer.togglePlay() # FIXME: FOR TESTING
+sequencer.togglePlay()  # FIXME: FOR TESTING
 
 running = True
 

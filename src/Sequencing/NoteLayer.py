@@ -8,6 +8,8 @@ class NoteLayer:
     self.note = 0
     self.octave = 3
     self.midiChannel = 0
+    self.velocity = 0
+    self.modulation = 0
     self.sustain = False
     self.arm = True
     self.lastPlayed = (0, 0)      # Used for sustain logic [0] note, [1] channel.

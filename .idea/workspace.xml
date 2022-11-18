@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d47b885-9ffc-4ac5-a3e3-b4e2aaf12bc1" name="Changes" comment="velocity and modulation displays should now display FF">
+    <list default="true" id="2d47b885-9ffc-4ac5-a3e3-b4e2aaf12bc1" name="Changes" comment="idk what i was thinking but now it should *actually* do something">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Hardware/OutputInterface.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hardware/OutputInterface.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Hardware/Midi.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hardware/Midi.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Sequencing/NoteLayer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sequencing/NoteLayer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/__main__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +30,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="modulation-module" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -46,19 +49,23 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "/mnt/pi/RPiMidiSC",
-    "node.js.selected.package.tslint": "(autodetect)"
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="89dd4c0b-f0e8-4caf-ab4d-a71581305da8" name="Changes" comment="" />
+      <changelist id="2d47b885-9ffc-4ac5-a3e3-b4e2aaf12bc1" name="Changes" comment="idk what i was thinking but now it should *actually* do something" />
       <created>1659341821975</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1659341821975</updated>
       <workItem from="1659341823213" duration="160000" />
       <workItem from="1659345438713" duration="89000" />
+      <workItem from="1668774443246" duration="2272000" />
     </task>
     <task id="LOCAL-00001" summary="init commit before work">
       <created>1668515648080</created>
@@ -74,7 +81,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668516132897</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="idk what i was thinking but now it should *actually* do something">
+      <created>1668516663567</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1668516663567</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -94,6 +108,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="init commit before work" />
     <MESSAGE value="velocity and modulation displays should now display FF" />
-    <option name="LAST_COMMIT_MESSAGE" value="velocity and modulation displays should now display FF" />
+    <MESSAGE value="idk what i was thinking but now it should *actually* do something" />
+    <option name="LAST_COMMIT_MESSAGE" value="idk what i was thinking but now it should *actually* do something" />
   </component>
 </project>

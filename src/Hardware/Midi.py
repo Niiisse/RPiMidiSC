@@ -79,9 +79,9 @@ class MidiInterface:
             if noteLayer.note != 0 and noteLayer.arm == True:
                 outputNote = self.calculateNoteValue(noteLayer.note, noteLayer.octave)  # Calculate note value; store it
                 self.interface.note_on(outputNote, self.velocity, noteLayer.midiChannel)  # Play it
-                print("OUTPUT note {}, octave {}, channel {}, vel {}, mod {}".
+                print("OUTPUT note {}, octave {}, channel {}, vel {}, mod {}, on layer {}".
                       format(outputNote, noteLayer.octave, noteLayer.midiChannel, noteLayer.velocity,
-                             noteLayer.modulation))
+                             noteLayer.modulation, idx))
 
                 playedNote = [outputNote, noteLayer.midiChannel, idx]  # Save as playedNote
                 self.noteOnList.append(playedNote)  # Add to list of played notes

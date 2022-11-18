@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d47b885-9ffc-4ac5-a3e3-b4e2aaf12bc1" name="Changes" comment="idk what i was thinking but now it should *actually* do something">
+    <list default="true" id="2d47b885-9ffc-4ac5-a3e3-b4e2aaf12bc1" name="Changes" comment="added debug data on note output (only outputs with hw enabled)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Hardware/Midi.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hardware/Midi.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Sequencing/NoteLayer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sequencing/NoteLayer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/__main__.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/__main__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +62,7 @@
       <updated>1659341821975</updated>
       <workItem from="1659341823213" duration="160000" />
       <workItem from="1659345438713" duration="89000" />
-      <workItem from="1668774443246" duration="2272000" />
+      <workItem from="1668774443246" duration="2967000" />
     </task>
     <task id="LOCAL-00001" summary="init commit before work">
       <created>1668515648080</created>
@@ -88,7 +85,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668516663567</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="added debug data on note output (only outputs with hw enabled)">
+      <created>1668781959035</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1668781959035</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -109,6 +113,7 @@
     <MESSAGE value="init commit before work" />
     <MESSAGE value="velocity and modulation displays should now display FF" />
     <MESSAGE value="idk what i was thinking but now it should *actually* do something" />
-    <option name="LAST_COMMIT_MESSAGE" value="idk what i was thinking but now it should *actually* do something" />
+    <MESSAGE value="added debug data on note output (only outputs with hw enabled)" />
+    <option name="LAST_COMMIT_MESSAGE" value="added debug data on note output (only outputs with hw enabled)" />
   </component>
 </project>

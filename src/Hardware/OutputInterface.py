@@ -49,12 +49,13 @@ class OutputInterface:
 
             outputString += self.generatePlayStatusData(sequencer.playing, sequencer.patternMode, sequencer.saveIndex)
 
+            outputString += self.generateSetData(sequencer.setIndex, sequencer.setChange, sequencer.setPending,
+                                                 sequencer.setRepeat)
+
             outputString += self.generateNoteControlModuleData(sequencer.sets, sequencer.setIndex,
                                                                sequencer.patternIndex, sequencer.seqstep)
 
 
-            outputString += self.generateSetData(sequencer.setIndex, sequencer.setChange, sequencer.setPending,
-                                                 sequencer.setRepeat)
 
             outputString += self.generateNmmData()
 

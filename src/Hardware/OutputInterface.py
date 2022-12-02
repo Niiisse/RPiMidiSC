@@ -3,6 +3,33 @@ from Sequencing.Sequencer import Sequencer
 import config
 
 
+def convertDecimalToByteString(decimal: int) -> str:
+    """ Convert decimal to 7-segment display output data """
+
+    numericArr = [  # Stores the numeric display bytes
+        0b10000001,  # 0
+        0b11101101,  # 1
+        0b01000011,  # 2
+        0b01001001,  # 3
+        0b00101101,  # 4
+        0b00011001,  # 5
+        0b00010001,  # 6
+        0b11001101,  # 7
+        0b00000001,  # 8
+        0b00001001,  # 9
+        0b00000101,  # 10 / A
+        0b00110001,  # 11 / b
+        0b01110011,  # 12 / C
+        0b01100001,  # 13 / d
+        0b00010011,  # 14 / E
+        0b00010111  # 15 / F
+    ]
+
+    byteString = format(numericArr[decimal], '08b')
+
+    return byteString
+
+
 class OutputInterface:
 
     def __init__(self):
@@ -75,7 +102,7 @@ class OutputInterface:
             bpmString = "0" + bpmString
 
         for i in range(3):  # Sends individual number off to get the bytestring
-            tempString = self.convertDecimalToByteString(int(bpmString[i]))
+            tempString = convertDecimalToByteString(int(bpmString[i]))
 
             bpmOutput = bpmOutput + tempString
 
@@ -95,7 +122,7 @@ class OutputInterface:
             patternStepString = "0" + patternStepString
 
             for i in range(2):
-                tempString = self.convertDecimalToByteString(int(patternStepString[i]))
+                tempString = convertDecimalToByteString(int(patternStepString[i]))
                 patternStepOutput = patternStepOutput + tempString
 
                 # Should we blink?
@@ -142,13 +169,13 @@ class OutputInterface:
         currentStep = sets[setIndex].patterns[patternIndex].steps[seqstep]
 
         noteString = self.convertDecimalToNote(currentStep.noteLayers[currentStep.selectedLayer[0]].note)
-        layerString = self.convertDecimalToByteString(currentStep.selectedLayer[0])
-        channelString = self.convertDecimalToByteString(
+        layerString = convertDecimalToByteString(currentStep.selectedLayer[0])
+        channelString = convertDecimalToByteString(
             currentStep.noteLayers[currentStep.selectedLayer[0]].midiChannel)
 
         if currentStep.noteLayers[currentStep.selectedLayer[0]].note != 0:
             # Checks whether it should display the values or write - (in case of disabled note)
-            octaveString = self.convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].octave)
+            octaveString = convertDecimalToByteString(currentStep.noteLayers[currentStep.selectedLayer[0]].octave)
 
         else:
             octaveString = "01111111"
@@ -200,7 +227,7 @@ class OutputInterface:
 
         setString = setIndex if setChange == 0 else setPending
 
-        setString = self.convertDecimalToByteString(setString)
+        setString = convertDecimalToByteString(setString)
 
         # Should we blink?
         if setChange != 0:
@@ -226,32 +253,6 @@ class OutputInterface:
         outputString += modulationString[0:4] + modulationString2[0:4] + modulationString[3:7] + modulationString2[3:7]
 
         return outputString
-
-    def convertDecimalToByteString(self, decimal: int) -> str:
-        """ Convert decimal to 7-segment display output data """
-
-        numericArr = [  # Stores the numeric display bytes
-            0b10000001,  # 0
-            0b11101101,  # 1
-            0b01000011,  # 2
-            0b01001001,  # 3
-            0b00101101,  # 4
-            0b00011001,  # 5
-            0b00010001,  # 6
-            0b11001101,  # 7
-            0b00000001,  # 8
-            0b00001001,  # 9
-            0b00000101,  # 10 / A
-            0b00110001,  # 11 / b
-            0b01110011,  # 12 / C
-            0b01100001,  # 13 / d
-            0b00010011,  # 14 / E
-            0b00010111  # 15 / F
-        ]
-
-        byteString = format(numericArr[decimal], '08b')
-
-        return byteString
 
     def convertDecimalToNote(self, decimal: int) -> str:
         """ Converts note number to 7-segment display note representation """

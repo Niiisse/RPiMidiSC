@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d47b885-9ffc-4ac5-a3e3-b4e2aaf12bc1" name="Changes" comment="append set data">
+    <list default="true" id="2d47b885-9ffc-4ac5-a3e3-b4e2aaf12bc1" name="Changes" comment="append nmm test data">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Hardware/InputInterface.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hardware/InputInterface.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Hardware/OutputInterface.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hardware/OutputInterface.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Hardware/ShiftInput.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hardware/ShiftInput.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,6 +65,9 @@
       <workItem from="1659341823213" duration="160000" />
       <workItem from="1659345438713" duration="89000" />
       <workItem from="1668774443246" duration="2967000" />
+      <workItem from="1669549303665" duration="2739000" />
+      <workItem from="1669834181319" duration="22000" />
+      <workItem from="1669913800351" duration="1632000" />
     </task>
     <task id="LOCAL-00001" summary="init commit before work">
       <created>1668515648080</created>
@@ -106,7 +111,14 @@
       <option name="project" value="LOCAL" />
       <updated>1668791078836</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="append nmm test data">
+      <created>1668791565779</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1668791565779</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -130,6 +142,7 @@
     <MESSAGE value="added debug data on note output (only outputs with hw enabled)" />
     <MESSAGE value="Output gcm data after first module data" />
     <MESSAGE value="append set data" />
-    <option name="LAST_COMMIT_MESSAGE" value="append set data" />
+    <MESSAGE value="append nmm test data" />
+    <option name="LAST_COMMIT_MESSAGE" value="append nmm test data" />
   </component>
 </project>

@@ -151,8 +151,8 @@ def readInputData() -> str:
         # new mod
         # 16
         # 17
-        # 18
-        # 19
+        # 18 note down
+        # 19 note up
         # 20
         # 21
         # 22
@@ -183,83 +183,88 @@ def readInputData() -> str:
         # Read inputs; set debouncing state
         hwInput = shiftInput.readData()
 
-        btnCurrentNoteUp = hwInput[0]
-        noteUpDb.setState(btnCurrentNoteUp, True)
-
-        btnCurrentNoteDown = hwInput[1]
-        noteDownDb.setState(btnCurrentNoteDown, True)
-
-        btnNoteLayerDown = hwInput[2]
-        layerDownDb.setState(btnNoteLayerDown, True)
-
-        btnOctaveDown = hwInput[3]
-        octaveDownDb.setState(btnOctaveDown, True)
-
-        btnMidiChannelDown = hwInput[4]
-        channelDownDb.setState(btnMidiChannelDown, True)
-
-        btnSustain = hwInput[5]
-        sustainDb.setState(btnSustain, True)
-
-        btnArm = hwInput[6]
-        armDb.setState(btnArm, True)
-
-        btnMidiChannelUp = hwInput[7]
-        channelUpDb.setState(btnMidiChannelUp, True)
-
-        btnOctaveUp = hwInput[8]
-        octaveUpDb.setState(btnOctaveUp, True)
-
-        btnNoteLayerUp = hwInput[9]
-        layerUpDb.setState(btnNoteLayerUp, True)
-
-        btnPatternToggle = hwInput[10]
+        btnPatternToggle = hwInput[0]
         patternModeToggleDb.setState(btnPatternToggle, True)
 
-        btnPatternDown = hwInput[11]
+        btnPatternDown = hwInput[1]
         patternDownDb.setState(btnPatternDown, True)
 
-        btnStepDown = hwInput[12]
+        btnStepDown = hwInput[2]
         stepDownDb.setState(btnStepDown, True)
 
-        btnSaveDown = hwInput[13]
+        btnSaveDown = hwInput[3]
         saveDownDb.setState(btnSaveDown, True)
 
-        btnSaveUp = hwInput[14]
+        btnSaveUp = hwInput[4]
         saveUpDb.setState(btnSaveUp, True)
 
-        btnStepUp = hwInput[15]
+        btnStepUp = hwInput[5]
         stepUpDb.setState(btnStepUp, True)
 
-        btnPatternUp = hwInput[16]
+        btnPatternUp = hwInput[6]
         patternUpDb.setState(btnPatternUp, True)
 
-        btnPlay = hwInput[17]
+        btnPlay = hwInput[7]
         playDb.setState(btnPlay, True)
 
-        btnSetDown = hwInput[18]
+        btnSetDown = hwInput[8]
         setDownDb.setState(btnSetDown, True)
 
-        btnReset = hwInput[19]
+        btnReset = hwInput[9]
         resetDb.setState(btnReset, True)
 
-        btnBpmDown = hwInput[20]
+        btnBpmDown = hwInput[10]
         bpmDownDb.setState(btnBpmDown, True)
 
-        btnSave = hwInput[21]
+        btnSave = hwInput[11]
         saveDb.setState(btnSave, True)
 
-        btnLoad = hwInput[22]
+        btnLoad = hwInput[12]
         loadDb.setState(btnLoad, True)
 
-        btnBpmUp = hwInput[23]
+        btnBpmUp = hwInput[13]
         bpmUpDb.setState(btnBpmUp, True)
 
-        btnSetRepeat = hwInput[24]
+        btnSetRepeat = hwInput[14]
         setRepeatDb.setState(btnSetRepeat, True)
 
-        btnSetUp = hwInput[25]
+        btnSetUp = hwInput[15]
         setUpDb.setState(btnSetUp, True)
+
+        # ...
+
+        btnCurrentNoteUp = hwInput[18]
+        noteUpDb.setState(btnCurrentNoteUp, True)
+
+        btnCurrentNoteDown = hwInput[19]
+        noteDownDb.setState(btnCurrentNoteDown, True)
+
+        # ...
+
+        btnNoteLayerDown = hwInput[32]
+        layerDownDb.setState(btnNoteLayerDown, True)
+
+        btnOctaveDown = hwInput[33]
+        octaveDownDb.setState(btnOctaveDown, True)
+
+        btnMidiChannelDown = hwInput[34]
+        channelDownDb.setState(btnMidiChannelDown, True)
+
+        btnSustain = hwInput[35]
+        sustainDb.setState(btnSustain, True)
+
+        btnArm = hwInput[36]
+        armDb.setState(btnArm, True)
+
+        btnMidiChannelUp = hwInput[37]
+        channelUpDb.setState(btnMidiChannelUp, True)
+
+        btnOctaveUp = hwInput[38]
+        octaveUpDb.setState(btnOctaveUp, True)
+
+        btnNoteLayerUp = hwInput[39]
+        layerUpDb.setState(btnNoteLayerUp, True)
+
 
         # Output returns
         if btnCurrentNoteUp == '1' and noteUpDb.checkDebounce():

@@ -11,9 +11,9 @@ class ShiftInput:
         self.OCTAVEUP = 6
         self.OCTAVEDOWN = 12
 
-        self.SERIAL = 13                # Input serial
-        self.CLOCK = 11
-        self.PLOAD = 9                  # Equivalent to LATCH
+        self.SERIAL = 13  # Input serial
+        self.CLOCK = 9
+        self.PLOAD = 11  # Equivalent to LATCH
 
         # old = ''
         GPIO.setup(self.SERIAL, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
@@ -47,13 +47,12 @@ class ShiftInput:
     def readData(self):
         """ Reads data from input shift registers """
 
-
         receivedByte = ''
 
         self.loadData()
 
-        ocUp = GPIO.input(self.OCTAVEUP)
-        ocDown = GPIO.input(self.OCTAVEDOWN)
+        # ocUp = GPIO.input(self.OCTAVEUP)
+        # ocDown = GPIO.input(self.OCTAVEDOWN)
 
         for x in range(40):
             i = GPIO.input(self.SERIAL)
@@ -61,6 +60,5 @@ class ShiftInput:
 
             self.tick()
 
-        output = str(ocUp) + str(ocDown) + receivedByte
-
-        return output
+        # output = str(ocUp) + str(ocDown) + receivedByte
+        return receivedByte

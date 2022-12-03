@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d47b885-9ffc-4ac5-a3e3-b4e2aaf12bc1" name="Changes" comment="work on re-input">
+    <list default="true" id="2d47b885-9ffc-4ac5-a3e3-b4e2aaf12bc1" name="Changes" comment="new button layout implemented">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Hardware/InputInterface.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hardware/InputInterface.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Hardware/ShiftInput.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hardware/ShiftInput.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +67,7 @@
       <workItem from="1669834181319" duration="22000" />
       <workItem from="1669913800351" duration="1632000" />
       <workItem from="1669978586222" duration="58000" />
-      <workItem from="1670065855876" duration="824000" />
+      <workItem from="1670065855876" duration="1286000" />
     </task>
     <task id="LOCAL-00001" summary="init commit before work">
       <created>1668515648080</created>
@@ -125,7 +125,14 @@
       <option name="project" value="LOCAL" />
       <updated>1669978605238</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="new button layout implemented">
+      <created>1670066702264</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1670066702264</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -151,6 +158,7 @@
     <MESSAGE value="append set data" />
     <MESSAGE value="append nmm test data" />
     <MESSAGE value="work on re-input" />
-    <option name="LAST_COMMIT_MESSAGE" value="work on re-input" />
+    <MESSAGE value="new button layout implemented" />
+    <option name="LAST_COMMIT_MESSAGE" value="new button layout implemented" />
   </component>
 </project>

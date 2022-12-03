@@ -12,8 +12,8 @@ class ShiftInput:
     self.OCTAVEDOWN = 12
 
     self.SERIALNCM = 13        # Input for NCM(s)
-    self.CLOCK = 9            # 
-    self.PLOAD = 11            # Equivalent to LATCH?
+    self.CLOCK = 11 
+    self.PLOAD = 9             # Equivalent to LATCH?
 
     #old = ''
     GPIO.setup(self.SERIALNCM, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
@@ -24,25 +24,22 @@ class ShiftInput:
     GPIO.setup(self.CLOCK, GPIO.OUT)
 
     GPIO.output(self.PLOAD, 1)
-    
     GPIO.output(self.CLOCK, 0)
 
   # Pulses the latch pin - write the output to data lines
   def loadData(self):
     GPIO.output(self.PLOAD, 0)
 
-    time.sleep(0.0001)
+    time.sleep(0.001)
     
     GPIO.output(self.PLOAD, 1)
 
   # Pulses clock to shift bits
   def tick(self):
     GPIO.output(self.CLOCK, 0)
-
     GPIO.output(self.CLOCK, 1)
 
     time.sleep(0.0001)
-
     GPIO.output(self.CLOCK, 0)
 
   def readData(self):
@@ -52,7 +49,6 @@ class ShiftInput:
     16 ticks for input of GCM """
 
     receivedByte = ''
-
     self.loadData()
     
     #GPIO.output(self.CLOCKENABLE, 0)
@@ -61,19 +57,13 @@ class ShiftInput:
     ocDown = GPIO.input(self.OCTAVEDOWN)
 
     for x in range(40):
-        i = GPIO.input(self.SERIALNCM)
-        receivedByte += str(i)
+      i = GPIO.input(self.SERIALNCM)
+      receivedByte += str(i)
 
-        self.tick()
+      self.tick()
 
-    #for x in range(16):
-    #  o = GPIO.input(self.SERIALGCM)
-    #  receivedGCMByte += str(o)
-      
-    #  self.tick()
+    output = str(ocUp) + str(ocDown) + receivedByte
 
-
-    output = str(ocUp) + str(ocDown) + receivedByte 
     return output
 
 shiftInput = ShiftInput()

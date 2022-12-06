@@ -233,10 +233,10 @@ def readInputData() -> str:
 
         # ...
 
-        btnCurrentNoteUp = hwInput[18]
+        btnCurrentNoteUp = hwInput[16]
         noteUpDb.setState(btnCurrentNoteUp, True)
 
-        btnCurrentNoteDown = hwInput[19]
+        btnCurrentNoteDown = hwInput[17]
         noteDownDb.setState(btnCurrentNoteDown, True)
 
         # ...

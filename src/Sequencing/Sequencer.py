@@ -560,11 +560,13 @@ class Sequencer:
 
         # Sustain
         elif action == "toggleSustain":
+            print("Toggling sustain")
             currentStep = self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep]
             currentStep.noteLayers[currentStep.selectedLayer[0]].toggleSustain()
 
         # Arm
         elif action == "toggleArm":
+            print("Toggling arm")
             currentStep = self.sets[self.setIndex].patterns[self.patternIndex].steps[self.seqstep]
             currentStep.noteLayers[currentStep.selectedLayer[0]].toggleArm()
 

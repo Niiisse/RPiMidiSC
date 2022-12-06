@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2d47b885-9ffc-4ac5-a3e3-b4e2aaf12bc1" name="Changes" comment="new button layout implemented">
+    <list default="true" id="2d47b885-9ffc-4ac5-a3e3-b4e2aaf12bc1" name="Changes" comment="updated input hardware interface">
+      <change afterPath="$PROJECT_DIR$/ProjectManagement/Experiments/shiftInputNew.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Hardware/ShiftInput.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Hardware/ShiftInput.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectManagement/Experiments/shiftInput.py" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectManagement/Experiments/shiftInput.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -40,18 +42,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/mnt/pi/RPiMidiSC&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/nisse/code/RPiMidiSC/ProjectManagement/Experiments",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   }
-}</component>
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ProjectManagement/Experiments" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -67,7 +74,8 @@
       <workItem from="1669834181319" duration="22000" />
       <workItem from="1669913800351" duration="1632000" />
       <workItem from="1669978586222" duration="58000" />
-      <workItem from="1670065855876" duration="1286000" />
+      <workItem from="1670065855876" duration="3351000" />
+      <workItem from="1670333439253" duration="257000" />
     </task>
     <task id="LOCAL-00001" summary="init commit before work">
       <created>1668515648080</created>
@@ -132,7 +140,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670066702264</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="updated input hardware interface">
+      <created>1670067155123</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1670067155123</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -159,6 +174,7 @@
     <MESSAGE value="append nmm test data" />
     <MESSAGE value="work on re-input" />
     <MESSAGE value="new button layout implemented" />
-    <option name="LAST_COMMIT_MESSAGE" value="new button layout implemented" />
+    <MESSAGE value="updated input hardware interface" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated input hardware interface" />
   </component>
 </project>

@@ -5,6 +5,7 @@
 .idea
 *.pyc
 
+workspace.xml
 
 src/Session.vim
 src/Session.vim.35846.obsession~

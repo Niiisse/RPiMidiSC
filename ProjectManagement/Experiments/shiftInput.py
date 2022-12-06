@@ -43,7 +43,7 @@ class ShiftInput:
 
     time.sleep(0.0001)
 
-    GPIO.output(self.CLOCK, 0)
+    GPIO.output(self.CLOCK, ft0)
 
   def readData(self):
     """ Reads data from input shift registers

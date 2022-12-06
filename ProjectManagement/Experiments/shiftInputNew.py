@@ -58,9 +58,9 @@ class ShiftInput:
         for x in range(40):
             idx += 1
             i = GPIO.input(self.SERIALNCM)
-            receivedByte += str(idx) + ", "
             if i:
                 highFlag = True
+                receivedByte += str(idx) + ", "
 
             self.tick()
 

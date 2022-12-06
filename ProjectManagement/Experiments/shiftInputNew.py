@@ -60,7 +60,7 @@ class ShiftInput:
         for x in range(40):
             i = GPIO.input(self.SERIALNCM)
             receivedByte += str(x) + ", "
-
+            print(i)
             if i:
                 self.highFlag = True
 
@@ -70,6 +70,7 @@ class ShiftInput:
 
 
 shiftInput = ShiftInput()
+print("Starting")
 
 while True:
     # Get input, print IDs if any input is high

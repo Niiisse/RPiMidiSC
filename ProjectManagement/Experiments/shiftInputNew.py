@@ -74,5 +74,6 @@ while True:
     # Get input, print IDs if any input is high
     if shiftInput.readData()[0]:
         print(shiftInput.readData()[1])
+        time.sleep(2)
 
     time.sleep(0.05)

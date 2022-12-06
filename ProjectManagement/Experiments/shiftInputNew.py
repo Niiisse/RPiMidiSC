@@ -54,7 +54,7 @@ class ShiftInput:
 
         self.loadData()
 
-        for x, idx in range(40):
+        for idx, x in range(40):
             i = GPIO.input(self.SERIALNCM)
             receivedByte += str(idx) + ", "
             if i:

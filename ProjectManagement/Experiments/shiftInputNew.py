@@ -4,6 +4,7 @@ import time
 
 class ShiftInput:
     highFlag = False
+    receivedData = ''
 
     def __init__(self):
 
@@ -45,28 +46,23 @@ class ShiftInput:
 
         time.sleep(0.0001)
 
-        GPIO.output(self.CLOCK, ft0)
+        GPIO.output(self.CLOCK, 0)
 
     def readData(self):
-        """ Reads data from input shift registers
-
-        Two seperate for loops: 8 ticks for NCM (8 ticks * NCM count)
-        16 ticks for input of GCM """
-
         receivedByte = ''
+        highFlag = False
 
         self.loadData()
 
-        for x in range(40):
+        for x, idx in range(40):
             i = GPIO.input(self.SERIALNCM)
-            receivedByte += str(x) + ", "
-            print(i)
+            receivedByte += str(idx) + ", "
             if i:
-                self.highFlag = True
+                highFlag = True
 
             self.tick()
 
-        return receivedByte
+        return [highFlag, receivedByte]
 
 
 shiftInput = ShiftInput()
@@ -74,8 +70,8 @@ print("Starting")
 
 while True:
     # Get input, print IDs if any input is high
-    if shiftInput.highFlag:
-        print(shiftInput.readData())
-        shiftInput.highFlag = False
+    if shiftInput.readData()[0]:
+        print(shiftInput.readData()[1])
+
 
     time.sleep(0.05)

@@ -30,6 +30,78 @@ def convertDecimalToByteString(decimal: int) -> str:
     return byteString
 
 
+def convertDecimalToNote(decimal: int) -> str:
+    """ Converts note number to 7-segment display note representation """
+
+    noteArr = [  # Stores the numeric display bytes
+        0b01111110,  # -
+        0b01110010,  # C
+        0b01110011,  # C#
+        0b01100000,  # D
+        0b01100001,  # D#
+        0b00010010,  # E
+        0b00010110,  # F
+        0b00010111,  # F#
+        0b10010000,  # G
+        0b10010001,  # G#
+        0b00000100,  # A
+        0b00000101,  # A#
+        0b00110000,  # B
+    ]
+
+    byteString = format(noteArr[decimal], '08b')
+
+    return byteString
+
+
+def binarySaveCounter(index: int) -> str:
+    """ Convert save index decimal to LED output string """
+
+    saveArr = [
+        0b0001,  # 1
+        0b0010,  # 2
+        0b0011,  # 3
+        0b0100,  # 4
+        0b0101,  # 5
+        0b0110,  # 6
+        0b0111,  # 7
+        0b1000,  # 8
+        0b1001,  # 9
+        0b1010,  # 10
+        0b1011,  # 11
+        0b1100,  # 12
+        0b1101,  # 13
+        0b1110,  # 14
+        0b1111,  # 15
+        0b0000  # 16
+    ]
+
+    return format(saveArr[index], '04b')
+
+
+def convertHexStringToByteString(hexChar: str) -> str:
+    hexDict = {
+        "0": "10000001",  # 0
+        "1": "11101101",  # 1
+        "2": "01000011",  # 2
+        "3": "01001001",  # 3
+        "4": "00101101",  # 4
+        "5": "00010001",  # 6
+        "6": "00011001",  # 5
+        "7": "11001101",  # 7
+        "8": "00000001",  # 8
+        "9": "00001001",  # 9
+        "a": "00000101",  # 10 / A
+        "b": "00110001",  # 11 / b
+        "c": "01110011",  # 12 / C
+        "d": "01100001",  # 13 / d
+        "e": "00010011",  # 14 / E
+        "f": "00010111"  # 15 / F
+    }
+
+    return hexDict[hexChar]
+
+
 class OutputInterface:
 
     def __init__(self):
@@ -79,7 +151,7 @@ class OutputInterface:
             outputString += self.generateSetData(sequencer.setIndex, sequencer.setChange, sequencer.setPending,
                                                  sequencer.setRepeat)
 
-            outputString += self.generateNmmData()
+            outputString += self.generateNmmData(255, 255, True, True, True, True)
 
             outputString += self.generateNoteControlModuleData(sequencer.sets, sequencer.setIndex,
                                                                sequencer.patternIndex, sequencer.seqstep)
@@ -168,7 +240,7 @@ class OutputInterface:
 
         currentStep = sets[setIndex].patterns[patternIndex].steps[seqstep]
 
-        noteString = self.convertDecimalToNote(currentStep.noteLayers[currentStep.selectedLayer[0]].note)
+        noteString = convertDecimalToNote(currentStep.noteLayers[currentStep.selectedLayer[0]].note)
         layerString = convertDecimalToByteString(currentStep.selectedLayer[0])
         channelString = convertDecimalToByteString(
             currentStep.noteLayers[currentStep.selectedLayer[0]].midiChannel)
@@ -218,7 +290,7 @@ class OutputInterface:
             gcOutput[3] = '1'
 
         # Add 4 bits for SaveIndex
-        gcOutputString = "".join(gcOutput) + self.binarySaveCounter(saveIndex)
+        gcOutputString = "".join(gcOutput) + binarySaveCounter(saveIndex)
 
         return gcOutputString
 
@@ -237,66 +309,47 @@ class OutputInterface:
 
         return setString
 
-    def generateNmmData(self) -> str:
-        """ Creates output for note modulation module. Needs to shuffle things around due to wiring """
+    def generateNmmData(self, velocity: int, modulation: int, led1: bool, led2: bool, led3: bool, led4: bool) -> str:
+        """ Creates output for note modulation module. Needs to shuffle things around due to wiring
 
-        # TODO: currently only generating test output data. Write, like, actual code here at some point
+        | Shift Register | Data                                |
+        | -------------- | ----------------------------------- |
+        | 1              | digit 4 0:3, digit 3 0:3            |
+        | 2              | digit 4 4:6, digit 3 4:6, LED 3 & 4 |
+        | 3              | digit 2 0:3, digit 1 0:3            |
+        | 4              | digit 2 4:6, digit 1 4:6, LED 1 & 2 |
 
-        # First, create data
-        velocityString = self.convertDecimalToNote(6)
-        velocityString2 = velocityString
-        modulationString = velocityString
-        modulationString2 = velocityString
+        1. Create hex string from velocity, modulation, without '0x'
+        2. convert hex strings to bytestrings
+        3. shuffle strings around
+        4. add led stuff
 
-        # Shuffle data around to match output
-        outputString = velocityString[0:4] + velocityString2[0:4] + velocityString[3:7] + velocityString2[3:7]
-        outputString += modulationString[0:4] + modulationString2[0:4] + modulationString[3:7] + modulationString2[3:7]
+        """
+        velocityString = hex(velocity)[2:]
+        modulationString = hex(modulation)[2:]
+
+        velocityOutputString = ""
+        modulationOutputString = ""
+
+
+        for char in velocityString:
+            velocityOutputString += convertHexStringToByteString(char)
+
+        for char in modulationString:
+            modulationOutputString += convertHexStringToByteString(char)
+
+        if len(velocityString) == 1:
+            velocityOutputString = convertHexStringToByteString("0") + velocityOutputString
+
+        if len(modulationString) == 1:
+            modulationOutputString = convertHexStringToByteString("0") + modulationOutputString
+
+        led1Str = "1" if led1 else "0"
+        led2Str = "1" if led2 else "0"
+        led3Str = "1" if led3 else "0"
+        led4Str = "1" if led4 else "0"
+
+        outputString = modulationOutputString[4:7] + modulationOutputString[12:15] + led3Str + led4Str + modulationOutputString[0:4] + modulationOutputString[8:12]
+        outputString += velocityOutputString[4:7] + velocityOutputString[12:15] + led1Str + led2Str + velocityOutputString[0:4] + velocityOutputString[8:12]
 
         return outputString
-
-    def convertDecimalToNote(self, decimal: int) -> str:
-        """ Converts note number to 7-segment display note representation """
-
-        noteArr = [  # Stores the numeric display bytes
-            0b01111110,  # -
-            0b01110010,  # C
-            0b01110011,  # C#
-            0b01100000,  # D
-            0b01100001,  # D#
-            0b00010010,  # E
-            0b00010110,  # F
-            0b00010111,  # F#
-            0b10010000,  # G
-            0b10010001,  # G#
-            0b00000100,  # A
-            0b00000101,  # A#
-            0b00110000,  # B
-        ]
-
-        byteString = format(noteArr[decimal], '08b')
-
-        return byteString
-
-    def binarySaveCounter(self, index: int) -> str:
-        """ Convert save index decimal to LED output string """
-
-        saveArr = [
-            0b0001,  # 1
-            0b0010,  # 2
-            0b0011,  # 3
-            0b0100,  # 4
-            0b0101,  # 5
-            0b0110,  # 6
-            0b0111,  # 7
-            0b1000,  # 8
-            0b1001,  # 9
-            0b1010,  # 10
-            0b1011,  # 11
-            0b1100,  # 12
-            0b1101,  # 13
-            0b1110,  # 14
-            0b1111,  # 15
-            0b0000  # 16
-        ]
-
-        return format(saveArr[index], '04b')

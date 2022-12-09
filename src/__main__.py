@@ -13,8 +13,6 @@ sequencer = Sequencer()
 outputInterface = OutputInterface()
 ui = NewUi()
 
-sequencer.togglePlay()  # FIXME: FOR TESTING
-
 running = True
 
 # with Live(screen=True, refresh_per_second=30) as display:
@@ -23,6 +21,7 @@ while running:
     sequencer.update()
     outputString = outputInterface.generateOutputString(sequencer)
     outputInterface.outputData(outputString)
+
     # display.update(ui.updateUi(sequencer, outputString))
 
     sequencer.processInput(InputInterface.readInputData())
